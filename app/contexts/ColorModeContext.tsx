@@ -1,72 +1,72 @@
-'use client' // Ensure this file is treated as a client-side component
-
-import {
+import React, {
   createContext,
-  useState,
-  useMemo,
   useContext,
-  ReactNode,
+  useState,
   useEffect,
+  ReactNode,
+  useMemo,
+  useCallback,
 } from 'react'
 
-// Тип для контекста (светлая/тёмная тема)
+// Типы для контекста
 interface ColorModeContextType {
-  mode: 'light' | 'dark' // Текущий режим темы
-  toggleColorMode: () => void // Функция для переключения темы
+  mode: 'light' | 'dark'
+  toggleColorMode: () => void
 }
 
-// Создаём контекст с дефолтным значением
-export const ColorModeContext =
-  createContext<ColorModeContextType>({
-    mode: 'light', // По умолчанию светлая тема
-    toggleColorMode: () => {}, // Пустая функция по умолчанию
-  })
+// Создаём контекст
+const ColorModeContext = createContext<
+  ColorModeContextType | undefined
+>(undefined)
 
-// Хук для использования контекста
-export const useColorMode = () =>
-  useContext(ColorModeContext)
-
-// Поставщик для ColorModeContext
 export const ColorModeProvider = ({
   children,
 }: {
   children: ReactNode
 }) => {
+  // Инициализация состояния темы: по умолчанию 'light'
   const [mode, setMode] = useState<'light' | 'dark'>(
     'light',
   )
 
-  // Используем useEffect для работы с localStorage только на клиенте
   useEffect(() => {
-    // Проверяем, доступен ли localStorage
+    // Проверка, доступен ли localStorage
     const savedMode = localStorage.getItem('colorMode') as
       | 'light'
       | 'dark'
       | null
     if (savedMode) {
       setMode(savedMode)
-    } else {
-      setMode('light') // Если значения нет, устанавливаем светлый режим по умолчанию
     }
-  }, [])
+  }, []) // Этот код выполнится только после первого рендера на клиенте
 
-  const toggleColorMode = () => {
-    setMode((prev) => {
-      const newMode = prev === 'light' ? 'dark' : 'light'
-      localStorage.setItem('colorMode', newMode) // Сохраняем выбранный режим в localStorage
-      return newMode
-    })
-  }
+  // Используем useCallback для сохранения стабильности функции
+  const toggleColorMode = useCallback(() => {
+    const newMode = mode === 'light' ? 'dark' : 'light'
+    setMode(newMode)
+    localStorage.setItem('colorMode', newMode) // Сохраняем новый режим в localStorage
+  }, [mode]) // Пересоздаём функцию, если меняется mode
 
-  const value = useMemo(
+  // Мемоизируем контекст, чтобы избежать лишних рендеров
+  const colorMode = useMemo(
     () => ({ mode, toggleColorMode }),
-    [mode],
+    [mode, toggleColorMode],
   )
 
-  // Оборачиваем детей в Provider с переданным значением
   return (
-    <ColorModeContext.Provider value={value}>
+    <ColorModeContext.Provider value={colorMode}>
       {children}
     </ColorModeContext.Provider>
   )
+}
+
+export const useColorMode = (): ColorModeContextType => {
+  const context = useContext(ColorModeContext)
+  console.log(context)
+  if (!context) {
+    throw new Error(
+      'useColorMode must be used within a ColorModeProvider',
+    )
+  }
+  return context
 }

@@ -1,39 +1,15 @@
-'use client' // Убедитесь, что файл будет обработан как клиентский
+'use client'
 
 import { IconButton } from '@mui/material'
 import {
   Brightness4,
   Brightness7,
 } from '@mui/icons-material'
-import { useState, useEffect } from 'react'
+import { useColorMode } from '../contexts/ColorModeContext' // Хук для получения и управления темой
 
 const ThemeSwitcher = () => {
-  const [mode, setMode] = useState<'light' | 'dark' | null>(
-    null,
-  )
-
-  useEffect(() => {
-    // Доступ к localStorage только на клиенте
-    const savedMode = localStorage.getItem('colorMode') as
-      | 'light'
-      | 'dark'
-      | null
-    if (savedMode) {
-      setMode(savedMode)
-    } else {
-      setMode('light') // Устанавливаем по умолчанию светлый режим
-    }
-  }, [])
-
-  const toggleColorMode = () => {
-    const newMode = mode === 'light' ? 'dark' : 'light'
-    setMode(newMode)
-    localStorage.setItem('colorMode', newMode) // Сохраняем новый режим в localStorage
-  }
-
-  // Если состояние не установлено, ничего не рендерим (например, на сервере)
-  if (mode === null) return null
-
+  const { mode, toggleColorMode } = useColorMode() // Получаем режим и функцию для переключения темы
+  
   return (
     <IconButton onClick={toggleColorMode}>
       {mode === 'light' ? <Brightness4 /> : <Brightness7 />}

@@ -3,7 +3,6 @@ import { ReactNode } from 'react'
 import { StoreProvider } from './StoreProvider'
 import { Roboto } from 'next/font/google'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
-import { ColorModeProvider } from './contexts/ColorModeContext'
 import ThemeWrapper from './ThemeWrapper'
 
 const roboto = Roboto({
@@ -23,19 +22,17 @@ export default function Layout({
       <body className={roboto.variable}>
         <AppRouterCacheProvider>
           <StoreProvider>
-            <ColorModeProvider>
-              <ThemeWrapper>
-                <section>
-                  {/* <Nav /> */}
+            <ThemeWrapper>
+              <section>
+                {/* <Nav /> */}
 
-                  {/* <Header /> */}
+                {/* <Header /> */}
 
-                  <main>{children}</main>
+                <main>{children}</main>
 
-                  {/* <Footer /> */}
-                </section>
-              </ThemeWrapper>
-            </ColorModeProvider>
+                {/* <Footer /> */}
+              </section>
+            </ThemeWrapper>
           </StoreProvider>
         </AppRouterCacheProvider>
       </body>

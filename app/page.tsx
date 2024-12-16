@@ -1,7 +1,7 @@
 // import { firestore } from '../firebase'
 
-import ThemeSwitcher from "./components/ThemeSwitcher";
-
+import ThemeSensitiveComponent from './components/ThemeSensitiveComponent'
+import ThemeSwitcher from './components/ThemeSwitcher'
 
 // export async function getServerSideProps(context) {
 //   const items = []
@@ -21,6 +21,7 @@ export default function idexPage() {
   return (
     <div>
       <ThemeSwitcher />
+      <ThemeSensitiveComponent />
       sss
     </div>
   )
