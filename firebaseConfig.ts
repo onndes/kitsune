@@ -3,6 +3,6 @@ const firebaseConfig = {
   authDomain: 'YOUR_AUTH_DOMAIN',
   projectId: 'YOUR_PROJECT_ID',
   // ... other config properties
-}
+};
 
-export default firebaseConfig
+export default firebaseConfig;

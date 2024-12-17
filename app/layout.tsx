@@ -1,28 +1,23 @@
-// app/layout.tsx
-import { ReactNode } from 'react'
-import { StoreProvider } from './StoreProvider'
-import { Roboto } from 'next/font/google'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
-import ThemeWrapper from './ThemeWrapper'
+import { ReactNode } from 'react';
+import { StoreProvider } from './StoreProvider';
+import { Roboto } from 'next/font/google';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { ColorModeProvider } from './contexts/ColorModeContext';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-roboto',
-})
+});
 
-export default function Layout({
-  children,
-}: {
-  children: ReactNode
-}) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className={roboto.variable}>
-        <AppRouterCacheProvider>
+    <ColorModeProvider>
+      <html lang="en">
+        <body className={roboto.variable}>
           <StoreProvider>
-            <ThemeWrapper>
+            <AppRouterCacheProvider>
               <section>
                 {/* <Nav /> */}
 
@@ -32,10 +27,10 @@ export default function Layout({
 
                 {/* <Footer /> */}
               </section>
-            </ThemeWrapper>
+            </AppRouterCacheProvider>
           </StoreProvider>
-        </AppRouterCacheProvider>
-      </body>
-    </html>
-  )
+        </body>
+      </html>
+    </ColorModeProvider>
+  );
 }

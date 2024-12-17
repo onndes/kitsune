@@ -148,4 +148,4 @@ export const tokens = (mode: 'light' | 'dark') => ({
           900: '#e1e2fe',
         },
       }),
-})
+});
