@@ -1,9 +1,12 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'; // Импортируем типы для Action и ThunkAction из Redux Toolkit
 import { combineSlices, configureStore } from '@reduxjs/toolkit'; // Импортируем функции для комбинирования редьюсеров и настройки хранилища
+import appReducer from './appSlice';
 
 // `combineSlices` автоматически комбинирует редьюсеры с использованием их `reducerPath`,
 // поэтому больше не нужно вручную вызывать `combineReducers`.
-const rootReducer = combineSlices();
+const rootReducer = combineSlices({
+  app: appReducer,
+});
 
 // Определяем тип `RootState` на основе корневого редьюсера
 export type RootState = ReturnType<typeof rootReducer>;

@@ -8,7 +8,7 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import { themeSettings } from '../styles/theme';
+import { themeSettings } from '../../styles/theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
 // Создаём контекст

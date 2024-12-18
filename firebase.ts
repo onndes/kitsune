@@ -1,12 +1,16 @@
-import { initializeApp } from 'firebase/app'; // Импортируем модуль Firebase
-import { getAuth } from 'firebase/auth'; // Импортируем только auth
-import { getFirestore } from 'firebase/firestore'; // Импортируем только firestore
-import firebaseConfig from './firebaseConfig';
+import { initializeApp, FirebaseApp } from 'firebase/app'; // Импортируем модуль Firebase
+import { getAuth, Auth } from 'firebase/auth'; // Импортируем auth и тип Auth
+import { getFirestore, Firestore } from 'firebase/firestore'; // Импортируем firestore и тип Firestore
+import { Database, getDatabase } from 'firebase/database'; // Импортируем Realtime Database и тип Database
+import firebaseConfig from './firebaseConfig'; // Ваши настройки Firebase
 
 // Инициализация Firebase
-const app = initializeApp(firebaseConfig);
+const app: FirebaseApp = initializeApp(firebaseConfig); // Типизация для FirebaseApp
 
 // Получение экземпляров сервисов
-export const auth = getAuth(app); // Получаем auth
-export const firestore = getFirestore(app); // Получаем firestore
-export { app };
+const auth: Auth = getAuth(app); // Типизация для auth
+const db: Firestore = getFirestore(app); // Типизация для firestore
+
+const database: Database = getDatabase(app); // Типизация для Realtime Database
+
+export { app, auth, db, database }; // Экспортируем экземпляры

@@ -1,23 +1,10 @@
 // import { firestore } from '../firebase'
 
-import ThemeSensitiveComponent from './components/ThemeSensitiveComponent';
-import ThemeSwitcher from './components/ThemeSwitcher';
+import ThemeSensitiveComponent from '@/components/client/ThemeSensitiveComponent';
+import ThemeSwitcher from '@/components/client/ThemeSwitcher';
 
-// export async function getServerSideProps(context) {
-//   const items = []
-//   const querySnapshot = await firestore
-//     .collection('items')
-//     .get()
-//   querySnapshot.forEach((doc) => {
-//     items.push({ id: doc.id, ...doc.data() })
-//   })
-
-//   return {
-//     props: { items }, // will be passed to the page component as props
-//   }
-// }
-
-export default function idexPage() {
+export default function idexPage({ product = {} }) {
+  console.log(product);
   return (
     <div>
       <ThemeSwitcher />
@@ -25,9 +12,4 @@ export default function idexPage() {
       sss
     </div>
   );
-  //   <div>
-  //   {items.map((item) => (
-  //     <p key={item.id}>{item.name}</p>
-  //   ))}
-  //   </div>
 }
