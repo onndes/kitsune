@@ -1,4 +1,4 @@
-import { tokens } from '@/styles/tokens';
+import { tokens } from '@/styles/theme';
 import { Theme, useMediaQuery, useTheme } from '@mui/material';
 
 interface UseMyThemeReturn {

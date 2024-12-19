@@ -3,6 +3,7 @@ import { StoreProvider } from './StoreProvider';
 import { Roboto } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ColorModeProvider } from './contexts/ColorModeContext';
+import MyAppBar from './components/MyAppBar';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -21,7 +22,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <section>
                 {/* <Nav /> */}
 
-                {/* <Header /> */}
+                <MyAppBar />
 
                 <main>{children}</main>
 

@@ -9,7 +9,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -19,42 +18,22 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [{ "name": "next" }]
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
-}
+    "plugins": [{ "name": "next" }],
 
-// Base Config
-// {
-//   "compilerOptions": {
-//     "target": "ES2017",
-//     "lib": ["dom", "dom.iterable", "esnext"],
-//     "allowJs": true,
-//     "skipLibCheck": true,
-//     "strict": true,
-//     "noEmit": true,
-//     "esModuleInterop": true,
-//     "module": "esnext",
-//     "moduleResolution": "bundler",
-//     "resolveJsonModule": true,
-//     "isolatedModules": true,
-//     "jsx": "preserve",
-//     "incremental": true,
-//     "plugins": [
-//       {
-//         "name": "next"
-//       }
-//     ],
-//     "paths": {
-//       "@/*": ["./*"]
-//     }
-//   },
-//   "include": [
-//     "next-env.d.ts",
-//     "**/*.ts",
-//     "**/*.tsx",
-//     ".next/types/**/*.ts"
-//   ],
-//   "exclude": ["node_modules"]
-// }
+    "noImplicitAny": true, // Требует явной типизации переменных вместо использования any
+    "strictNullChecks": true, // Проверяет, что значения null и undefined явно обрабатываются
+    "noUnusedParameters": true, // Выдаёт ошибку, если функция содержит неиспользуемые параметры
+    "noUnusedLocals": true, // Выдаёт ошибку, если локальная переменная не используется
+    "noImplicitReturns": true, // Требует, чтобы все пути внутри функции возвращали значение
+    "noFallthroughCasesInSwitch": true // Запрещает продолжение выполнения в следующем case без break
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "./styles/styles.d.ts"
+  ],
+  "exclude": ["node_modules"],
+  "rules": {}
+}

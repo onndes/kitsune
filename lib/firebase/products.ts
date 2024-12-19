@@ -16,7 +16,7 @@ export const getOneProductByCode = async (
   code: number
 ): Promise<IOneProduct | null> => {
   try {
-    const docRef = doc(db, 'products', `${code}`);
+    const docRef = doc(db, EnumFirestoreCollections.PRODUCTS, `${code}`);
     const docSnap = await getDoc(docRef);
 
     return docSnap.exists() ? (docSnap.data() as IOneProduct) : null;

@@ -1,32 +1,67 @@
-import { createTheme, ThemeOptions } from '@mui/material/styles';
-import { tokens } from './tokens'; // Токены для цветов
+import { createTheme } from '@mui/material/styles';
+import { ThemeOptions } from '@mui/system';
+import { darkTokens } from './tokensColor/dark';
+import { lightTokens } from './tokensColor/light';
+
+export const tokens = (mode: 'light' | 'dark') => ({
+  ...(mode === 'dark' ? darkTokens : lightTokens),
+});
 
 // Функция для создания темы в зависимости от режима
 export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
-  const currentTokens = tokens(mode); // Получаем токены для текущего режима
+  const colors = tokens(mode); // Получаем токены для текущего режима
 
   return createTheme({
     palette: {
-      mode, // Устанавливаем режим (light или dark)
-      primary: {
-        main: currentTokens.primary[500], // Используем основной цвет из токенов
-      },
-      secondary: {
-        main: currentTokens.greenAccent[500], // Используем зелёный акцент
-      },
-
-      ...(mode === 'dark' && {
-        background: {
-          default: currentTokens.grey[900], // Тёмный фон для тёмного режима
-          paper: currentTokens.grey[800],
+      mode,
+      ...(mode === 'dark'
+        ? {
+            primary: {
+              main: '#4E97FD',
+            },
+            secondary: {
+              main: '#B8DEFE',
+            },
+            success: {
+              main: '#47d147',
+            },
+            background: {
+              default: '#F3F5F9',
+              lightPrimary: '#F3F5F9',
+            },
+          }
+        : {
+            primary: {
+              main: colors.primaryPink[500],
+            },
+            secondary: {
+              main: colors.primaryPink[300],
+            },
+            success: {
+              main: '#2eb82e',
+            },
+            background: {
+              lightPrimary: colors.lightPinkPrimary[100],
+              mediumPrimary: colors.lightPinkPrimary[200],
+              heavyPrimary: colors.lightPinkPrimary[400],
+              lightGrey: '#F6F9FC',
+            },
+            text: {
+              //   main: '#4E97FD',
+              //   primary: '#2B3445',
+              //   secondary: '#7D879C',
+            },
+          }),
+    },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {},
         },
-        text: {
-          primary: '#fff', // Белый текст для тёмного режима
-        },
-      }),
+      },
     },
     typography: {
-      fontFamily: 'Roboto, Arial, sans-serif', // Пример шрифта
+      fontFamily: 'Roboto, Arial, sans-serif',
       h1: {
         fontWeight: 700,
       },
@@ -34,6 +69,5 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
         fontWeight: 600,
       },
     },
-    spacing: 8, // Пример кастомизации spacing
   });
 };
