@@ -1,139 +1,67 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { db } from '@/firebase';
+import { EnumFirestoreCollections } from '@/types/enums';
+import { IGetProductsParams, IOneProduct } from '@/types/products.types';
 import {
   collection,
+  doc,
+  DocumentSnapshot,
+  getDoc,
   getDocs,
+  limit,
   query,
   where,
-  doc,
-  limit,
-  startAfter,
-  getDoc,
-  DocumentSnapshot,
 } from 'firebase/firestore';
-import { db } from '@/firebase';
-import { AsyncThunkOptions } from '@/types/createAsyncThunk';
-import { CATEGORIES, SUBCATEGORIES } from '@/common/consts';
-// Типы для параметров
-interface GetProductParams {
-  code: string;
-}
 
-interface GetProductsParams {
-  category?: string;
-  subcategory?: string;
-}
-
-// Типы для данных продуктов
-interface Product {
-  name: string;
-  price: number;
-  // добавьте другие поля, соответствующие вашей модели данных
-}
-
-console.warn('FIXME: проверь тип!');
-interface GetProductsResponse {
-  products: Product[];
-  lastVisible: DocumentSnapshot[]; // Это будет последний видимый документ (типизированный как DocumentSnapshot)
-}
-
-export const getProduct = createAsyncThunk<
-  { product: Product },
-  AsyncThunkOptions
->('product/getProduct', async (data: GetProductParams, { rejectWithValue }) => {
+export const getOneProductByCode = async (
+  code: number
+): Promise<IOneProduct | null> => {
   try {
-    const docRef = doc(db, 'products', `${data.code}`);
+    const docRef = doc(db, 'products', `${code}`);
     const docSnap = await getDoc(docRef);
-    return { product: docSnap.data() } as { product: Product };
-  } catch (e) {
-    return rejectWithValue(e);
+
+    return docSnap.exists() ? (docSnap.data() as IOneProduct) : null;
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    throw error;
   }
-});
+};
 
-export const getProducts = createAsyncThunk<
-  GetProductsResponse,
-  GetProductsParams,
-  AsyncThunkOptions
->('product/getProducts', async (data, { rejectWithValue, getState }) => {
+export const getProducts = async (
+  params: IGetProductsParams
+): Promise<{
+  products: IOneProduct[];
+  lastVisible: DocumentSnapshot | null;
+}> => {
   try {
-    const { limitGetProduct } = getState().product;
-    const { category, subcategory } = data;
-    const productsRef = collection(db, 'products');
-
-    const subReg = subcategory && doc(db, SUBCATEGORIES, subcategory);
-    const catReg = category && doc(db, CATEGORIES, category);
-
-    let q = query(productsRef, limit(limitGetProduct));
+    const { category, subcategory, limitNumber } = params;
+    const productsRef = collection(db, EnumFirestoreCollections.PRODUCTS);
+    let productQuery = query(productsRef, limit(limitNumber));
 
     if (subcategory) {
-      q = query(
-        productsRef,
-        where('subcategory', '==', subReg),
-        limit(limitGetProduct)
+      productQuery = query(
+        productQuery,
+        where(EnumFirestoreCollections.SUBCATEGORY, '==', subcategory)
       );
     } else if (category) {
-      q = query(
-        productsRef,
-        where('category', '==', catReg),
-        limit(limitGetProduct)
+      productQuery = query(
+        productQuery,
+        where(EnumFirestoreCollections.CATEGORY, '==', category)
       );
     }
 
-    const docSnapshot = await getDocs(q);
-    const lastVisible = docSnapshot.docs[docSnapshot.docs.length - 1];
-
-    const products: Product[] = [];
-    docSnapshot?.forEach((doc) => products.push(doc.data() as Product));
-
-    return { products, lastVisible };
-  } catch (e) {
-    return rejectWithValue(e);
-  }
-});
-
-export const addedProducts = createAsyncThunk<
-  GetProductsResponse,
-  GetProductsParams,
-  AsyncThunkOptions
->('product/addedProducts', async (data, { rejectWithValue, getState }) => {
-  try {
-    const { limitGetProduct } = getState().product;
-    const { category, subcategory } = data;
-    const productsRef = collection(db, 'products');
-
-    const subReg = subcategory && doc(db, SUBCATEGORIES, subcategory);
-    const catReg = category && doc(db, CATEGORIES, category);
-    const { lastVisibleProduct } = getState().product;
-
-    let q = query(
-      productsRef,
-      startAfter(lastVisibleProduct),
-      limit(limitGetProduct)
+    const querySnapshot = await getDocs(productQuery);
+    const products: IOneProduct[] = querySnapshot.docs.map(
+      (doc) => doc.data() as IOneProduct
     );
 
-    if (subcategory) {
-      q = query(
-        productsRef,
-        where('subcategory', '==', subReg),
-        startAfter(lastVisibleProduct),
-        limit(limitGetProduct)
-      );
-    } else if (category) {
-      q = query(
-        productsRef,
-        where('category', '==', catReg),
-        startAfter(lastVisibleProduct),
-        limit(limitGetProduct)
-      );
-    }
-
-    const docSnapshot = await getDocs(q);
-    const lastVisible = docSnapshot.docs[docSnapshot.docs.length - 1];
-
-    const products: Product[] = [];
-    docSnapshot?.forEach((doc) => products.push(doc.data() as Product));
+    const lastVisible =
+      querySnapshot.docs.length > 0
+        ? querySnapshot.docs[querySnapshot.docs.length - 1]
+        : null;
 
     return { products, lastVisible };
-  } catch (e) {
-    return rejectWithValue(e);
+  } catch (error) {
+    console.error('Error fetching products:', error); // Логируем ошибку
+    throw new Error('Failed to fetch products'); // Выбрасываем ошибку
   }
-});
+};
