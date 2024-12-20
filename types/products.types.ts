@@ -1,3 +1,5 @@
+import { DocumentReference } from 'firebase/firestore';
+
 export interface IDescriptionProduct {
   paragraphs: string[];
 }
@@ -41,5 +43,9 @@ export interface ICategory {
 }
 
 export interface ISubCategory extends ICategory {
+  category: DocumentReference;
+}
+
+export interface ISubCategoryWithPath extends ICategory {
   category: string;
 }

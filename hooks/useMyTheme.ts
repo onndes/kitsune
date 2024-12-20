@@ -4,7 +4,7 @@ import { Theme, useMediaQuery, useTheme } from '@mui/material';
 interface UseMyThemeReturn {
   mq: boolean; // Результат useMediaQuery
   theme: Theme; // Типизируем тему MUI
-  colors: ReturnType<typeof tokens>; // Типизация для colors, возвращаемого функцией tokens
+  colors: ReturnType<typeof tokens>;
 }
 
 const useMyTheme = (width: string = '900'): UseMyThemeReturn => {

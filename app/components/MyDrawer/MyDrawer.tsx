@@ -5,12 +5,12 @@ import Divider from '@mui/material/Divider';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, Typography } from '@mui/material';
-import MyMenu from './Menu/MyMenu';
+import MyMenu from '../Menu/MyMenu';
 
 export default function MyDrawer() {
   const [state, setState] = React.useState(false);
 
-  const toggleDrawer = (open) => {
+  const toggleDrawer = (open: boolean) => {
     setState(open);
   };
 

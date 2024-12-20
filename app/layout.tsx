@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ColorModeProvider } from './contexts/ColorModeContext';
 import MyAppBar from './components/MyAppBar';
+import Indent from './components/Indent';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -12,7 +13,7 @@ const roboto = Roboto({
   variable: '--font-roboto',
 });
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <ColorModeProvider>
       <html lang="en">
@@ -23,9 +24,9 @@ export default function Layout({ children }: { children: ReactNode }) {
                 {/* <Nav /> */}
 
                 <MyAppBar />
-
+                <Indent />
                 <main>{children}</main>
-
+                <Indent bottom />
                 {/* <Footer /> */}
               </section>
             </AppRouterCacheProvider>

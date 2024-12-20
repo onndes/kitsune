@@ -5,15 +5,12 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import useScrollPosition from '@/hooks/useScrollPosition';
 import SearchInput from './SearchInput';
-import useMyTheme from '@/hooks/useMyTheme';
 import LogoAppBar from './LogoAppBar';
 import CartAppBar from './CartAppBar';
 import { StyledAppBar, StyledToolbar } from './styles';
 // import MyDrawer from '../MyDrawer';
 
 export default function MyAppBar() {
-  const { mq } = useMyTheme();
-
   //   todo
   //   const cartProduct = useSelector(({ cart }) => cart.products);
 
@@ -30,7 +27,7 @@ export default function MyAppBar() {
         <Container maxWidth="lg">
           <StyledToolbar>
             <LogoAppBar />
-            {!mq && <SearchInput />}
+            <SearchInput />
             <Box sx={{ display: 'flex', gap: 2 }}></Box>
             <CartAppBar />
           </StyledToolbar>

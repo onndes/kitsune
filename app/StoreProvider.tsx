@@ -1,6 +1,6 @@
 'use client'; // Указывает, что это компонент, который будет рендериться на клиенте, а не на сервере
-import type { AppStore } from '@/store/store'; // Тип для хранилища Redux (будет определяться в файле store.ts)
-import { makeStore } from '@/store/store'; // Функция для создания нового хранилища Redux
+import type { AppStore } from '@/redux/store'; // Тип для хранилища Redux (будет определяться в файле store.ts)
+import { makeStore } from '@/redux/store'; // Функция для создания нового хранилища Redux
 import { setupListeners } from '@reduxjs/toolkit/query'; // Функция для настройки слушателей запросов (необязательно, но рекомендуется для некоторых фич, таких как refetchOnFocus)
 import type { ReactNode } from 'react'; // Тип для дочерних элементов компонента (ReactNode — это любой элемент React)
 import { useEffect, useRef } from 'react'; // Хуки для работы с эффектами и ссылками

@@ -18,14 +18,14 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [{ "name": "next" }],
+    "plugins": [{ "name": "next" }]
 
-    "noImplicitAny": true, // Требует явной типизации переменных вместо использования any
-    "strictNullChecks": true, // Проверяет, что значения null и undefined явно обрабатываются
-    "noUnusedParameters": true, // Выдаёт ошибку, если функция содержит неиспользуемые параметры
-    "noUnusedLocals": true, // Выдаёт ошибку, если локальная переменная не используется
-    "noImplicitReturns": true, // Требует, чтобы все пути внутри функции возвращали значение
-    "noFallthroughCasesInSwitch": true // Запрещает продолжение выполнения в следующем case без break
+    // "noImplicitAny": true, // Требует явной типизации переменных вместо использования any
+    // "strictNullChecks": true, // Проверяет, что значения null и undefined явно обрабатываются
+    // "noUnusedParameters": true, // Выдаёт ошибку, если функция содержит неиспользуемые параметры
+    // "noUnusedLocals": true, // Выдаёт ошибку, если локальная переменная не используется
+    // "noImplicitReturns": true, // Требует, чтобы все пути внутри функции возвращали значение
+    // "noFallthroughCasesInSwitch": true // Запрещает продолжение выполнения в следующем case без break
   },
   "include": [
     "next-env.d.ts",

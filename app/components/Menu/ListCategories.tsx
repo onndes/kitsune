@@ -1,9 +1,22 @@
 import { Collapse, List } from '@mui/material';
-import React from 'react';
-import CategoryItem from './CategoryItem';
+import React, { FC } from 'react';
 import SubcategoryItem from './SubcategoryItem';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import CategoryItem from './CategoryItem';
 
-const ListCategories = ({
+export interface ICategoryWithSubcategory extends ICategory {
+  subcategories: ISubCategoryWithPath[];
+}
+
+interface ListCategoriesProps {
+  listCategories: ICategoryWithSubcategory[];
+  openedSubmenu: string;
+  handleClickItemMenu: (category: ICategory) => void;
+  drawerClose?: () => void;
+  homePage: boolean;
+}
+
+const ListCategories: FC<ListCategoriesProps> = ({
   listCategories,
   openedSubmenu,
   handleClickItemMenu,
@@ -14,6 +27,7 @@ const ListCategories = ({
     .sort((a, b) => a.sortIndex - b.sortIndex)
     .map((cat) => {
       const isOpen = openedSubmenu === cat.ukName;
+
       return (
         <React.Fragment key={cat.id}>
           <CategoryItem

@@ -6,9 +6,12 @@ import {
   StyledInputBase,
   StyledButton,
 } from './styles';
+import useMyTheme from '@/hooks/useMyTheme';
 
 const SearchInput = () => {
-  return (
+  const { mq } = useMyTheme();
+
+  return !mq ? (
     <Search>
       <SearchIconWrapper>
         <SearchIcon color="action" />
@@ -21,7 +24,7 @@ const SearchInput = () => {
         Search
       </StyledButton>
     </Search>
-  );
+  ) : null;
 };
 
 export default SearchInput;
