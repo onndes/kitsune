@@ -1,28 +1,105 @@
-import React from 'react';
-import MyMenu from './MyMenu';
-import { getCatsAndSubs } from '@/lib/firebase/getCategories';
-import { ISubCategory, ISubCategoryWithPath } from '@/types/products.types';
+'use client';
 
-const extractCategoryPath = (
-  subcategories: ISubCategory[]
-): ISubCategoryWithPath[] => {
-  return subcategories.map((subc) => ({
-    ...subc,
-    category: subc.category.path,
-  }));
-};
+import { useState, FC, useMemo } from 'react';
+import List from '@mui/material/List';
+import useMyTheme from '@/hooks/useMyTheme';
+import {
+  StyledContainerMenu,
+  StyledPaperMenu,
+  StyledTitleTypography,
+  StyledWrapperTitle,
+} from './styles';
+import Grid from '@mui/material/Grid2';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { db } from '@/firebase';
+import { setOpenedSubmenu } from '@/redux/appSlice';
+import { RootState } from '@/redux/store';
+import { EnumFirestoreCollections } from '@/types/enums';
+import { doc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import ListCategories from './ListCategories';
+import { useDispatch } from 'react-redux';
 
-const ServerWrapperMyMenu = async () => {
-  const { categories, subcategories } = await getCatsAndSubs();
-  const extractedCategoryPath = extractCategoryPath(subcategories);
+interface MyMenuProps {
+  drawerClose?: () => void;
+  homePage: boolean;
+  categories: ICategory[];
+  subcategories: ISubCategoryWithPath[];
+}
+
+const MyMenu: FC<MyMenuProps> = ({
+  categories,
+  subcategories,
+  drawerClose = () => {},
+  homePage,
+}) => {
+  const { mq } = useMyTheme();
+  const [dense] = useState(false);
+  const dispatch = useDispatch();
+  const openedSubmenu = useSelector(
+    (state: RootState) => state.app.openedSubmenu
+  );
+
+  const getListCategories = () => {
+    const getFilteredSubCat = (path: string) =>
+      subcategories.filter(
+        (subcat: ISubCategoryWithPath) => path === subcat.category
+      );
+
+    return categories.map((cat: ICategory) => ({
+      ...cat,
+      subcategories: getFilteredSubCat(
+        doc(db, EnumFirestoreCollections.CATEGORIES, cat.nameDoc).path
+      ),
+    }));
+  };
+
+  const listCategories = useMemo(getListCategories, [
+    categories,
+    subcategories,
+  ]);
+
+  const handleClickItemMenu = (cat: ICategory) => {
+    if (cat.ukName === openedSubmenu) {
+      dispatch(setOpenedSubmenu(''));
+    } else {
+      dispatch(setOpenedSubmenu(cat.ukName));
+    }
+  };
+
+  if (mq) return null;
 
   return (
-    <MyMenu
-      categories={categories}
-      subcategories={extractedCategoryPath}
-      homePage={false}
-    />
+    <Grid width="270px">
+      <StyledPaperMenu elevation={0}>
+        <StyledContainerMenu
+          maxWidth={false}
+          disableGutters
+          sx={{ pl: mq ? 0 : 2 }}
+        >
+          <StyledWrapperTitle>
+            <StyledTitleTypography>Категорії</StyledTitleTypography>
+          </StyledWrapperTitle>
+
+          <List
+            dense={dense}
+            disablePadding
+            sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}
+          >
+            {listCategories.length > 0 && (
+              <ListCategories
+                listCategories={listCategories}
+                openedSubmenu={openedSubmenu}
+                handleClickItemMenu={handleClickItemMenu}
+                drawerClose={drawerClose}
+                homePage={homePage}
+              />
+            )}
+          </List>
+        </StyledContainerMenu>
+      </StyledPaperMenu>
+    </Grid>
   );
 };
 
-export default ServerWrapperMyMenu;
+export default MyMenu;

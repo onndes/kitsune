@@ -30,7 +30,7 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
 
   return (
     <Link
-      href={`products/${cat.nameDoc.trim()}/${sub.nameDoc.trim()}`}
+      href={`/products/${cat.nameDoc.trim()}/${sub.nameDoc.trim()}`}
       passHref
     >
       <StyledListItemButton onClick={handleClick} isCurrent={isCurrent}>

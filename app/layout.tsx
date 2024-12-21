@@ -22,12 +22,11 @@ export default async function Layout({ children }: { children: ReactNode }) {
             <AppRouterCacheProvider>
               <section>
                 {/* <Nav /> */}
-
                 <MyAppBar />
                 <Indent />
                 <main>{children}</main>
                 <Indent bottom />
-                {/* <Footer /> */}
+                {/* <Footer /> */} 
               </section>
             </AppRouterCacheProvider>
           </StoreProvider>

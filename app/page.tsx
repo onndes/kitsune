@@ -1,18 +1,10 @@
-// import { firestore } from '../firebase'
+import ProductsLayout from './products/layout';
+import Products from './products/Products';
 
-import ServerWrapperMyMenu from './components/Menu';
-
-// import ThemeSensitiveComponent from '@/components/client/ThemeSensitiveComponent';
-// import ThemeSwitcher from '@/components/client/ThemeSwitcher';
-
-export default function idexPage({ product = {} }) {
-  console.log(product);
+export default function HomePage() {
   return (
-    <div>
-      <ServerWrapperMyMenu />
-      {/* <ThemeSwitcher />
-      <ThemeSensitiveComponent />
-      sss */}
-    </div>
+    <ProductsLayout>
+      <Products />
+    </ProductsLayout>
   );
 }

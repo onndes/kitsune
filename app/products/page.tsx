@@ -1,3 +1,5 @@
-export default async function Products() {
-  return <div>ProductsPage</div>;
+import Products from './Products';
+
+export default function ProductsPage() {
+  return <Products />;
 }
