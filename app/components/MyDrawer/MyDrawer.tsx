@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Divider from '@mui/material/Divider';
@@ -10,7 +10,7 @@ import { IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MyMenu from '../Menu';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
-import useMyTheme from '@/hooks/useMyTheme';
+import { useDevice } from '@/app/contexts/DeviceContextProps';
 
 interface MyDrawerProps {
   categories: ICategory[];
@@ -41,14 +41,14 @@ export default function MyDrawer({
   subcategories,
   homePage,
 }: MyDrawerProps) {
-  const { mq } = useMyTheme();
-  const [state, setState] = React.useState(false);
+  const [state, setState] = useState(false);
+  const { isMobile } = useDevice();
 
   const toggleDrawer = (open: boolean) => {
     setState(open);
   };
 
-  if (!mq) return null;
+  if (!isMobile) return null;
 
   return (
     <div>

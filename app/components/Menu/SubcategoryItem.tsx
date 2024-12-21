@@ -18,12 +18,11 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
   drawerClose,
   cat,
 }) => {
-  const pathname = usePathname();
+  const pathname = decodeURIComponent(usePathname());
 
   const isСurrent =
     pathname === `/products/${cat?.nameDoc.trim()}/${sub?.nameDoc.trim()}`;
 
-  console.log(pathname);
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (drawerClose) {
@@ -33,7 +32,7 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
 
   return (
     <Link
-      href={`/products/${cat.nameDoc.trim()}/${sub?.nameDoc.trim()}`}
+      href={`/products/${encodeURIComponent(cat.nameDoc.trim())}/${encodeURIComponent(sub?.nameDoc.trim())}`}
       passHref
       style={{ textDecoration: 'none' }}
     >

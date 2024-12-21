@@ -14,7 +14,9 @@ export default function Products() {
       <ul>
         {categories.map((category) => (
           <li key={category.slug}>
-            <Link href={`/products/${category.slug}`}>{category.name}</Link>
+            <Link href={`/products/${encodeURIComponent(category.slug)}`}>
+              {category.name}
+            </Link>
           </li>
         ))}
       </ul>

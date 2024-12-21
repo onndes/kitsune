@@ -3,13 +3,17 @@ import { useParams } from 'next/navigation';
 
 export default function SubcategoryPage() {
   const params = useParams();
-  const { categorySlug, subcategorySlug } = params;
+  const { categorySlug, subcategorySlug } = params as {
+    categorySlug: string;
+    subcategorySlug: string;
+  };
 
   return (
     <div>
-      <h1>
-        Category: {categorySlug} - Subcategory: {subcategorySlug}
-      </h1>
+      <h6>
+        Category: {decodeURIComponent(categorySlug)} - Subcategory:
+        {decodeURIComponent(subcategorySlug)}
+      </h6>
     </div>
   );
 }

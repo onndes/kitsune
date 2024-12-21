@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { StyledLogoContainer, StyledTypography } from './styles';
 import MyDrawer from '../MyDrawer/MyDrawer';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { useDevice } from '@/app/contexts/DeviceContextProps';
 
 interface Props {
   categories: ICategory[];
@@ -12,14 +13,17 @@ interface Props {
 
 const LogoAppBar = ({ categories, subcategories }: Props) => {
   const router = useRouter();
+  const { isMobile } = useDevice();
 
   return (
     <StyledLogoContainer>
-      <MyDrawer
-        categories={categories}
-        subcategories={subcategories}
-        homePage={false}
-      />
+      {isMobile && (
+        <MyDrawer
+          categories={categories}
+          subcategories={subcategories}
+          homePage={false}
+        />
+      )}
       <StyledTypography component="div" onClick={() => router.push('/')}>
         <Image src={logo} alt="KITSUNE logo" width={40} height={40} priority />
         KITSUNE

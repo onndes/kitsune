@@ -6,12 +6,12 @@ import {
   StyledInputBase,
   StyledButton,
 } from './styles';
-import useMyTheme from '@/hooks/useMyTheme';
+import { useDevice } from '@/app/contexts/DeviceContextProps';
 
 const SearchInput = () => {
-  const { mq } = useMyTheme();
+  const { isMobile } = useDevice();
 
-  return !mq ? (
+  return !isMobile ? (
     <Search>
       <SearchIconWrapper>
         <SearchIcon color="action" />

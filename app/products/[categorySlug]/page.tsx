@@ -8,7 +8,7 @@ export default function CategoryPage() {
 
   return (
     <div>
-      <h1>Category: {categorySlug}</h1>
+      <h6>Category: {categorySlug}</h6>
       {/* Здесь можно добавить логику для загрузки данных категории */}
     </div>
   );

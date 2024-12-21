@@ -2,7 +2,6 @@
 
 import { useState, FC, useMemo } from 'react';
 import List from '@mui/material/List';
-import useMyTheme from '@/hooks/useMyTheme';
 import {
   StyledContainerMenu,
   StyledPaperMenu,
@@ -19,6 +18,7 @@ import { doc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import ListCategories from './ListCategories';
 import { useDispatch } from 'react-redux';
+import { useDevice } from '@/app/contexts/DeviceContextProps';
 
 interface MyMenuProps {
   drawerClose?: () => void;
@@ -35,7 +35,8 @@ const MyMenu: FC<MyMenuProps> = ({
   homePage,
   drawer,
 }) => {
-  const { mq } = useMyTheme();
+  // const { isMobile } = useWindowWidth();
+  const { isMobile } = useDevice();
   const [dense] = useState(false);
   const dispatch = useDispatch();
   const openedSubmenu = useSelector(
@@ -64,7 +65,7 @@ const MyMenu: FC<MyMenuProps> = ({
     }
   };
 
-  if (mq && !drawer) return null;
+  if (isMobile && !drawer) return null;
 
   return (
     <Grid width="270px">
@@ -72,7 +73,7 @@ const MyMenu: FC<MyMenuProps> = ({
         <StyledContainerMenu
           maxWidth={false}
           disableGutters
-          sx={{ pl: mq ? 0 : 2 }}
+          sx={{ pl: isMobile ? 0 : 2 }}
         >
           <StyledWrapperTitle>
             <StyledTitleTypography>Категорії</StyledTitleTypography>

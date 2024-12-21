@@ -81,14 +81,14 @@ export const ItemText = styled(ListItemText)(() => ({
 }));
 
 export const StyledListItemButton = styled(ListItemButton, {
-  shouldForwardProp: (prop) => prop !== 'isСurrent', // Останавливаем передачу isСurrent в DOM
+  shouldForwardProp: (prop) => prop !== 'isСurrent',
 })<{ isСurrent: boolean }>(({ theme, isСurrent }) => ({
   paddingLeft: theme.spacing(4),
   backgroundColor: isСurrent ? theme.palette.action.selected : 'inherit',
 }));
 
 export const StyledTypography = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== 'isСurrent', // Останавливаем передачу isСurrent в DOM
+  shouldForwardProp: (prop) => prop !== 'isСurrent',
 })<{ isСurrent: boolean }>(({ theme, isСurrent }) => ({
   color: isСurrent ? theme.palette.primary.main : '#5e6d87',
 }));

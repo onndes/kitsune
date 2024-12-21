@@ -33,13 +33,14 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   const pathname = usePathname();
   const router = useRouter();
   const isCurrent = pathname.includes(cat.nameDoc?.trim());
+  console.log(decodeURIComponent(cat.nameDoc.trim()));
 
   return (
     <ItemButton
       onClick={() => {
         handleClickItemMenu(cat);
         if (!isOpen) {
-          router.push(`/products/${cat.nameDoc.trim()}`);
+          router.push(`/products/${encodeURIComponent(cat.nameDoc.trim())}`);
         }
       }}
       сselected={isCurrent ? colors.primaryPink[500] : null}

@@ -32,6 +32,17 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []); // Этот код выполнится только после первого рендера на клиенте
 
+  // Логика обновления meta-тега theme-color
+  useEffect(() => {
+    const metaThemeColor = document.querySelector("meta[name='theme-color']");
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute(
+        'content',
+        mode === 'light' ? '#ffffff' : '#000000' // Укажите цвета для светлой и тёмной темы
+      );
+    }
+  }, [mode]); // Этот эффект вызывается при изменении темы
+
   // Используем useCallback для сохранения стабильности функции
   const toggleColorMode = useCallback(() => {
     const newMode = mode === 'light' ? 'dark' : 'light';
