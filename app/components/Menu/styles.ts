@@ -80,15 +80,15 @@ export const ItemText = styled(ListItemText)(() => ({
   },
 }));
 
-export const StyledListItemButton = styled(ListItemButton)<{
-  isCurrent: boolean;
-}>(({ theme, isCurrent }) => ({
+export const StyledListItemButton = styled(ListItemButton, {
+  shouldForwardProp: (prop) => prop !== 'isСurrent', // Останавливаем передачу isСurrent в DOM
+})<{ isСurrent: boolean }>(({ theme, isСurrent }) => ({
   paddingLeft: theme.spacing(4),
-  backgroundColor: isCurrent ? theme.palette.action.selected : 'inherit',
+  backgroundColor: isСurrent ? theme.palette.action.selected : 'inherit',
 }));
 
-export const StyledTypography = styled(Typography)<{ isCurrent: boolean }>(
-  ({ theme, isCurrent }) => ({
-    color: isCurrent ? theme.palette.primary.main : '#5e6d87',
-  })
-);
+export const StyledTypography = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'isСurrent', // Останавливаем передачу isСurrent в DOM
+})<{ isСurrent: boolean }>(({ theme, isСurrent }) => ({
+  color: isСurrent ? theme.palette.primary.main : '#5e6d87',
+}));

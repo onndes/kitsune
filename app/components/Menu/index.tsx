@@ -25,6 +25,7 @@ interface MyMenuProps {
   homePage: boolean;
   categories: ICategory[];
   subcategories: ISubCategoryWithPath[];
+  drawer: boolean;
 }
 
 const MyMenu: FC<MyMenuProps> = ({
@@ -32,6 +33,7 @@ const MyMenu: FC<MyMenuProps> = ({
   subcategories,
   drawerClose = () => {},
   homePage,
+  drawer,
 }) => {
   const { mq } = useMyTheme();
   const [dense] = useState(false);
@@ -40,7 +42,7 @@ const MyMenu: FC<MyMenuProps> = ({
     (state: RootState) => state.app.openedSubmenu
   );
 
-  const getListCategories = () => {
+  const listCategories = useMemo(() => {
     const getFilteredSubCat = (path: string) =>
       subcategories.filter(
         (subcat: ISubCategoryWithPath) => path === subcat.category
@@ -52,12 +54,7 @@ const MyMenu: FC<MyMenuProps> = ({
         doc(db, EnumFirestoreCollections.CATEGORIES, cat.nameDoc).path
       ),
     }));
-  };
-
-  const listCategories = useMemo(getListCategories, [
-    categories,
-    subcategories,
-  ]);
+  }, [categories, subcategories]);
 
   const handleClickItemMenu = (cat: ICategory) => {
     if (cat.ukName === openedSubmenu) {
@@ -67,7 +64,7 @@ const MyMenu: FC<MyMenuProps> = ({
     }
   };
 
-  if (mq) return null;
+  if (mq && !drawer) return null;
 
   return (
     <Grid width="270px">

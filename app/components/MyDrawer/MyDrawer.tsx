@@ -1,77 +1,97 @@
-// import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-// import Divider from '@mui/material/Divider';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import CloseIcon from '@mui/icons-material/Close';
-// import { IconButton, Typography } from '@mui/material';
-// import MyMenu from '../Menu/MyMenu';
+'use client';
 
-// export default function MyDrawer() {
-//   const [state, setState] = React.useState(false);
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Divider from '@mui/material/Divider';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import MyMenu from '../Menu';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import useMyTheme from '@/hooks/useMyTheme';
 
-//   const toggleDrawer = (open: boolean) => {
-//     setState(open);
-//   };
+interface MyDrawerProps {
+  categories: ICategory[];
+  subcategories: ISubCategoryWithPath[];
+  homePage: boolean;
+}
 
-//   return (
-//     <div>
-//       <IconButton
-//         size="large"
-//         edge="start"
-//         color="default"
-//         aria-label="menu"
-//         onClick={() => toggleDrawer(true)}
-//       >
-//         <MenuIcon />
-//       </IconButton>
-//       <SwipeableDrawer
-//         anchor="left"
-//         open={state}
-//         onClose={() => toggleDrawer(false)}
-//         onOpen={() => toggleDrawer(true)}
-//       >
-//         <Box
-//           sx={{
-//             width: 270,
-//           }}
-//           role="presentation"
-//           // onClick={toggleDrawer(false)}
-//           onKeyDown={() => toggleDrawer(false)}
-//         >
-//           <Box
-//             sx={{
-//               display: 'flex',
-//               pl: 2,
-//               pt: 2,
-//               pb: 2,
-//               alignItems: 'center',
-//             }}
-//           >
-//             <Typography
-//               color="text.primary"
-//               variant="h3"
-//               component="div"
-//               fontWeight="900"
-//               sx={{ flexGrow: 1 }}
-//             >
-//               ELLEMOD
-//             </Typography>
-//             <IconButton
-//               size="large"
-//               edge="start"
-//               color="default"
-//               aria-label="menuClose"
-//               sx={{ mr: 2 }}
-//               onClick={() => toggleDrawer(false)}
-//             >
-//               <CloseIcon fontSize="large" />
-//             </IconButton>
-//           </Box>
-//           <Divider />
-//           <MyMenu drawer drawerClose={() => toggleDrawer(false)} />
-//         </Box>
-//       </SwipeableDrawer>
-//     </div>
-//   );
-// }
+const StyledDrawerContainer = styled(Box)(() => ({
+  width: 270,
+  role: 'presentation',
+}));
+
+const StyledHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  paddingLeft: theme.spacing(2),
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(2),
+  alignItems: 'center',
+}));
+
+const StyledTitle = styled(Typography)(() => ({
+  flexGrow: 1,
+  fontWeight: 900,
+}));
+
+export default function MyDrawer({
+  categories,
+  subcategories,
+  homePage,
+}: MyDrawerProps) {
+  const { mq } = useMyTheme();
+  const [state, setState] = React.useState(false);
+
+  const toggleDrawer = (open: boolean) => {
+    setState(open);
+  };
+
+  if (!mq) return null;
+
+  return (
+    <div>
+      <IconButton
+        size="large"
+        edge="start"
+        color="default"
+        aria-label="menu"
+        onClick={() => toggleDrawer(true)}
+      >
+        <MenuIcon />
+      </IconButton>
+      <SwipeableDrawer
+        anchor="left"
+        open={state}
+        onClose={() => toggleDrawer(false)}
+        onOpen={() => toggleDrawer(true)}
+      >
+        <StyledDrawerContainer onKeyDown={() => toggleDrawer(false)}>
+          <StyledHeader>
+            <StyledTitle color="text.primary" variant="h5">
+              ELLEMOD
+            </StyledTitle>
+            <IconButton
+              size="large"
+              edge="start"
+              color="default"
+              aria-label="menuClose"
+              onClick={() => toggleDrawer(false)}
+            >
+              <CloseIcon fontSize="medium" />
+            </IconButton>
+          </StyledHeader>
+          <Divider />
+          <MyMenu
+            drawer={true}
+            drawerClose={() => toggleDrawer(false)}
+            categories={categories}
+            subcategories={subcategories}
+            homePage={homePage}
+          />
+        </StyledDrawerContainer>
+      </SwipeableDrawer>
+    </div>
+  );
+}

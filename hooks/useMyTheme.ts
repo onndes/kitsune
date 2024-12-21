@@ -2,8 +2,8 @@ import { tokens } from '@/styles/theme';
 import { Theme, useMediaQuery, useTheme } from '@mui/material';
 
 interface UseMyThemeReturn {
-  mq: boolean; // Результат useMediaQuery
-  theme: Theme; // Типизируем тему MUI
+  mq: boolean;
+  theme: Theme;
   colors: ReturnType<typeof tokens>;
 }
 

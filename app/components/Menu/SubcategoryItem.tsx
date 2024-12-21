@@ -19,8 +19,11 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
   cat,
 }) => {
   const pathname = usePathname();
-  const isCurrent =
-    pathname === `/products/${cat.nameDoc.trim()}/${sub.nameDoc.trim()}`;
+
+  const isСurrent =
+    pathname === `/products/${cat?.nameDoc.trim()}/${sub?.nameDoc.trim()}`;
+
+  console.log(pathname);
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (drawerClose) {
@@ -30,13 +33,14 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
 
   return (
     <Link
-      href={`/products/${cat.nameDoc.trim()}/${sub.nameDoc.trim()}`}
+      href={`/products/${cat.nameDoc.trim()}/${sub?.nameDoc.trim()}`}
       passHref
+      style={{ textDecoration: 'none' }}
     >
-      <StyledListItemButton onClick={handleClick} isCurrent={isCurrent}>
+      <StyledListItemButton onClick={handleClick} isСurrent={isСurrent}>
         <ListItemText
           primary={
-            <StyledTypography variant="body1" isCurrent={isCurrent}>
+            <StyledTypography variant="body2" isСurrent={isСurrent}>
               {sub.ukName}
             </StyledTypography>
           }
