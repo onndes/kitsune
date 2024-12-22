@@ -15,11 +15,6 @@ export default async function ProductsLayout({
   return (
     <Container maxWidth="lg" sx={{ pt: 2, height: '100%' }} disableGutters>
       <Grid container sx={{ height: '100%' }} gap={2}>
-        {/* <MyDrawer
-          categories={categories}
-          subcategories={extractedCategoryPath}
-          homePage={false}
-        /> */}
         <MyMenu
           homePage={false}
           categories={categories}

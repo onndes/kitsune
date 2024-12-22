@@ -10,9 +10,12 @@ import MyAppBarWraper from './components/MyAppBar';
 import { DeviceProvider } from './contexts/DeviceContextProps';
 
 export const metadata = {
-  title: 'Your App',
-  description: 'Description of your app',
-  themeColor: 'green', // Установите желаемый цвет строки состояния
+  title: 'Your metadata App',
+  description: 'Description of your metadata app',
+};
+
+export const vieport = {
+  themeColor: 'light',
 };
 
 const roboto = Roboto({
@@ -25,13 +28,17 @@ const roboto = Roboto({
 export default async function Layout({ children }: { children: ReactNode }) {
   const headersList = await headers();
   const userAgent = headersList.get('user-agent');
-  const isMobile = /iPhone|iPad|Android/i.test(userAgent || '');
   const initialTheme = 'light';
+  const isMobile = /iPhone|iPad|Android/i.test(userAgent || '');
 
   return (
     <ColorModeProvider>
       <html lang="en">
         <head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+          />
           <meta
             name="theme-color"
             content={initialTheme === 'light' ? '#ffffff' : '#000000'}

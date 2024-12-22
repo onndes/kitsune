@@ -1,19 +1,20 @@
-'use client';
-import { useParams } from 'next/navigation';
+import { getProducts } from '@/lib/firebase/getProducts';
+import Products from '../../Products';
+import { extractCategoryAndSubcategoryPaths } from '@/common/utils/extractCategoryPath';
 
-export default function SubcategoryPage() {
-  const params = useParams();
-  const { categorySlug, subcategorySlug } = params as {
-    categorySlug: string;
-    subcategorySlug: string;
-  };
+export default async function SubcategoryPage({
+  params,
+}: {
+  params: { categorySlug: string; subcategorySlug: string };
+}) {
+  const { categorySlug, subcategorySlug } = await params;
+  console.log(categorySlug, subcategorySlug);
+  const { products } = await getProducts({
+    category: decodeURIComponent(categorySlug),
+    subcategory: decodeURIComponent(subcategorySlug),
+    limitNumber: 10,
+  });
+  const productsWithPaths = extractCategoryAndSubcategoryPaths(products);
 
-  return (
-    <div>
-      <h6>
-        Category: {decodeURIComponent(categorySlug)} - Subcategory:
-        {decodeURIComponent(subcategorySlug)}
-      </h6>
-    </div>
-  );
+  return <Products products={productsWithPaths} />;
 }

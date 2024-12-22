@@ -1,15 +1,19 @@
-'use client';
+import { getProducts } from '@/lib/firebase/getProducts';
+import Products from '../Products';
+import { extractCategoryAndSubcategoryPaths } from '@/common/utils/extractCategoryPath';
 
-import { useParams } from 'next/navigation';
+export default async function CategoryPage({
+  params,
+}: {
+  params: { categorySlug: string };
+}) {
+  const { categorySlug } = await params;
+  const { products } = await getProducts({
+    category: decodeURIComponent(categorySlug),
+    limitNumber: 10,
+  });
 
-export default function CategoryPage() {
-  const params = useParams(); // Получаем параметры из URL
-  const { categorySlug } = params;
+  const productsWithPaths = extractCategoryAndSubcategoryPaths(products);
 
-  return (
-    <div>
-      <h6>Category: {categorySlug}</h6>
-      {/* Здесь можно добавить логику для загрузки данных категории */}
-    </div>
-  );
+  return <Products products={productsWithPaths} />;
 }

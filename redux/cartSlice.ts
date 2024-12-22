@@ -1,22 +1,15 @@
 // cartSlice.ts
 
+import { IProductWithPaths } from '@/common/utils/extractCategoryPath';
+import { IOneProduct } from '@/types/products.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface Product {
-  code: string;
-  name: string;
-  price: number;
-  count: number;
-}
-
 export interface CartState {
-  products: Product[];
+  products: IProductWithPaths[];
 }
 
 const initialState: CartState = {
-  products: JSON.parse(
-    window.localStorage.getItem('cartProducts') || '[]'
-  ) as Product[],
+  products: [],
 };
 
 const cartSlice = createSlice({
@@ -24,7 +17,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     resetState: () => initialState,
-    addProduct(state, action: PayloadAction<Product>) {
+    addProduct(state, action: PayloadAction<IProductWithPaths>) {
       const product = action.payload;
       const existingProduct = state.products.find(
         (el) => el.code === product.code
@@ -50,7 +43,7 @@ const cartSlice = createSlice({
     },
     removeProduct(
       state,
-      action: PayloadAction<{ product: Product; remove?: boolean }>
+      action: PayloadAction<{ product: IOneProduct; remove?: boolean }>
     ) {
       const { product, remove } = action.payload;
       const existingProduct = state.products.find(

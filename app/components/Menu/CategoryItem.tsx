@@ -33,7 +33,6 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   const pathname = usePathname();
   const router = useRouter();
   const isCurrent = pathname.includes(cat.nameDoc?.trim());
-  console.log(decodeURIComponent(cat.nameDoc.trim()));
 
   return (
     <ItemButton

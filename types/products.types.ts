@@ -13,7 +13,7 @@ export type IImageProduct = string[];
 
 export interface IOneProduct {
   brand: string;
-  category: string;
+  category: DocumentReference;
   code: number;
   count: number;
   dateCreated: string;
@@ -24,7 +24,7 @@ export interface IOneProduct {
   image: IImageProduct;
   name: string;
   price: number;
-  subcategory: string;
+  subcategory: DocumentReference;
 }
 
 export interface IGetProductsParams {

@@ -37,23 +37,30 @@ export const getProducts = async (
     const productsRef = collection(db, EnumFirestoreCollections.PRODUCTS);
     let productQuery = query(productsRef, limit(limitNumber));
 
+    const subReg =
+      subcategory &&
+      doc(db, EnumFirestoreCollections.SUBCATEGORIES, subcategory);
+    const catReg =
+      category && doc(db, EnumFirestoreCollections.CATEGORIES, category);
+      
     if (subcategory) {
       productQuery = query(
         productQuery,
-        where(EnumFirestoreCollections.SUBCATEGORY, '==', subcategory)
+        where(EnumFirestoreCollections.SUBCATEGORY, '==', subReg)
       );
     } else if (category) {
       productQuery = query(
         productQuery,
-        where(EnumFirestoreCollections.CATEGORY, '==', category)
+        where(EnumFirestoreCollections.CATEGORY, '==', catReg)
       );
     }
-
+    console.log('getProducts', category, subcategory, limitNumber);
     const querySnapshot = await getDocs(productQuery);
+    console.log('getProducts - querySnapshot', querySnapshot);
     const products: IOneProduct[] = querySnapshot.docs.map(
       (doc) => doc.data() as IOneProduct
     );
-
+    console.log('getProducts - products', products);
     const lastVisible =
       querySnapshot.docs.length > 0
         ? querySnapshot.docs[querySnapshot.docs.length - 1]
