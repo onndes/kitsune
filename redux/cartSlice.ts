@@ -1,7 +1,7 @@
 // cartSlice.ts
 
 import { IProductWithPaths } from '@/common/utils/extractCategoryPath';
-import { IOneProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CartState {
@@ -43,7 +43,7 @@ const cartSlice = createSlice({
     },
     removeProduct(
       state,
-      action: PayloadAction<{ product: IOneProduct; remove?: boolean }>
+      action: PayloadAction<{ product: IProduct; remove?: boolean }>
     ) {
       const { product, remove } = action.payload;
       const existingProduct = state.products.find(

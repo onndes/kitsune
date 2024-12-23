@@ -1,14 +1,9 @@
 import {
-  IOneProduct,
+  IProduct,
+  IProductWithDocRef,
   ISubCategory,
   ISubCategoryWithPath,
 } from '@/types/products.types';
-
-export interface IProductWithPaths {
-  category: string;
-  subcategory?: string; // Если subcategory существует
-  [key: string]: any;
-}
 
 export const extractCategoryPath = (
   subcategories: ISubCategory[]
@@ -20,11 +15,22 @@ export const extractCategoryPath = (
 };
 
 export const extractCategoryAndSubcategoryPaths = (
-  products: IOneProduct[]
-): IProductWithPaths[] => {
+  products: IProductWithDocRef[]
+): IProduct[] => {
   return products.map((product) => ({
     ...product,
     category: product.category.path,
-    subcategory: product.subcategory?.path, // Проверяем наличие subcategory
+    subcategory: product.subcategory?.path,
   }));
+};
+
+export const extractCategoryAndSubcategoryPathsAndPlaceholder = (
+  products: IProduct[]
+): IProduct[] => {
+  return products.map((el) => {
+    return {
+      ...el,
+      image: ['https://dummyimage.com/400x400/cccccc/000000&text=No+Image'],
+    };
+  });
 };

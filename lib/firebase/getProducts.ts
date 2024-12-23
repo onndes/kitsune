@@ -1,6 +1,14 @@
+import {
+  extractCategoryAndSubcategoryPaths,
+  extractCategoryAndSubcategoryPathsAndPlaceholder,
+} from '@/common/utils/extractCategoryPath';
 import { db } from '@/firebase';
 import { EnumFirestoreCollections } from '@/types/enums';
-import { IGetProductsParams, IOneProduct } from '@/types/products.types';
+import {
+  IGetProductsParams,
+  IProduct,
+  IProductWithDocRef,
+} from '@/types/products.types';
 import {
   collection,
   doc,
@@ -14,12 +22,12 @@ import {
 
 export const getOneProductByCode = async (
   code: number
-): Promise<IOneProduct | null> => {
+): Promise<IProduct | null> => {
   try {
     const docRef = doc(db, EnumFirestoreCollections.PRODUCTS, `${code}`);
     const docSnap = await getDoc(docRef);
 
-    return docSnap.exists() ? (docSnap.data() as IOneProduct) : null;
+    return docSnap.exists() ? (docSnap.data() as IProduct) : null;
   } catch (error) {
     console.error('Error fetching product:', error);
     throw error;
@@ -29,8 +37,10 @@ export const getOneProductByCode = async (
 export const getProducts = async (
   params: IGetProductsParams
 ): Promise<{
-  products: IOneProduct[];
+  productsWithSnapshot: IProductWithDocRef[];
   lastVisible: DocumentSnapshot | null;
+  products: IProduct[];
+  productsImgSplash: IProduct[];
 }> => {
   try {
     const { category, subcategory, limitNumber } = params;
@@ -42,7 +52,7 @@ export const getProducts = async (
       doc(db, EnumFirestoreCollections.SUBCATEGORIES, subcategory);
     const catReg =
       category && doc(db, EnumFirestoreCollections.CATEGORIES, category);
-      
+
     if (subcategory) {
       productQuery = query(
         productQuery,
@@ -54,21 +64,30 @@ export const getProducts = async (
         where(EnumFirestoreCollections.CATEGORY, '==', catReg)
       );
     }
-    console.log('getProducts', category, subcategory, limitNumber);
+
     const querySnapshot = await getDocs(productQuery);
-    console.log('getProducts - querySnapshot', querySnapshot);
-    const products: IOneProduct[] = querySnapshot.docs.map(
-      (doc) => doc.data() as IOneProduct
+    const productsWithSnapshot: IProductWithDocRef[] = querySnapshot.docs.map(
+      (doc) => doc.data() as IProductWithDocRef
     );
-    console.log('getProducts - products', products);
     const lastVisible =
       querySnapshot.docs.length > 0
         ? querySnapshot.docs[querySnapshot.docs.length - 1]
         : null;
 
-    return { products, lastVisible };
+    const products: IProduct[] =
+      extractCategoryAndSubcategoryPaths(productsWithSnapshot);
+
+    // const firstProductImageUrl = products[0].image?.[0] || '';
+    // const isFirstImageValid = await checkImageLoadServer(firstProductImageUrl);
+
+    const productsImgSplash: IProduct[] =
+      extractCategoryAndSubcategoryPathsAndPlaceholder(products);
+
+    // productsImgSplash = isFirstImageValid ? products : productsImgSplash;
+
+    return { products, productsWithSnapshot, lastVisible, productsImgSplash };
   } catch (error) {
-    console.error('Error fetching products:', error); // Логируем ошибку
-    throw new Error('Failed to fetch products'); // Выбрасываем ошибку
+    console.error('Error fetching products:', error);
+    throw new Error('Failed to fetch products');
   }
 };

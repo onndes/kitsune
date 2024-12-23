@@ -4,23 +4,24 @@ import React from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Button, styled, Typography } from '@mui/material';
-import { useRouter } from 'next/navigation'; // Adjust import path as per your project
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { addProduct } from '@/redux/cartSlice';
 import { RootState } from '@/redux/store';
-import { IOneProduct } from '@/types/products.types';
-import { IProductWithPaths } from '@/common/utils/extractCategoryPath';
+import { IProduct } from '@/types/products.types';
 
 interface BuyButtonProps {
-  product: IProductWithPaths;
+  product: IProduct;
   width?: string;
   sxButton?: Record<string, unknown>;
   content?: boolean;
 }
 
 // Styled Components
-const StyledButton = styled(Button)<{ $width: string }>`
+const StyledButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== '$width', // Prevent forwarding $width to DOM
+})<{ $width: string }>`
   font-weight: 600;
   font-size: 13px;
   color: ${(props) => props.theme.palette.primary.main};
@@ -42,9 +43,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({
   const router = useRouter();
   const cartProducts = useSelector((state: RootState) => state.cart.products);
 
-  const check = cartProducts.some(
-    (el: IProductWithPaths) => el?.code === product?.code
-  );
+  const check = cartProducts.some((el: IProduct) => el?.code === product?.code);
 
   const handleAddProduct = () => {
     if (check) {

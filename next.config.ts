@@ -6,6 +6,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== 'development', // Remove console.log in production
   },
+  images: {
+    domains: ['dummyimage.com', 'firebasestorage.googleapis.com'], // Разрешаем загрузку с dummyimage.com
+  },
 };
 
 export default withPWA({

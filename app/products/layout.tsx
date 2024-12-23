@@ -13,8 +13,16 @@ export default async function ProductsLayout({
   const extractedCategoryPath = extractCategoryPath(subcategories);
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 2, height: '100%' }} disableGutters>
-      <Grid container sx={{ height: '100%' }} gap={2}>
+    <Container sx={{ pt: 2, height: '100%' }} disableGutters>
+      <Grid
+        container
+        sx={{ height: '100%' }}
+        gap={2}
+        size={{
+          xs: 0,
+          md: 4,
+        }}
+      >
         <MyMenu
           homePage={false}
           categories={categories}
@@ -22,6 +30,10 @@ export default async function ProductsLayout({
           drawer={false}
         />
         <Grid
+          size={{
+            xs: 12,
+            md: 8,
+          }}
           sx={{
             display: 'flex',
             flexDirection: 'column',

@@ -11,7 +11,7 @@ export interface IFeatureProduct {
 
 export type IImageProduct = string[];
 
-export interface IOneProduct {
+export interface IProductWithDocRef {
   brand: string;
   category: DocumentReference;
   code: number;
@@ -25,6 +25,22 @@ export interface IOneProduct {
   name: string;
   price: number;
   subcategory: DocumentReference;
+}
+
+export interface IProduct {
+  brand: string;
+  category: string;
+  code: number;
+  count: number;
+  dateCreated: string;
+  descriptions: IDescriptionProduct[];
+  title: string;
+  discount: number;
+  features: IFeatureProduct[];
+  image: IImageProduct;
+  name: string;
+  price: number;
+  subcategory: string;
 }
 
 export interface IGetProductsParams {

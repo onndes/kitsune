@@ -11,7 +11,6 @@ import {
   AppBar,
 } from '@mui/material';
 
-// Общий стиль для логотипа
 export const StyledLogoContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -31,7 +30,6 @@ export const StyledTypography = styled(Typography)<TypographyProps>(
   })
 );
 
-// Стили для SearchInput
 export const Search = styled('div')(({ theme }) => ({
   display: 'flex',
   overflow: 'hidden',
@@ -66,7 +64,6 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   fontSize: '0.9rem',
 }));
 
-// Стили для CartAppBar
 export const StyledIconButton = styled(IconButton)(({ theme }) => ({
   backgroundColor: '#F3F5F9',
   '&:hover': {
@@ -93,7 +90,6 @@ export const StyledMenu = styled(Menu)(({ theme }) => ({
   },
 }));
 
-// Стили для AppBar
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   boxShadow: theme.shadows[2],

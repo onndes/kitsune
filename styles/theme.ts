@@ -69,5 +69,14 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
         fontWeight: 600,
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 385,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
   });
 };

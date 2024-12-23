@@ -1,24 +1,20 @@
+'use client';
+
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import CardActions from '@mui/material/CardActions';
 import { Box, Divider } from '@mui/material';
-import { IOneProduct } from '@/types/products.types';
 import BuyButton from './BuyButton';
 import {
   StyledCard,
-  ImgBlock,
   StyledCardContent,
   NameTypography,
   StyledBox,
   PriceTypography,
 } from './styles';
-import { IProductWithPaths } from '@/common/utils/extractCategoryPath';
+import { IProduct } from '@/types/products.types';
+import ImgBlock from './ImgBlock';
 
-export default function ItemProduct({
-  product,
-}: {
-  product: IProductWithPaths;
-}) {
+export default function ItemProduct({ product }: { product: IProduct }) {
   const router = useRouter();
 
   const handleClickProduct = () => {
@@ -32,10 +28,14 @@ export default function ItemProduct({
 
   return (
     <StyledCard elevation={0}>
-      <Box sx={{ flex: 1 }}>
-        <ImgBlock src={product.image[0]} onClick={handleClickProduct} />
+      <Box sx={{ flex: 0 }}>
+        <ImgBlock
+          src={product.image[0]}
+          handleClickProduct={handleClickProduct}
+        />
+        <Divider />
       </Box>
-      <Divider />
+
       <StyledCardContent>
         <NameTypography
           gutterBottom
@@ -46,12 +46,16 @@ export default function ItemProduct({
         </NameTypography>
         <StyledBox>
           <PriceTypography gutterBottom>{product.price} ₴</PriceTypography>
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 1,
+            }}
+          >
             <BuyButton product={product} />
           </Box>
         </StyledBox>
       </StyledCardContent>
-      <CardActions sx={{ display: 'flex', gap: 1 }} disableSpacing />
     </StyledCard>
   );
 }
