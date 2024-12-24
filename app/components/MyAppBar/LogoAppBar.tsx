@@ -1,9 +1,9 @@
-import logo from '@/assets/img/logo.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { StyledLogoContainer, StyledTypography } from './styles';
 import MyDrawer from '../MyDrawer/MyDrawer';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import logo from '@/app/icons/logo.svg';
 
 interface Props {
   categories: ICategory[];
