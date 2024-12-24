@@ -7,7 +7,6 @@ export const tokens = (mode: 'light' | 'dark') => ({
   ...(mode === 'dark' ? darkTokens : lightTokens),
 });
 
-// Функция для создания темы в зависимости от режима
 export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
   const colors = tokens(mode); // Получаем токены для текущего режима
 
@@ -76,7 +75,22 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
         md: 900,
         lg: 1200,
         xl: 1536,
+        mobile: 0,
+        tablet: 640,
+        laptop: 1024,
+        desktop: 1280,
       },
+    },
+    spacing: 8,
+    shape: {
+      borderRadius: 8, // Добавляем параметр shape
     },
   });
 };
+
+// type CustomTheme = typeof themeSettings;
+
+// declare module '@mui/material/styles' {
+//   interface Theme extends CustomTheme {}
+//   interface ThemeOptions extends Partial<CustomTheme> {}
+// }

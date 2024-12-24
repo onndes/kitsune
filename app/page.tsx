@@ -1,10 +1,11 @@
 import ProductsLayout from './products/layout';
-import Products from './products/Products';
+
+import WrapperProducts from './products/WrapperProducts';
 
 export default function HomePage() {
   return (
     <ProductsLayout>
-      <Products />
+      <WrapperProducts />
     </ProductsLayout>
   );
 }

@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled, Theme } from '@mui/material/styles';
 import {
   Box,
   Typography,
@@ -11,14 +11,16 @@ import {
   AppBar,
 } from '@mui/material';
 
-export const StyledLogoContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.spacing(1),
-}));
+export const StyledLogoContainer = styled(Box)(
+  ({ theme }: { theme: Theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1),
+  })
+);
 
 export const StyledTypography = styled(Typography)<TypographyProps>(
-  ({ theme }) => ({
+  ({ theme }: { theme: Theme }) => ({
     flexGrow: 1,
     cursor: 'pointer',
     display: 'flex',
@@ -30,7 +32,7 @@ export const StyledTypography = styled(Typography)<TypographyProps>(
   })
 );
 
-export const Search = styled('div')(({ theme }) => ({
+export const Search = styled('div')(({ theme }: { theme: Theme }) => ({
   display: 'flex',
   overflow: 'hidden',
   borderRadius: '35px',
@@ -41,21 +43,25 @@ export const Search = styled('div')(({ theme }) => ({
   width: '500px',
 }));
 
-export const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+export const SearchIconWrapper = styled('div')(
+  ({ theme }: { theme: Theme }) => ({
+    padding: theme.spacing(0, 2),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  })
+);
 
-export const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1.5, 3, 1.5, 0),
-  },
-}));
+export const StyledInputBase = styled(InputBase)(
+  ({ theme }: { theme: Theme }) => ({
+    width: '100%',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+    },
+  })
+);
 
-export const StyledButton = styled(Button)(({ theme }) => ({
+export const StyledButton = styled(Button)(({ theme }: { theme: Theme }) => ({
   color: 'white',
   padding: theme.spacing(0, 4),
   fontWeight: 600,
@@ -64,14 +70,16 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   fontSize: '0.9rem',
 }));
 
-export const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: '#F3F5F9',
-  '&:hover': {
-    backgroundColor: theme.palette.grey[200],
-  },
-}));
+export const StyledIconButton = styled(IconButton)(
+  ({ theme }: { theme: Theme }) => ({
+    backgroundColor: '#F3F5F9',
+    '&:hover': {
+      backgroundColor: theme.palette.grey[200],
+    },
+  })
+);
 
-export const StyledBadge = styled(Badge)(({ theme }) => ({
+export const StyledBadge = styled(Badge)(({ theme }: { theme: Theme }) => ({
   '& .MuiBadge-badge': {
     fontSize: '13px',
     color: 'white',
@@ -81,7 +89,7 @@ export const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export const StyledMenu = styled(Menu)(({ theme }) => ({
+export const StyledMenu = styled(Menu)(({ theme }: { theme: Theme }) => ({
   '& .MuiPaper-root': {
     borderRadius: theme.shape.borderRadius,
     boxShadow: theme.shadows[3],
@@ -90,15 +98,18 @@ export const StyledMenu = styled(Menu)(({ theme }) => ({
   },
 }));
 
-export const StyledAppBar = styled(AppBar)(({ theme }) => ({
+export const StyledAppBar = styled(AppBar)(({ theme }: { theme: Theme }) => ({
   backgroundColor: theme.palette.background.default,
   boxShadow: theme.shadows[2],
   position: 'fixed',
 }));
 
-export const StyledToolbar = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: theme.spacing(1, 0),
-}));
+export const StyledToolbar = styled(Box)(({ theme }: { theme: Theme }) => {
+  return {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: theme.spacing(1, 0),
+    gap: theme.spacing(2),
+  };
+});

@@ -27,12 +27,17 @@ declare module '@mui/material/styles' {
     heavyPrimary?: string;
     lightGrey?: string;
   }
+  interface BreakpointOverrides {
+    mobile: true;
+    tablet: true;
+    laptop: true;
+    desktop: true;
+  }
 }
 
-// Убедитесь, что это расширение работает
 declare module '@mui/material' {
   interface Palette {
-    background: TypeBackground; // Связываем с вашим расширенным типом
+    background: TypeBackground;
   }
   interface PaletteOptions {
     background?: Partial<TypeBackground>;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FC, useMemo } from 'react';
+import { useState, FC, useMemo, useEffect } from 'react';
 import List from '@mui/material/List';
 import {
   StyledContainerMenu,
@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import ListCategories from './ListCategories';
 import { useDispatch } from 'react-redux';
 import { useDevice } from '@/app/contexts/DeviceContextProps';
+import useResponsive from '@/hooks/useResponsive';
 
 interface MyMenuProps {
   drawerClose?: () => void;
@@ -37,11 +38,18 @@ const MyMenu: FC<MyMenuProps> = ({
 }) => {
   // const { isMobile } = useWindowWidth();
   const { isMobile } = useDevice();
+  const { isMd } = useResponsive();
   const [dense] = useState(false);
   const dispatch = useDispatch();
   const openedSubmenu = useSelector(
     (state: RootState) => state.app.openedSubmenu
   );
+
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   const listCategories = useMemo(() => {
     const getFilteredSubCat = (path: string) =>
@@ -64,8 +72,13 @@ const MyMenu: FC<MyMenuProps> = ({
       dispatch(setOpenedSubmenu(cat.ukName));
     }
   };
+  // console.log(isMd);
+  if ((isMobile || isMd) && !drawer) return null;
 
-  if (isMobile && !drawer) return null;
+  if (!hydrated) {
+    // Заглушка для предотвращения "прыжков"
+    return null;
+  }
 
   return (
     <Grid width="270px">

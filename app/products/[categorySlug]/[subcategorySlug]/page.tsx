@@ -1,4 +1,4 @@
-import Products from '../../Products';
+import WrapperProducts from '../../WrapperProducts';
 
 export default async function SubcategoryPage({
   params,
@@ -8,7 +8,7 @@ export default async function SubcategoryPage({
   const { categorySlug, subcategorySlug } = await params;
 
   return (
-    <Products
+    <WrapperProducts
       category={decodeURIComponent(categorySlug)}
       subcategory={decodeURIComponent(subcategorySlug)}
     />

@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import MyMenu from '../Menu';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
 import { useDevice } from '@/app/contexts/DeviceContextProps';
+import useResponsive from '@/hooks/useResponsive';
 
 interface MyDrawerProps {
   categories: ICategory[];
@@ -43,12 +44,13 @@ export default function MyDrawer({
 }: MyDrawerProps) {
   const [state, setState] = useState(false);
   const { isMobile } = useDevice();
+  const { isMd } = useResponsive();
 
   const toggleDrawer = (open: boolean) => {
     setState(open);
   };
 
-  if (!isMobile) return null;
+  if (!isMobile && !isMd) return null;
 
   return (
     <div>

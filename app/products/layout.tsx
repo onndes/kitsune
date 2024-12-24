@@ -17,11 +17,12 @@ export default async function ProductsLayout({
       <Grid
         container
         sx={{ height: '100%' }}
-        gap={2}
-        size={{
-          xs: 0,
-          md: 4,
-        }}
+        gap={1}
+        // size={{
+        //   xs: 0,
+        //   md: 4,
+        // }}
+        size={4}
       >
         <MyMenu
           homePage={false}
@@ -30,10 +31,11 @@ export default async function ProductsLayout({
           drawer={false}
         />
         <Grid
-          size={{
-            xs: 12,
-            md: 8,
-          }}
+          // size={{
+          //   xs: 12,
+          //   md: 8,
+          // }}
+          size="grow"
           sx={{
             display: 'flex',
             flexDirection: 'column',

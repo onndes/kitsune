@@ -1,47 +1,49 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Container, Box } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid2';
 import ItemProduct from './components/ItemProducts';
-import { getProducts } from '@/lib/firebase/getProducts';
+import { IProduct } from '@/types/products.types';
 
 interface Props {
   handleNextProduct?: () => void;
-  category?: string;
-  subcategory?: string;
+  products: IProduct[];
 }
 
-export default async function Products({
-  handleNextProduct,
-  category,
-  subcategory,
-}: Props) {
-  const { productsImgSplash } = await getProducts({
-    limitNumber: 10,
-    category,
-    subcategory,
-  });
+export default function Products({ products, handleNextProduct }: Props) {
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    // Заглушка для предотвращения "прыжков"
+    return null;
+  }
 
   return (
     <Container maxWidth={false} sx={{ pt: 0, pb: 4 }}>
       <Grid container spacing={2} pb={4}>
-        {productsImgSplash?.length === 0 && (
-          <Grid size={{ xs: 12 }}>Товарів немає</Grid>
-        )}
+        {products?.length === 0 && <Grid size={{ xs: 12 }}>Товарів немає</Grid>}
         {/* {isLoading && (
           <Grid size={{ xs: 12 }} minHeight="300px">
             <LinearLoader position="relative" />
-          </Grid>
+          </Grid>a
         )} */}
-        {productsImgSplash?.length > 0 &&
-          productsImgSplash.map((product) => {
+        {products?.length > 0 &&
+          products.map((product) => {
             return (
               <Grid
-                size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                size={{ xs: 12, sm: 6, tablet: 4, md: 4, lg: 3 }}
+                // size={8}
                 key={product.code}
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  // flex: 1,
+                  flex: '1 1 auto',
                 }}
               >
                 <ItemProduct product={product} />
@@ -49,7 +51,7 @@ export default async function Products({
             );
           })}
       </Grid>
-      {productsImgSplash?.length > 0 && (
+      {products?.length > 0 && (
         <Box display="flex" justifyContent="center">
           <LoadingButton
             sx={{ height: '100%', fontWeight: 600 }}
