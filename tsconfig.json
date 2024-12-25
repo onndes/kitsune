@@ -5,7 +5,7 @@
     "paths": { "@/*": ["./*"] },
     "typeRoots": ["node_modules/@types", "types"],
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "webworker"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

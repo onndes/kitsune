@@ -1,14 +1,15 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { Roboto } from 'next/font/google';
+import Head from 'next/head';
 import { headers } from 'next/headers';
 import { ReactNode } from 'react';
 import '../styles/globals.css';
-import { ColorModeProvider } from './contexts/ColorModeContext';
-import { StoreProvider } from './StoreProvider';
 import Indent from './components/Indent';
 import MyAppBarWraper from './components/MyAppBar';
+import { ColorModeProvider } from './contexts/ColorModeContext';
 import { DeviceProvider } from './contexts/DeviceContextProps';
-import Head from 'next/head';
+import RegisterServiceWorker from './RegisterServiceWorker';
+import { StoreProvider } from './StoreProvider';
 
 export const metadata = {
   title: 'KITSUNE',
@@ -48,25 +49,26 @@ export default async function Layout({ children }: { children: ReactNode }) {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="./apple-touch-icon.png"
+            href="icon/icon-180x180.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="192x192"
-            href="./apple-touch-icon.png"
+            href="icon/icon-192x192.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="512x512"
-            href="./apple-touch-icon.png"
+            href="/icon/icon-512x512.png"
           />
           {/* Другие метатеги */}
         </Head>
         <body className={roboto.variable}>
           <StoreProvider>
             <AppRouterCacheProvider>
+              <RegisterServiceWorker />
               <DeviceProvider isMobile={isMobile}>
                 <section>
                   {/* <Nav /> */}
