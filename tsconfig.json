@@ -34,7 +34,7 @@
     ".next/types/**/*.ts",
     "./styles/styles.d.ts",
     "service-worker.ts"
-, "public/service-worker.js"  ],
+, "archive/aservice-worker.js"  ],
   "exclude": ["node_modules"],
   "rules": {}
 }

@@ -75,10 +75,14 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
         md: 900,
         lg: 1200,
         xl: 1536,
-        mobile: 0,
-        tablet: 640,
-        laptop: 1024,
-        desktop: 1280,
+
+        base: 0, // Самый маленький экран (начальная точка)
+        mobileSmall: 320, // Маленькие мобильные устройства
+        mobileLarge: 480, // Большие смартфоны
+        tabletPortrait: 768, // Планшеты в портретной ориентации
+        tabletLandscape: 1024, // Планшеты в ландшафтной ориентации
+        desktop: 1280, // Настольные мониторы
+        widescreen: 1920, // Ультраширокие мониторы
       },
     },
     spacing: 8,

@@ -8,7 +8,6 @@ import Indent from './components/Indent';
 import MyAppBarWraper from './components/MyAppBar';
 import { ColorModeProvider } from './contexts/ColorModeContext';
 import { DeviceProvider } from './contexts/DeviceContextProps';
-import RegisterServiceWorker from './RegisterServiceWorker';
 import { StoreProvider } from './StoreProvider';
 
 export const metadata = {
@@ -46,7 +45,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
             name="theme-color"
             content={initialTheme === 'light' ? '#ffffff' : '#000000'}
           />
-          <link rel="manifest" href="./manifest.js" />
+          <link rel="manifest" href="./manifest.ts" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -65,13 +64,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
             href="/icons/icon-512x512.png"
           />
           <link rel="preload" href="/icons/icon-192x192.png" as="image" />
-          <link rel="preload" href="/icons/icon-512x512.png" as="image" />
+          <link rel="preload" href="/icons/icon-256x256.png" as="image" />
           {/* Другие метатеги */}
         </Head>
         <body className={roboto.variable}>
           <StoreProvider>
             <AppRouterCacheProvider>
-              <RegisterServiceWorker />
               <DeviceProvider isMobile={isMobile}>
                 <section>
                   {/* <Nav /> */}

@@ -6,13 +6,18 @@ import {
   StyledInputBase,
   StyledButton,
 } from './styles';
+// import { useDevice } from '@/app/contexts/DeviceContextProps';
+import useResponsive from '@/hooks/useResponsive';
 import { useDevice } from '@/app/contexts/DeviceContextProps';
 
 const SearchInput = () => {
   const { isMobile } = useDevice();
+  const { isMobileLarge } = useResponsive();
 
-  return !isMobile ? (
-    <Search>
+  const shouldShowMobile = isMobileLarge || isMobile;
+
+  return (
+    <Search sx={{ display: !shouldShowMobile ? 'felx' : 'none' }}>
       <SearchIconWrapper>
         <SearchIcon color="action" />
       </SearchIconWrapper>
@@ -24,7 +29,7 @@ const SearchInput = () => {
         Search
       </StyledButton>
     </Search>
-  ) : null;
+  );
 };
 
 export default SearchInput;

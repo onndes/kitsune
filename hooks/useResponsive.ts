@@ -5,16 +5,26 @@ import { useMediaQuery, useTheme } from '@mui/material';
 function useResponsive() {
   const theme = useTheme();
 
-  const isXs = useMediaQuery(theme.breakpoints.down('xs'));
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMd = useMediaQuery(theme.breakpoints.down('md'));
-  const isLg = useMediaQuery(theme.breakpoints.up('lg'));
+  const isBase = useMediaQuery(theme.breakpoints.down('base'));
+  const isMobileSmall = useMediaQuery(theme.breakpoints.down('mobileSmall'));
+  const isMobileLarge = useMediaQuery(theme.breakpoints.down('mobileLarge'));
+  const isTabletPortrait = useMediaQuery(
+    theme.breakpoints.down('tabletPortrait')
+  );
+  const isTabletLandscape = useMediaQuery(
+    theme.breakpoints.down('tabletLandscape')
+  );
+  const isDesktop = useMediaQuery(theme.breakpoints.down('desktop'));
+  const isWidescreen = useMediaQuery(theme.breakpoints.up('widescreen'));
 
   return {
-    isXs,
-    isSm,
-    isMd,
-    isLg,
+    isBase,
+    isMobileSmall,
+    isMobileLarge,
+    isTabletPortrait,
+    isTabletLandscape,
+    isDesktop,
+    isWidescreen,
   };
 }
 

@@ -44,16 +44,17 @@ export default function MyDrawer({
 }: MyDrawerProps) {
   const [state, setState] = useState(false);
   const { isMobile } = useDevice();
-  const { isMd } = useResponsive();
+  const { isTabletPortrait } = useResponsive();
 
   const toggleDrawer = (open: boolean) => {
     setState(open);
   };
 
-  if (!isMobile && !isMd) return null;
+  const shouldShowMobile = isTabletPortrait && !isMobile;
+  if (!shouldShowMobile) return null;
 
   return (
-    <div>
+    <Box>
       <IconButton
         size="large"
         edge="start"
@@ -94,6 +95,6 @@ export default function MyDrawer({
           />
         </StyledDrawerContainer>
       </SwipeableDrawer>
-    </div>
+    </Box>
   );
 }

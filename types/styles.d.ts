@@ -28,10 +28,13 @@ declare module '@mui/material/styles' {
     lightGrey?: string;
   }
   interface BreakpointOverrides {
-    mobile: true;
-    tablet: true;
-    laptop: true;
+    base: true;
+    mobileSmall: true;
+    mobileLarge: true;
+    tabletPortrait: true;
+    tabletLandscape: true;
     desktop: true;
+    widescreen: true;
   }
 }
 
