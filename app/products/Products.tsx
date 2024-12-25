@@ -19,6 +19,9 @@ export default function Products({ products, handleNextProduct }: Props) {
     setHydrated(true);
   }, []);
 
+  //!Добавить скелитрн лоадер
+  //!Добавить скелитрн лоадер
+  //!Добавить скелитрн лоадер
   if (!hydrated) {
     // Заглушка для предотвращения "прыжков"
     return null;

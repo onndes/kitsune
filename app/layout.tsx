@@ -25,6 +25,7 @@ const roboto = Roboto({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-roboto',
+  preload: true,
 });
 
 export default async function Layout({ children }: { children: ReactNode }) {
@@ -45,24 +46,26 @@ export default async function Layout({ children }: { children: ReactNode }) {
             name="theme-color"
             content={initialTheme === 'light' ? '#ffffff' : '#000000'}
           />
-          <link rel="manifest" href="./manifest.ts" />
+          <link rel="manifest" href="./manifest.js" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="icon/icon-180x180.png"
+            href="icons/icon-180x180.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="192x192"
-            href="icon/icon-192x192.png"
+            href="icons/icon-192x192.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="512x512"
-            href="/icon/icon-512x512.png"
+            href="/icons/icon-512x512.png"
           />
+          <link rel="preload" href="/icons/icon-192x192.png" as="image" />
+          <link rel="preload" href="/icons/icon-512x512.png" as="image" />
           {/* Другие метатеги */}
         </Head>
         <body className={roboto.variable}>

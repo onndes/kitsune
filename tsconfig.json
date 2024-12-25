@@ -32,8 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "./styles/styles.d.ts"
-  ],
+    "./styles/styles.d.ts",
+    "service-worker.ts"
+, "public/service-worker.js"  ],
   "exclude": ["node_modules"],
   "rules": {}
 }

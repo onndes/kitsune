@@ -39,6 +39,7 @@
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19",
     "@types/react-redux": "^7.1.34",
+    "@types/service_worker_api": "^0.0.9",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "@typescript-eslint/parser": "^8.18.1",
     "eslint": "^9.17.0",

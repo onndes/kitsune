@@ -1,13 +1,32 @@
 import withPWA from 'next-pwa';
+import { RemotePattern } from 'next/dist/shared/lib/image-config';
 
 const nextConfig = {
   reactStrictMode: true, // Enable React strict mode for improved error handling
   // swcMinify: true, // Enable SWC minification for improved performance
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        'next-intl/config': './path/to/i18n.ts',
+      },
+    },
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV !== 'development', // Remove console.log in production
   },
   images: {
-    domains: ['dummyimage.com', 'firebasestorage.googleapis.com'], // Разрешаем загрузку с dummyimage.com
+    remotePatterns: [
+      {
+        protocol: 'https', // Используйте https, так как это стандарт для этих доменов
+        hostname: 'dummyimage.com',
+        pathname: '/**', // Разрешает загрузку изображений с любых путей на этом домене
+      },
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        pathname: '/**', // Разрешает загрузку изображений с любых путей на этом домене
+      },
+    ] as RemotePattern[], // Разрешаем загрузку с dummyimage.com
   },
 };
 
@@ -17,18 +36,3 @@ export default withPWA({
   register: true, // register the PWA service worker
   skipWaiting: true, // skip waiting for service worker activation
 })(nextConfig);
-
-// Old config
-// import withPWA from 'next-pwa'
-
-// // Основная конфигурация Next.js
-// const nextConfig = {
-//   reactStrictMode: true, // Включение React Strict Mode
-//   // Добавьте другие настройки Next.js здесь, если необходимо
-
-//   // Настройки для PWA
-//   dest: 'public', // Папка для сохранения файлов PWA (сервис-воркер и манифест)
-//   disable: process.env.NODE_ENV === 'development', // Отключаем PWA в режиме разработки
-// }
-
-// export default withPWA(nextConfig)

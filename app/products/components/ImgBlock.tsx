@@ -58,6 +58,7 @@ const ImgBlock: React.FC<ImgBlockProps> = ({
         style={{
           objectFit: 'cover',
         }}
+        loading="lazy"
       />
     </Box>
   );
