@@ -7,6 +7,7 @@ interface ImgBlockProps {
   handleClickProduct: () => void;
   boxProps?: BoxProps;
   lazy?: boolean;
+  index?: number;
 }
 
 const ImgBlock: React.FC<ImgBlockProps> = ({

@@ -38,7 +38,7 @@ const MyMenu: FC<MyMenuProps> = ({
 }) => {
   // const { isMobile } = useWindowWidth();
   const { isMobile } = useDevice();
-  const { isMd } = useResponsive();
+  const { isTabletPortrait } = useResponsive();
   const [dense] = useState(false);
   const dispatch = useDispatch();
   const openedSubmenu = useSelector(
@@ -73,7 +73,7 @@ const MyMenu: FC<MyMenuProps> = ({
     }
   };
   // console.log(isMd);
-  if ((isMobile || isMd) && !drawer) return null;
+  if ((isMobile || isTabletPortrait) && !drawer) return null;
 
   if (!hydrated) {
     // Заглушка для предотвращения "прыжков"
@@ -81,7 +81,16 @@ const MyMenu: FC<MyMenuProps> = ({
   }
 
   return (
-    <Grid width="270px">
+    <Grid
+      width="270px"
+      sx={{
+        position: 'sticky',
+        top: 67,
+        height: '100%',
+        overflowY: 'auto',
+        alignSelf: 'start',
+      }}
+    >
       <StyledPaperMenu elevation={0}>
         <StyledContainerMenu
           maxWidth={false}
@@ -95,7 +104,12 @@ const MyMenu: FC<MyMenuProps> = ({
           <List
             dense={dense}
             disablePadding
-            sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 0.5,
+              paddingBottom: '35px',
+            }}
           >
             {listCategories.length > 0 && (
               <ListCategories

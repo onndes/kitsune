@@ -16,12 +16,8 @@ export default async function ProductsLayout({
     <Container sx={{ pt: 2, height: '100%' }} disableGutters>
       <Grid
         container
-        sx={{ height: '100%' }}
+        sx={{ height: '100%', minHeight: '100vh' }}
         gap={1}
-        // size={{
-        //   xs: 0,
-        //   md: 4,
-        // }}
         size={4}
       >
         <MyMenu
@@ -31,10 +27,6 @@ export default async function ProductsLayout({
           drawer={false}
         />
         <Grid
-          // size={{
-          //   xs: 12,
-          //   md: 8,
-          // }}
           size="grow"
           sx={{
             display: 'flex',

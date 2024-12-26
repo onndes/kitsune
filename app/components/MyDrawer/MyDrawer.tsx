@@ -50,9 +50,9 @@ export default function MyDrawer({
     setState(open);
   };
 
-  const shouldShowMobile = isTabletPortrait && !isMobile;
+  const shouldShowMobile = isTabletPortrait || isMobile;
   if (!shouldShowMobile) return null;
-
+  console.log(isTabletPortrait, isMobile);
   return (
     <Box>
       <IconButton

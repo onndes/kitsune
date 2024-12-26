@@ -42,7 +42,7 @@ export const StyledWrapperTitle = styled(Box)(({ theme }) => ({
 // Стиль для заголовка
 export const StyledTitleTypography = styled(Typography)(() => ({
   color: '#4b566b',
-  fontSize: '17px',
+  fontSize: '14px',
   fontWeight: 600,
   letterSpacing: '1px',
 }));
@@ -53,7 +53,7 @@ export const ItemButton = styled(ListItemButton, {
   const { colors } = useMyTheme();
 
   return {
-    padding: theme.spacing(1, 1, 1, 1),
+    padding: theme.spacing(0.4, 1),
     cursor: 'pointer',
     backgroundColor: '#F3F5F9',
     div: {
@@ -76,7 +76,7 @@ export const ItemText = styled(ListItemText)(() => ({
   fontWeight: 600,
   color: '#5e6d87',
   '& .MuiListItemText-primary': {
-    fontSize: '0.9rem', // Обеспечиваем размер для основного текста
+    fontSize: '0.87rem', // Обеспечиваем размер для основного текста
   },
 }));
 
@@ -85,6 +85,8 @@ export const StyledListItemButton = styled(ListItemButton, {
 })<{ isСurrent: boolean }>(({ theme, isСurrent }) => ({
   paddingLeft: theme.spacing(4),
   backgroundColor: isСurrent ? theme.palette.action.selected : 'inherit',
+  paddingTop: theme.spacing(0.1),
+  paddingBottom: theme.spacing(0.1),
 }));
 
 export const StyledTypography = styled(Typography, {

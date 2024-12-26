@@ -9,6 +9,7 @@ import MyAppBarWraper from './components/MyAppBar';
 import { ColorModeProvider } from './contexts/ColorModeContext';
 import { DeviceProvider } from './contexts/DeviceContextProps';
 import { StoreProvider } from './StoreProvider';
+import Footer from './components/Footer/Footer';
 
 export const metadata = {
   title: 'KITSUNE',
@@ -77,7 +78,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
                   <Indent />
                   <main>{children}</main>
                   <Indent bottom />
-                  {/* <Footer /> */}
+                  <Footer />
                 </section>
               </DeviceProvider>
             </AppRouterCacheProvider>

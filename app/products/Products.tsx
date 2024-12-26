@@ -37,10 +37,10 @@ export default function Products({ products, handleNextProduct }: Props) {
           </Grid>a
         )} */}
         {products?.length > 0 &&
-          products.map((product) => {
+          products.map((product, index) => {
             return (
               <Grid
-                size={{ xs: 12, sm: 6, tablet: 4, md: 4, lg: 3 }}
+                size={{ xs: 12, sm: 6, tabletLandscape: 4, md: 4, lg: 3 }}
                 // size={8}
                 key={product.code}
                 sx={{
@@ -49,7 +49,7 @@ export default function Products({ products, handleNextProduct }: Props) {
                   flex: '1 1 auto',
                 }}
               >
-                <ItemProduct product={product} />
+                <ItemProduct product={product} index={index} />
               </Grid>
             );
           })}

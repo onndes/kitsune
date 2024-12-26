@@ -14,7 +14,13 @@ import {
 import { IProduct } from '@/types/products.types';
 import ImgBlock from './ImgBlock';
 
-export default function ItemProduct({ product }: { product: IProduct }) {
+export default function ItemProduct({
+  product,
+  index,
+}: {
+  product: IProduct;
+  index: number;
+}) {
   const router = useRouter();
 
   const handleClickProduct = () => {
@@ -32,6 +38,7 @@ export default function ItemProduct({ product }: { product: IProduct }) {
         <ImgBlock
           src={product.image[0]}
           handleClickProduct={handleClickProduct}
+          index={index}
         />
         <Divider />
       </Box>
