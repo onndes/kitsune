@@ -2,11 +2,13 @@ import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import appReducer from './appSlice';
 import cartReducer from './cartSlice';
+// import categoryMenuReducer from './categoryMenuSlice';
 // import productReducer from './productSlice';
 
 const rootReducer = combineSlices({
   app: appReducer,
   cart: cartReducer,
+  // categoryMenu: categoryMenuReducer,
   // product: productReducer,
 });
 
