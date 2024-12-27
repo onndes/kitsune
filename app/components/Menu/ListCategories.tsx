@@ -26,6 +26,7 @@ const ListCategories: FC<ListCategoriesProps> = ({
   return listCategories
     .sort((a, b) => a.sortIndex - b.sortIndex)
     .map((cat) => {
+      console.log(openedSubmenu, cat.ukName);
       const isOpen = openedSubmenu === cat.ukName;
 
       return (

@@ -20,7 +20,7 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
 }) => {
   const pathname = decodeURIComponent(usePathname());
 
-  const isСurrent =
+  const isActiveSubcategory =
     pathname === `/products/${cat?.nameDoc.trim()}/${sub?.nameDoc.trim()}`;
 
   const handleClick = (e: React.MouseEvent) => {
@@ -36,10 +36,13 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
       passHref
       style={{ textDecoration: 'none' }}
     >
-      <StyledListItemButton onClick={handleClick} isСurrent={isСurrent}>
+      <StyledListItemButton
+        onClick={handleClick}
+        isСurrent={isActiveSubcategory}
+      >
         <ListItemText
           primary={
-            <StyledTypography variant="body2" isСurrent={isСurrent}>
+            <StyledTypography variant="body2" isСurrent={isActiveSubcategory}>
               {sub.ukName}
             </StyledTypography>
           }

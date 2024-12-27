@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { Container, Box } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid2';
@@ -13,19 +13,19 @@ interface Props {
 }
 
 export default function Products({ products, handleNextProduct }: Props) {
-  const [hydrated, setHydrated] = useState(false);
+  // const [hydrated, setHydrated] = useState(false);
 
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  // useEffect(() => {
+  //   setHydrated(true);
+  // }, []);
 
   //!Добавить скелитрн лоадер
   //!Добавить скелитрн лоадер
   //!Добавить скелитрн лоадер
-  if (!hydrated) {
-    // Заглушка для предотвращения "прыжков"
-    return null;
-  }
+  // if (!hydrated) {
+  //   // Заглушка для предотвращения "прыжков"
+  //   return null;
+  // }
 
   return (
     <Container maxWidth={false} sx={{ pt: 0, pb: 4 }}>

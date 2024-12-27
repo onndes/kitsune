@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FC, useMemo, useEffect } from 'react';
+import { useState, FC, useMemo } from 'react';
 import List from '@mui/material/List';
 import {
   StyledContainerMenu,
@@ -36,7 +36,6 @@ const MyMenu: FC<MyMenuProps> = ({
   homePage,
   drawer,
 }) => {
-  // const { isMobile } = useWindowWidth();
   const { isMobile } = useDevice();
   const { isTabletPortrait } = useResponsive();
   const [dense] = useState(false);
@@ -45,17 +44,10 @@ const MyMenu: FC<MyMenuProps> = ({
     (state: RootState) => state.app.openedSubmenu
   );
 
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-
   const listCategories = useMemo(() => {
+    console.log('listCategories RENDER');
     const getFilteredSubCat = (path: string) =>
-      subcategories.filter(
-        (subcat: ISubCategoryWithPath) => path === subcat.category
-      );
+      subcategories.filter((el: ISubCategoryWithPath) => path === el.category);
 
     return categories.map((cat: ICategory) => ({
       ...cat,
@@ -72,13 +64,8 @@ const MyMenu: FC<MyMenuProps> = ({
       dispatch(setOpenedSubmenu(cat.ukName));
     }
   };
-  // console.log(isMd);
-  if ((isMobile || isTabletPortrait) && !drawer) return null;
 
-  if (!hydrated) {
-    // Заглушка для предотвращения "прыжков"
-    return null;
-  }
+  if ((isMobile || isTabletPortrait) && !drawer) return null;
 
   return (
     <Grid
