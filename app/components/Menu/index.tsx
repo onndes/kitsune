@@ -57,7 +57,6 @@ const MyMenu: FC<MyMenuProps> = ({
   }, [categories, subcategories]);
 
   const handleClickItemMenu = (cat: ICategory) => {
-    console.log('handleClickItemMenu');
     if (cat.ukName === openedSubmenu) {
       dispatch(setOpenedSubmenu(''));
     } else {

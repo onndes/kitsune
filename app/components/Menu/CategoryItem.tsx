@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link'; // Импортируем Link из Next.js
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import useMyTheme from '@/hooks/useMyTheme';
@@ -30,23 +30,25 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   ) : (
     <ExpandMore />
   );
-  const pathname = usePathname();
-  const router = useRouter();
-  const isCurrent = pathname.includes(cat.nameDoc?.trim());
+  const isCurrent =
+    typeof window !== 'undefined' &&
+    window.location.pathname.includes(cat.nameDoc?.trim());
 
   return (
-    <ItemButton
-      onClick={() => {
-        handleClickItemMenu(cat);
-        if (!isOpen) {
-          router.push(`/products/${encodeURIComponent(cat.nameDoc.trim())}`);
-        }
-      }}
-      сselected={isCurrent ? colors.primaryPink[500] : null}
+    <Link
+      href={`/products/${encodeURIComponent(cat.nameDoc.trim())}`}
+      passHref
+      legacyBehavior
     >
-      <ItemText primary={cat.ukName} />
-      {!homePage ? iconArrow : null}
-    </ItemButton>
+      <ItemButton
+        onClick={() => handleClickItemMenu(cat)} // Добавляем вызов handleClickItemMenu
+        сselected={isCurrent ? colors.primaryPink[500] : null}
+        // sx={{ textDecoration: 'none' }}
+      >
+        <ItemText primary={cat.ukName} />
+        {!homePage ? iconArrow : null}
+      </ItemButton>
+    </Link>
   );
 };
 

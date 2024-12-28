@@ -23,19 +23,16 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
   const isActiveSubcategory =
     pathname === `/products/${cat?.nameDoc.trim()}/${sub?.nameDoc.trim()}`;
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleClick = () => {
     if (drawerClose) {
       drawerClose();
     }
   };
 
+  const link = `/products/${encodeURIComponent(cat.nameDoc.trim())}/${encodeURIComponent(sub?.nameDoc.trim())}`;
+
   return (
-    <Link
-      href={`/products/${encodeURIComponent(cat.nameDoc.trim())}/${encodeURIComponent(sub?.nameDoc.trim())}`}
-      passHref
-      style={{ textDecoration: 'none' }}
-    >
+    <Link href={link} passHref style={{ textDecoration: 'none' }}>
       <StyledListItemButton
         onClick={handleClick}
         isСurrent={isActiveSubcategory}
