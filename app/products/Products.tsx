@@ -52,11 +52,12 @@ export default function Products({
   const loadMoreProducts = async () => {
     if (!lastDoc || loading) return;
 
+    const scrollYBeforeLoad = window.scrollY;
     setLoading(true);
 
     try {
       const { productsImgSplash, lastVisible } = await getProducts({
-        limitNumber: 3,
+        limitNumber: 10,
         category,
         subcategory,
         lastDoc,
@@ -69,6 +70,7 @@ export default function Products({
         dispatch(setProducts(productsImgSplash));
         dispatch(setLastDoc(lastVisible));
       }
+      window.scrollTo({ top: scrollYBeforeLoad });
     } catch (error) {
       console.error('Ошибка загрузки продуктов:', error);
     } finally {
@@ -109,7 +111,7 @@ export default function Products({
             sx={{ height: '100%', fontWeight: 600 }}
             onClick={loadMoreProducts}
             type="submit"
-            disabled={!!lastDoc}
+            disabled={!lastDoc}
             variant="outlined"
             size="large"
             loading={loading}
