@@ -1,64 +1,44 @@
-// import { createSlice } from '@reduxjs/toolkit';
-// // import { setStatus } from '../../../common/utils/setStatus';
-// // import { addedProducts, getProduct, getProducts } from './productAsync';
+import { IProduct } from '@/types/products.types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// const initialState = {
-//   products: [],
-//   lastVisibleProduct: null,
-//   status: [],
-//   currentProduct: null,
-//   limitGetProduct: 16,
-// };
+interface ProductState {
+  products: IProduct[];
+  lastDoc: string | null;
+  limitGetProduct: number;
+}
 
-// const productSlice = createSlice({
-//   name: 'product',
-//   initialState,
-//   reducers: {
-//     resetState: () => initialState,
-//   },
-//   extraReducers: (builder) => {
-//     // getProduct
-//     builder.addCase(getProduct.pending, (state, action) => {
-//       setStatus(state, action);
-//     });
-//     builder.addCase(getProduct.fulfilled, (state, action) => {
-//       setStatus(state, action);
-//       state.currentProduct = action.payload.product;
-//     });
-//     builder.addCase(getProduct.rejected, (state, action) => {
-//       setStatus(state, action);
-//     });
+const initialState: ProductState = {
+  products: [],
+  lastDoc: null,
+  limitGetProduct: 16,
+};
 
-//     // getProducts
-//     builder.addCase(getProducts.pending, (state, action) => {
-//       setStatus(state, action);
-//     });
-//     builder.addCase(getProducts.fulfilled, (state, action) => {
-//       setStatus(state, action);
-//       state.products = action.payload.products;
-//       state.lastVisibleProduct = action.payload.lastVisible;
-//     });
-//     builder.addCase(getProducts.rejected, (state, action) => {
-//       setStatus(state, action);
-//     });
+const productSlice = createSlice({
+  name: 'product',
+  initialState,
+  reducers: {
+    resetState: () => initialState,
+    setProducts(state, action: PayloadAction<IProduct[]>) {
+      state.products = [...state.products, ...action.payload];
+    },
+    setInitialProducts(state, action: PayloadAction<IProduct[]>) {
+      state.products = action.payload;
+    },
+    setLastDoc(state, action: PayloadAction<string | null>) {
+      state.lastDoc = action.payload;
+    },
+    clearProducts(state) {
+      state.products = [];
+    },
+  },
+});
 
-//     // addedProducts
-//     builder.addCase(addedProducts.pending, (state, action) => {
-//       setStatus(state, action);
-//     });
-//     builder.addCase(addedProducts.fulfilled, (state, action) => {
-//       setStatus(state, action);
-//       if (action.payload.products.length) {
-//         state.products = [...state.products, ...action.payload.products];
-//       }
-//       state.lastVisibleProduct = action.payload.lastVisible;
-//     });
-//     builder.addCase(addedProducts.rejected, (state, action) => {
-//       setStatus(state, action);
-//     });
-//   },
-// });
+export const {
+  resetState,
+  setProducts,
+  setLastDoc,
+  clearProducts,
+  setInitialProducts,
+} = productSlice.actions;
 
-// export const { resetState } = productSlice.actions;
-
-// export default productSlice.reducer;
+export default productSlice.reducer;

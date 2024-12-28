@@ -1,11 +1,10 @@
 // cartSlice.ts
 
-import { IProductWithPaths } from '@/common/utils/extractCategoryPath';
 import { IProduct } from '@/types/products.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CartState {
-  products: IProductWithPaths[];
+  products: IProduct[];
 }
 
 const initialState: CartState = {
@@ -17,7 +16,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     resetState: () => initialState,
-    addProduct(state, action: PayloadAction<IProductWithPaths>) {
+    addProduct(state, action: PayloadAction<IProduct>) {
       const product = action.payload;
       const existingProduct = state.products.find(
         (el) => el.code === product.code

@@ -12,11 +12,12 @@ import {
 import {
   collection,
   doc,
-  DocumentSnapshot,
   getDoc,
   getDocs,
   limit,
+  orderBy,
   query,
+  startAfter,
   where,
 } from 'firebase/firestore';
 
@@ -47,24 +48,32 @@ export const getOneProductByCode = async (
 };
 
 export const getProducts = async (
-  params: IGetProductsParams
+  params: IGetProductsParams & { lastDoc?: string | null }
 ): Promise<{
   productsWithSnapshot: IProductWithDocRef[];
-  lastVisible: DocumentSnapshot | null;
+  lastVisible: string | null;
   products: IProduct[];
   productsImgSplash: IProduct[];
 }> => {
   try {
-    const { category, subcategory, limitNumber } = params;
-    const productsRef = collection(db, EnumFirestoreCollections.PRODUCTS);
-    let productQuery = query(productsRef, limit(limitNumber));
+    const { category, subcategory, limitNumber = 10, lastDoc } = params;
 
+    // Ссылка на коллекцию продуктов
+    const productsRef = collection(db, EnumFirestoreCollections.PRODUCTS);
+    let productQuery = query(
+      productsRef,
+      orderBy('__name__'),
+      limit(limitNumber)
+    );
+
+    // Ссылки на подкатегорию и категорию
     const subReg =
       subcategory &&
       doc(db, EnumFirestoreCollections.SUBCATEGORIES, subcategory);
     const catReg =
       category && doc(db, EnumFirestoreCollections.CATEGORIES, category);
 
+    // Фильтрация по категории или подкатегории
     if (subcategory) {
       productQuery = query(
         productQuery,
@@ -77,25 +86,29 @@ export const getProducts = async (
       );
     }
 
+    // Дозагрузка данных, если указан lastDoc
+    if (lastDoc) {
+      productQuery = query(productQuery, startAfter(lastDoc));
+    }
+
+    // Выполнение запроса
     const querySnapshot = await getDocs(productQuery);
+
+    // Преобразование данных
     const productsWithSnapshot: IProductWithDocRef[] = querySnapshot.docs.map(
       (doc) => doc.data() as IProductWithDocRef
     );
+
     const lastVisible =
       querySnapshot.docs.length > 0
-        ? querySnapshot.docs[querySnapshot.docs.length - 1]
+        ? querySnapshot.docs[querySnapshot.docs.length - 1].id
         : null;
 
     const products: IProduct[] =
       extractCategoryAndSubcategoryPaths(productsWithSnapshot);
 
-    // const firstProductImageUrl = products[0].image?.[0] || '';
-    // const isFirstImageValid = await checkImageLoadServer(firstProductImageUrl);
-
     const productsImgSplash: IProduct[] =
       extractCategoryAndSubcategoryPathsAndPlaceholder(products);
-
-    // productsImgSplash = isFirstImageValid ? products : productsImgSplash;
 
     return { products, productsWithSnapshot, lastVisible, productsImgSplash };
   } catch (error) {

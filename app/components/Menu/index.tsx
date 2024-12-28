@@ -67,7 +67,8 @@ const MyMenu: FC<MyMenuProps> = ({
   const handleClickItemSubcategory = (subcategory: string) => {
     dispatch(setActiveSubcategory(subcategory));
   };
-  if (pathname.split('/').length === 5) return null;
+
+  if (pathname.split('/').length === 5 && !drawer) return null;
 
   if ((isMobile || isTabletPortrait) && !drawer) return null;
 

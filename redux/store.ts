@@ -4,15 +4,15 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // Использует localStorage
 import appReducer from './appSlice';
 import cartReducer from './cartSlice';
+import productReducer from './productSlice';
 // import categoryMenuReducer from './categoryMenuSlice';
-// import productReducer from './productSlice';
 
 // Корневой редюсер с использованием combineReducers
 const rootReducer = combineReducers({
   app: appReducer,
   cart: cartReducer,
   // categoryMenu: categoryMenuReducer,
-  // product: productReducer,
+  product: productReducer,
 });
 
 // Конфигурация redux-persist

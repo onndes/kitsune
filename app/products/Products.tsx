@@ -6,26 +6,75 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid2';
 import ItemProduct from './components/ItemProducts';
 import { IProduct } from '@/types/products.types';
+import { useEffect, useState } from 'react';
+import { getProducts } from '@/lib/firebase/getProducts';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { useDispatch } from 'react-redux';
+import {
+  setInitialProducts,
+  setLastDoc,
+  setProducts,
+} from '@/redux/productSlice';
 
 interface Props {
+  initialProducts: IProduct[];
+  initialLastDoc: string | null;
+  category?: string;
+  subcategory?: string;
   handleNextProduct?: () => void;
-  products: IProduct[];
 }
 
-export default function Products({ products, handleNextProduct }: Props) {
-  // const [hydrated, setHydrated] = useState(false);
+export default function Products({
+  initialProducts,
+  initialLastDoc,
+  category,
+  subcategory,
+}: Props) {
+  // const [products, setProducts] = useState<IProduct[]>(initialProducts);
+  // const [lastDoc, setLastDoc] = useState<string | null>(initialLastDoc);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { lastDoc, products } = useSelector(
+    (state: RootState) => state.product
+  );
 
-  // useEffect(() => {
-  //   setHydrated(true);
-  // }, []);
+  useEffect(() => {
+    if (initialProducts.length > 0 && !products.length) {
+      dispatch(setInitialProducts(initialProducts));
+    }
+    if (initialLastDoc && !lastDoc) {
+      dispatch(setLastDoc(initialLastDoc));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  //!Добавить скелитрн лоадер
-  //!Добавить скелитрн лоадер
-  //!Добавить скелитрн лоадер
-  // if (!hydrated) {
-  //   // Заглушка для предотвращения "прыжков"
-  //   return null;
-  // }
+  const loadMoreProducts = async () => {
+    if (!lastDoc || loading) return;
+
+    setLoading(true);
+
+    try {
+      const { productsImgSplash, lastVisible } = await getProducts({
+        limitNumber: 3,
+        category,
+        subcategory,
+        lastDoc,
+      });
+
+      // Проверяем, если больше продуктов нет
+      if (productsImgSplash.length === 0) {
+        dispatch(setLastDoc(null)); // Останавливаем дозагрузку
+      } else {
+        dispatch(setProducts(productsImgSplash));
+        dispatch(setLastDoc(lastVisible));
+      }
+    } catch (error) {
+      console.error('Ошибка загрузки продуктов:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Container maxWidth={false} sx={{ pt: 0, pb: 4 }}>
@@ -58,11 +107,12 @@ export default function Products({ products, handleNextProduct }: Props) {
         <Box display="flex" justifyContent="center">
           <LoadingButton
             sx={{ height: '100%', fontWeight: 600 }}
-            onClick={handleNextProduct}
+            onClick={loadMoreProducts}
             type="submit"
-            // disabled={!onButtonLoadProduct}
+            disabled={!!lastDoc}
             variant="outlined"
             size="large"
+            loading={loading}
           >
             Завантажити ще
           </LoadingButton>

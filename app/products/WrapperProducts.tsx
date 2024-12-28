@@ -12,7 +12,7 @@ export default async function WrapperProducts({
   category,
   subcategory,
 }: Props) {
-  const { productsImgSplash } = await getProducts({
+  const { productsImgSplash, lastVisible } = await getProducts({
     limitNumber: 10,
     category,
     subcategory,
@@ -20,7 +20,10 @@ export default async function WrapperProducts({
 
   return (
     <Products
-      products={productsImgSplash}
+      initialProducts={productsImgSplash}
+      initialLastDoc={lastVisible}
+      category={category}
+      subcategory={subcategory}
       handleNextProduct={handleNextProduct}
     />
   );
