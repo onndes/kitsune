@@ -45,7 +45,6 @@ const MyMenu: FC<MyMenuProps> = ({
   );
 
   const listCategories = useMemo(() => {
-    console.log('listCategories RENDER');
     const getFilteredSubCat = (path: string) =>
       subcategories.filter((el: ISubCategoryWithPath) => path === el.category);
 
@@ -58,6 +57,7 @@ const MyMenu: FC<MyMenuProps> = ({
   }, [categories, subcategories]);
 
   const handleClickItemMenu = (cat: ICategory) => {
+    console.log('handleClickItemMenu');
     if (cat.ukName === openedSubmenu) {
       dispatch(setOpenedSubmenu(''));
     } else {

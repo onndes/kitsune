@@ -1,49 +1,50 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
-import { combineSlices, configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // Использует localStorage
 import appReducer from './appSlice';
 import cartReducer from './cartSlice';
 // import categoryMenuReducer from './categoryMenuSlice';
 // import productReducer from './productSlice';
 
-const rootReducer = combineSlices({
+// Корневой редюсер с использованием combineReducers
+const rootReducer = combineReducers({
   app: appReducer,
   cart: cartReducer,
   // categoryMenu: categoryMenuReducer,
   // product: productReducer,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+// Конфигурация redux-persist
+const persistConfig = {
+  key: 'root', // Ключ, под которым будет храниться состояние в localStorage
+  storage, // Используем localStorage для хранения состояния
+  whitelist: ['cart', 'app'], // Указываем, какие редьюсеры сохранять (например, корзина)
+};
 
-// `makeStore` инкапсулирует конфигурацию хранилища, чтобы можно было создавать уникальные экземпляры хранилища.
-// Это особенно важно для серверного рендеринга (SSR), где необходимо создавать отдельные экземпляры хранилища для каждого запроса,
-// чтобы избежать загрязнения состояния между запросами.
+// Оборачиваем корневой редюсер в persistReducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const makeStore = () => {
   return configureStore({
-    reducer: rootReducer, // Указываем комбинированный редьюсер, который включает все слайсы
-    // Добавление middleware для API позволяет использовать кэширование, инвалидизацию, опросы
-    // и другие полезные фичи `rtk-query`.
-    middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware()
-        .concat
-        // quotesApiSlice.middleware,
-        (); // Добавляем middleware для `quotesApiSlice`
-    },
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false, // Отключаем проверку сериализуемости для корректной работы redux-persist
+      }),
   });
 };
 
-// Определяем тип `AppStore`, используя возвращаемое значение из `makeStore`
-// Это позволяет типизировать хранилище Redux, что полезно для TypeScript.
-export type AppStore = ReturnType<typeof makeStore>;
+export const store = makeStore();
+export const persistor = persistStore(store);
 
-// Определяем тип `AppDispatch`, который будет использоваться для диспетчеризации действий
-// Этот тип основан на типе `dispatch` из хранилища.
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = typeof store;
 export type AppDispatch = AppStore['dispatch'];
 
-// Определяем тип для `AppThunk` — это тип для асинхронных действий с использованием `ThunkAction`.
-// `ThunkAction` позволяет выполнять асинхронные операции, которые могут работать с состоянием и выполнять действия.
 export type AppThunk<ThunkReturnType = void> = ThunkAction<
-  ThunkReturnType, // Тип возвращаемого значения из Thunk (по умолчанию `void`)
-  RootState, // Тип состояния, которое используется в Thunk
-  unknown, // Примечание для неизвестных типов, которые могут использоваться в Thunk (например, API-сервисы)
-  Action // Тип действия, которое будет выполнено
+  ThunkReturnType,
+  RootState,
+  unknown,
+  Action
 >;
