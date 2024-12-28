@@ -16,12 +16,12 @@ interface Props {
 }
 
 export default function MyAppBar({ categories, subcategories }: Props) {
-  //   todo
+  //   TODO
   //   const cartProduct = useSelector(({ cart }) => cart.products);
 
   const position = useScrollPosition();
 
-  // todo
+  // TODO
   //   const count = cartProduct.reduce((sum, el) => {
   //     return sum + el.count;
   //   }, 0);

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link'; // Импортируем Link из Next.js
+import Link from 'next/link';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import useMyTheme from '@/hooks/useMyTheme';
@@ -12,6 +12,7 @@ import { ItemButton, ItemText } from './styles';
 export interface CategoryItemProps {
   cat: ICategoryWithSubcategory;
   handleClickItemMenu: (category: ICategory) => void;
+  handleClickItemSubcategory: (subcategory: string) => void;
   isOpen: boolean;
   homePage: boolean;
   currentOpenMenu: boolean;
@@ -22,6 +23,8 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   handleClickItemMenu,
   isOpen,
   homePage,
+  currentOpenMenu,
+  handleClickItemSubcategory,
 }) => {
   const { colors } = useMyTheme();
   const isHaveSubcategories = cat.subcategories.length > 0;
@@ -30,9 +33,6 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   ) : (
     <ExpandMore />
   );
-  const isCurrent =
-    typeof window !== 'undefined' &&
-    window.location.pathname.includes(cat.nameDoc?.trim());
 
   return (
     <Link
@@ -41,9 +41,11 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
       legacyBehavior
     >
       <ItemButton
-        onClick={() => handleClickItemMenu(cat)} // Добавляем вызов handleClickItemMenu
-        сselected={isCurrent ? colors.primaryPink[500] : null}
-        // sx={{ textDecoration: 'none' }}
+        onClick={() => {
+          handleClickItemMenu(cat);
+          handleClickItemSubcategory('');
+        }}
+        сselected={currentOpenMenu ? colors.primaryPink[500] : null}
       >
         <ItemText primary={cat.ukName} />
         {!homePage ? iconArrow : null}

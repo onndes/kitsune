@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FC, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import List from '@mui/material/List';
 import {
   StyledContainerMenu,
@@ -11,7 +11,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
 import { db } from '@/firebase';
-import { setOpenedSubmenu } from '@/redux/appSlice';
+import { setActiveSubcategory, setOpenedSubmenu } from '@/redux/appSlice';
 import { RootState } from '@/redux/store';
 import { EnumFirestoreCollections } from '@/types/enums';
 import { doc } from 'firebase/firestore';
@@ -38,11 +38,9 @@ const MyMenu: FC<MyMenuProps> = ({
 }) => {
   const { isMobile } = useDevice();
   const { isTabletPortrait } = useResponsive();
-  const [dense] = useState(false);
+  const dense = false;
   const dispatch = useDispatch();
-  const openedSubmenu = useSelector(
-    (state: RootState) => state.app.openedSubmenu
-  );
+  const { openedSubmenu } = useSelector((state: RootState) => state.app);
 
   const listCategories = useMemo(() => {
     const getFilteredSubCat = (path: string) =>
@@ -57,14 +55,20 @@ const MyMenu: FC<MyMenuProps> = ({
   }, [categories, subcategories]);
 
   const handleClickItemMenu = (cat: ICategory) => {
-    if (cat.ukName === openedSubmenu) {
+    if (cat.nameDoc === openedSubmenu) {
       dispatch(setOpenedSubmenu(''));
     } else {
-      dispatch(setOpenedSubmenu(cat.ukName));
+      dispatch(setOpenedSubmenu(cat.nameDoc));
     }
   };
 
-  if ((isMobile || isTabletPortrait) && !drawer) return null;
+  const handleClickItemSubcategory = (subcategory: string) => {
+    dispatch(setActiveSubcategory(subcategory));
+  };
+
+  if ((isMobile || isTabletPortrait) && !drawer) {
+    return null;
+  }
 
   return (
     <Grid
@@ -104,6 +108,7 @@ const MyMenu: FC<MyMenuProps> = ({
                 handleClickItemMenu={handleClickItemMenu}
                 drawerClose={drawerClose}
                 homePage={homePage}
+                handleClickItemSubcategory={handleClickItemSubcategory}
               />
             )}
           </List>

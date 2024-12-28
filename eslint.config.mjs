@@ -15,6 +15,12 @@ const eslintConfig = [
     'next/typescript',
     'plugin:prettier/recommended'
   ),
+  {
+    rules: {
+      // Предупреждение для console.log
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+    },
+  },
 ];
 
 export default eslintConfig;

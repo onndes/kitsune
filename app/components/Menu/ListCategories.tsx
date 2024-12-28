@@ -12,6 +12,7 @@ interface ListCategoriesProps {
   listCategories: ICategoryWithSubcategory[];
   openedSubmenu: string;
   handleClickItemMenu: (category: ICategory) => void;
+  handleClickItemSubcategory: (subcategory: string) => void;
   drawerClose?: () => void;
   homePage: boolean;
 }
@@ -20,13 +21,14 @@ const ListCategories: FC<ListCategoriesProps> = ({
   listCategories,
   openedSubmenu,
   handleClickItemMenu,
+  handleClickItemSubcategory,
   drawerClose,
   homePage,
 }) => {
   return listCategories
     .sort((a, b) => a.sortIndex - b.sortIndex)
     .map((cat) => {
-      const isOpen = openedSubmenu === cat.ukName;
+      const isOpen = openedSubmenu === cat.nameDoc;
 
       return (
         <React.Fragment key={cat.id}>
@@ -34,6 +36,7 @@ const ListCategories: FC<ListCategoriesProps> = ({
             homePage={homePage}
             cat={cat}
             handleClickItemMenu={handleClickItemMenu}
+            handleClickItemSubcategory={handleClickItemSubcategory}
             currentOpenMenu={isOpen}
             isOpen={isOpen}
           />
@@ -46,6 +49,7 @@ const ListCategories: FC<ListCategoriesProps> = ({
                     sub={sub}
                     cat={cat}
                     key={sub.id}
+                    handleClickItemSubcategory={handleClickItemSubcategory}
                   />
                 ))}
               </List>

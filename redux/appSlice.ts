@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface AppState {
   currentLink: string;
   openedSubmenu: string;
+  activeSubcategory: string;
 }
 
 const initialState: AppState = {
   currentLink: '',
   openedSubmenu: '',
+  activeSubcategory: '',
 };
 
 const appSlice = createSlice({
@@ -22,9 +24,13 @@ const appSlice = createSlice({
     setOpenedSubmenu(state, action: PayloadAction<string>) {
       state.openedSubmenu = action.payload;
     },
+    setActiveSubcategory(state, action: PayloadAction<string>) {
+      state.activeSubcategory = action.payload;
+    },
   },
 });
 
-export const { setLink, setOpenedSubmenu } = appSlice.actions;
+export const { setLink, setOpenedSubmenu, setActiveSubcategory } =
+  appSlice.actions;
 
 export default appSlice.reducer;

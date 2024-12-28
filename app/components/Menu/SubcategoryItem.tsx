@@ -3,27 +3,32 @@
 import React from 'react';
 import { ListItemText } from '@mui/material';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { StyledListItemButton, StyledTypography } from './styles';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 export interface SubcategoryItemProps {
   sub: ISubCategoryWithPath;
   drawerClose?: () => void;
   cat: ICategory;
+  handleClickItemSubcategory: (subcategory: string) => void;
 }
 
 const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
   sub,
   drawerClose,
   cat,
+  handleClickItemSubcategory,
 }) => {
-  const pathname = decodeURIComponent(usePathname());
+  const acriveSubcategory = useSelector(
+    (state: RootState) => state.app.activeSubcategory
+  );
 
-  const isActiveSubcategory =
-    pathname === `/products/${cat?.nameDoc.trim()}/${sub?.nameDoc.trim()}`;
+  const isActiveSubcategory = acriveSubcategory === sub.nameDoc;
 
   const handleClick = () => {
+    handleClickItemSubcategory(sub.nameDoc);
     if (drawerClose) {
       drawerClose();
     }
