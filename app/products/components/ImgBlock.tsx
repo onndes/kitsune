@@ -1,19 +1,23 @@
-import { Box, BoxProps } from '@mui/system';
+import { Box, BoxProps, SystemStyleObject } from '@mui/system';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ImgBlockProps {
   src: string;
-  handleClickProduct: () => void;
+  // handleClickProduct: () => void;
   boxProps?: BoxProps;
   lazy?: boolean;
   index?: number;
+  sxProps?: SystemStyleObject;
+  sxImgageProps?: BoxProps;
 }
 
 const ImgBlock: React.FC<ImgBlockProps> = ({
   src,
-  handleClickProduct,
+  // handleClickProduct,
   boxProps = {},
+  sxProps = {},
+  sxImgageProps = {},
 }) => {
   const [width, setWidth] = useState(0);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -45,11 +49,13 @@ const ImgBlock: React.FC<ImgBlockProps> = ({
         img: {
           maxWidth: '100%',
           maxHeight: '100%',
+          ...sxImgageProps,
         },
         position: 'relative',
         cursor: 'pointer',
+        ...sxProps,
       }}
-      onClick={handleClickProduct}
+      // onClick={handleClickProduct}
     >
       <Image
         sizes="100%"

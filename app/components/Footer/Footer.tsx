@@ -64,13 +64,23 @@ const Footer = () => {
           </Grid>
           <Grid size={{ base: 12, tabletPortrait: 6 }}>
             <Typography variant="h5" component="p" color="white" pb={2}>
-              Contact Us
+              Наші контакти
             </Typography>
             <Typography variant="body2" component="p" color="white">
-              Support phone / consultant: +380630550303
+              <a
+                href="tel:+380630550303"
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                +380630550303
+              </a>
             </Typography>
             <Typography variant="body2" component="p" color="white">
-              email: ellemod.ua@gmail.com
+              <a
+                href={`mailto:ellemod.ua@gmail.com`}
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                ellemod.ua@gmail.com
+              </a>
             </Typography>
           </Grid>
         </Grid>

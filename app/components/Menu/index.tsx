@@ -20,6 +20,7 @@ import ListCategories from './ListCategories';
 import { useDispatch } from 'react-redux';
 import { useDevice } from '@/app/contexts/DeviceContextProps';
 import useResponsive from '@/hooks/useResponsive';
+import { usePathname } from 'next/navigation';
 
 interface MyMenuProps {
   drawerClose?: () => void;
@@ -41,6 +42,7 @@ const MyMenu: FC<MyMenuProps> = ({
   const dense = false;
   const dispatch = useDispatch();
   const { openedSubmenu } = useSelector((state: RootState) => state.app);
+  const pathname = usePathname();
 
   const listCategories = useMemo(() => {
     const getFilteredSubCat = (path: string) =>
@@ -65,10 +67,9 @@ const MyMenu: FC<MyMenuProps> = ({
   const handleClickItemSubcategory = (subcategory: string) => {
     dispatch(setActiveSubcategory(subcategory));
   };
+  if (pathname.split('/').length === 5) return null;
 
-  if ((isMobile || isTabletPortrait) && !drawer) {
-    return null;
-  }
+  if ((isMobile || isTabletPortrait) && !drawer) return null;
 
   return (
     <Grid

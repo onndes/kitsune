@@ -1,6 +1,7 @@
 import { DocumentReference } from 'firebase/firestore';
 
 export interface IDescriptionProduct {
+  title: string;
   paragraphs: string[];
 }
 

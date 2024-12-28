@@ -22,12 +22,24 @@ import {
 
 export const getOneProductByCode = async (
   code: number
-): Promise<IProduct | null> => {
+): Promise<{
+  product: IProductWithDocRef;
+  productsImgSplash: IProduct;
+  productWithRef: IProduct;
+} | null> => {
   try {
     const docRef = doc(db, EnumFirestoreCollections.PRODUCTS, `${code}`);
     const docSnap = await getDoc(docRef);
+    const product: IProductWithDocRef | null = docSnap.exists()
+      ? (docSnap.data() as IProductWithDocRef)
+      : null;
+    if (!product) throw new Error("Product doesn't exist");
+    const productWithRef = extractCategoryAndSubcategoryPaths([product])[0];
 
-    return docSnap.exists() ? (docSnap.data() as IProduct) : null;
+    const productsImgSplash: IProduct =
+      extractCategoryAndSubcategoryPathsAndPlaceholder([productWithRef])[0];
+
+    return { product, productsImgSplash, productWithRef };
   } catch (error) {
     console.error('Error fetching product:', error);
     throw error;

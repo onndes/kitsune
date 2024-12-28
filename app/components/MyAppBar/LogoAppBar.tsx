@@ -4,6 +4,8 @@ import { StyledLogoContainer, StyledTypography } from './styles';
 import MyDrawer from '../MyDrawer/MyDrawer';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
 import logo from '@/app/icons/logo.svg';
+import { useDispatch } from 'react-redux';
+import { setActiveSubcategory, setOpenedSubmenu } from '@/redux/appSlice';
 
 interface Props {
   categories: ICategory[];
@@ -11,6 +13,7 @@ interface Props {
 }
 
 const LogoAppBar = ({ categories, subcategories }: Props) => {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   return (
@@ -21,7 +24,14 @@ const LogoAppBar = ({ categories, subcategories }: Props) => {
         homePage={false}
       />
 
-      <StyledTypography component="div" onClick={() => router.push('/')}>
+      <StyledTypography
+        component="div"
+        onClick={() => {
+          router.push('/');
+          dispatch(setActiveSubcategory(''));
+          dispatch(setOpenedSubmenu(''));
+        }}
+      >
         <Image src={logo} alt="KITSUNE logo" width={40} height={40} priority />
         KITSUNE
       </StyledTypography>
