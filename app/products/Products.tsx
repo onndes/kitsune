@@ -6,7 +6,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid2';
 import ItemProduct from './components/ItemProducts';
 import { IProduct } from '@/types/products.types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getProducts } from '@/lib/firebase/getProducts';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -38,26 +38,25 @@ export default function Products({
   const { lastDoc, products } = useSelector(
     (state: RootState) => state.product
   );
+  const scrollRef = useRef<number>(0);
 
   useEffect(() => {
-    if (initialProducts.length > 0 && !products.length) {
+    if (initialProducts.length > 0 && products.length === 0) {
       dispatch(setInitialProducts(initialProducts));
     }
     if (initialLastDoc && !lastDoc) {
       dispatch(setLastDoc(initialLastDoc));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, initialProducts, initialLastDoc, products.length, lastDoc]);
 
   const loadMoreProducts = async () => {
     if (!lastDoc || loading) return;
 
-    const scrollYBeforeLoad = window.scrollY;
+    scrollRef.current = window.scrollY;
     setLoading(true);
 
     try {
       const { productsImgSplash, lastVisible } = await getProducts({
-        limitNumber: 10,
         category,
         subcategory,
         lastDoc,
@@ -70,7 +69,7 @@ export default function Products({
         dispatch(setProducts(productsImgSplash));
         dispatch(setLastDoc(lastVisible));
       }
-      window.scrollTo({ top: scrollYBeforeLoad });
+      window.scrollTo({ top: scrollRef.current });
     } catch (error) {
       console.error('Ошибка загрузки продуктов:', error);
     } finally {

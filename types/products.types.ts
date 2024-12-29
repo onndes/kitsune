@@ -47,7 +47,7 @@ export interface IProduct {
 export interface IGetProductsParams {
   category?: string;
   subcategory?: string;
-  limitNumber: number;
+  limitNumber?: number;
 }
 
 export interface ICategory {

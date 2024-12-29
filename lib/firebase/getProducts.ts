@@ -56,7 +56,7 @@ export const getProducts = async (
   productsImgSplash: IProduct[];
 }> => {
   try {
-    const { category, subcategory, limitNumber = 10, lastDoc } = params;
+    const { category, subcategory, limitNumber = 3, lastDoc } = params;
 
     // Ссылка на коллекцию продуктов
     const productsRef = collection(db, EnumFirestoreCollections.PRODUCTS);

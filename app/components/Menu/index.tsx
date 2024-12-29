@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { useDevice } from '@/app/contexts/DeviceContextProps';
 import useResponsive from '@/hooks/useResponsive';
 import { usePathname } from 'next/navigation';
+import { clearProducts } from '@/redux/productSlice';
 
 interface MyMenuProps {
   drawerClose?: () => void;
@@ -57,6 +58,7 @@ const MyMenu: FC<MyMenuProps> = ({
   }, [categories, subcategories]);
 
   const handleClickItemMenu = (cat: ICategory) => {
+    dispatch(clearProducts());
     if (cat.nameDoc === openedSubmenu) {
       dispatch(setOpenedSubmenu(''));
     } else {
@@ -65,6 +67,7 @@ const MyMenu: FC<MyMenuProps> = ({
   };
 
   const handleClickItemSubcategory = (subcategory: string) => {
+    dispatch(clearProducts());
     dispatch(setActiveSubcategory(subcategory));
   };
 

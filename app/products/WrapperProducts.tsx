@@ -13,7 +13,6 @@ export default async function WrapperProducts({
   subcategory,
 }: Props) {
   const { productsImgSplash, lastVisible } = await getProducts({
-    limitNumber: 10,
     category,
     subcategory,
   });
