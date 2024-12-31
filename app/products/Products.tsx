@@ -1,25 +1,15 @@
 'use client';
 
-// import { useEffect, useState } from 'react';
 import { Container, Box } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid2';
 import ItemProduct from './components/ItemProducts';
-import { IProduct } from '@/types/products.types';
-import { useEffect, useRef, useState } from 'react';
-import { getProducts } from '@/lib/firebase/getProducts';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import { useDispatch } from 'react-redux';
-import {
-  setInitialProducts,
-  setLastDoc,
-  setProducts,
-} from '@/redux/productSlice';
+import { IProduct, TLastProductId } from '@/types/products.types';
+import { useProductsQuery } from '@/hooks/useProductsQuery';
 
 interface Props {
   initialProducts: IProduct[];
-  initialLastDoc: string | null;
+  initialLastProductId: TLastProductId;
   category?: string;
   subcategory?: string;
   handleNextProduct?: () => void;
@@ -27,71 +17,31 @@ interface Props {
 
 export default function Products({
   initialProducts,
-  initialLastDoc,
+  initialLastProductId,
   category,
   subcategory,
 }: Props) {
-  // const [products, setProducts] = useState<IProduct[]>(initialProducts);
-  // const [lastDoc, setLastDoc] = useState<string | null>(initialLastDoc);
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const { lastDoc, products } = useSelector(
-    (state: RootState) => state.product
-  );
-  const scrollRef = useRef<number>(0);
-
-  useEffect(() => {
-    if (initialProducts.length > 0 && products.length === 0) {
-      dispatch(setInitialProducts(initialProducts));
-    }
-    if (initialLastDoc && !lastDoc) {
-      dispatch(setLastDoc(initialLastDoc));
-    }
-  }, [dispatch, initialProducts, initialLastDoc, products.length, lastDoc]);
-
-  const loadMoreProducts = async () => {
-    if (!lastDoc || loading) return;
-
-    scrollRef.current = window.scrollY;
-    setLoading(true);
-
-    try {
-      const { productsImgSplash, lastVisible } = await getProducts({
-        category,
-        subcategory,
-        lastDoc,
-      });
-
-      // Проверяем, если больше продуктов нет
-      if (productsImgSplash.length === 0) {
-        dispatch(setLastDoc(null)); // Останавливаем дозагрузку
-      } else {
-        dispatch(setProducts(productsImgSplash));
-        dispatch(setLastDoc(lastVisible));
-      }
-      window.scrollTo({ top: scrollRef.current });
-    } catch (error) {
-      console.error('Ошибка загрузки продуктов:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useProductsQuery(
+      category,
+      subcategory,
+      initialLastProductId,
+      initialProducts
+    );
+  console.log(category, subcategory);
+  const products = data.pages.flatMap((page) => page.products || []);
 
   return (
     <Container maxWidth={false} sx={{ pt: 0, pb: 4 }}>
       <Grid container spacing={2} pb={4}>
-        {products?.length === 0 && <Grid size={{ xs: 12 }}>Товарів немає</Grid>}
-        {/* {isLoading && (
-          <Grid size={{ xs: 12 }} minHeight="300px">
-            <LinearLoader position="relative" />
-          </Grid>a
-        )} */}
-        {products?.length > 0 &&
+        {products.length === 0 && (
+          <Grid size={{ xs: 12 }}>Товари відсутні</Grid>
+        )}
+        {products.length > 0 &&
           products.map((product, index) => {
             return (
               <Grid
                 size={{ xs: 12, sm: 6, tabletLandscape: 4, md: 4, lg: 3 }}
-                // size={8}
                 key={product.code}
                 sx={{
                   display: 'flex',
@@ -104,16 +54,16 @@ export default function Products({
             );
           })}
       </Grid>
-      {products?.length > 0 && (
+      {products.length > 0 && (
         <Box display="flex" justifyContent="center">
           <LoadingButton
             sx={{ height: '100%', fontWeight: 600 }}
-            onClick={loadMoreProducts}
+            onClick={() => fetchNextPage()}
             type="submit"
-            disabled={!lastDoc}
+            disabled={!hasNextPage}
             variant="outlined"
             size="large"
-            loading={loading}
+            loading={isFetchingNextPage}
           >
             Завантажити ще
           </LoadingButton>

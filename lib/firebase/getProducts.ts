@@ -8,6 +8,8 @@ import {
   IGetProductsParams,
   IProduct,
   IProductWithDocRef,
+  NonLastProductId,
+  TLastProductId,
 } from '@/types/products.types';
 import {
   collection,
@@ -21,7 +23,7 @@ import {
   where,
 } from 'firebase/firestore';
 
-export const getOneProductByCode = async (
+export const getProductByCode = async (
   code: number
 ): Promise<{
   product: IProductWithDocRef;
@@ -48,18 +50,17 @@ export const getOneProductByCode = async (
 };
 
 export const getProducts = async (
-  params: IGetProductsParams & { lastDoc?: string | null }
+  params: IGetProductsParams
 ): Promise<{
   productsWithSnapshot: IProductWithDocRef[];
-  lastVisible: string | null;
+  lastProductId: TLastProductId;
   products: IProduct[];
   productsImgSplash: IProduct[];
 }> => {
   try {
-    const { category, subcategory, limitNumber = 3, lastDoc } = params;
-
-    // Ссылка на коллекцию продуктов
+    const { category, subcategory, limitNumber = 2, lastDocId } = params;
     const productsRef = collection(db, EnumFirestoreCollections.PRODUCTS);
+
     let productQuery = query(
       productsRef,
       orderBy('__name__'),
@@ -70,6 +71,7 @@ export const getProducts = async (
     const subReg =
       subcategory &&
       doc(db, EnumFirestoreCollections.SUBCATEGORIES, subcategory);
+
     const catReg =
       category && doc(db, EnumFirestoreCollections.CATEGORIES, category);
 
@@ -79,7 +81,8 @@ export const getProducts = async (
         productQuery,
         where(EnumFirestoreCollections.SUBCATEGORY, '==', subReg)
       );
-    } else if (category) {
+    }
+    if (category) {
       productQuery = query(
         productQuery,
         where(EnumFirestoreCollections.CATEGORY, '==', catReg)
@@ -87,8 +90,8 @@ export const getProducts = async (
     }
 
     // Дозагрузка данных, если указан lastDoc
-    if (lastDoc) {
-      productQuery = query(productQuery, startAfter(lastDoc));
+    if (lastDocId) {
+      productQuery = query(productQuery, startAfter(lastDocId));
     }
 
     // Выполнение запроса
@@ -99,10 +102,10 @@ export const getProducts = async (
       (doc) => doc.data() as IProductWithDocRef
     );
 
-    const lastVisible =
+    const lastProductId =
       querySnapshot.docs.length > 0
         ? querySnapshot.docs[querySnapshot.docs.length - 1].id
-        : null;
+        : NonLastProductId;
 
     const products: IProduct[] =
       extractCategoryAndSubcategoryPaths(productsWithSnapshot);
@@ -110,7 +113,7 @@ export const getProducts = async (
     const productsImgSplash: IProduct[] =
       extractCategoryAndSubcategoryPathsAndPlaceholder(products);
 
-    return { products, productsWithSnapshot, lastVisible, productsImgSplash };
+    return { products, productsWithSnapshot, lastProductId, productsImgSplash };
   } catch (error) {
     console.error('Error fetching products:', error);
     throw new Error('Failed to fetch products');

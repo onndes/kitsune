@@ -53,6 +53,7 @@ const ImgBlock: React.FC<ImgBlockProps> = ({
         },
         position: 'relative',
         cursor: 'pointer',
+        // minHeight: 251,
         ...sxProps,
       }}
       // onClick={handleClickProduct}

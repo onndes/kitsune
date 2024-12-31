@@ -12,6 +12,10 @@ export interface IFeatureProduct {
 
 export type IImageProduct = string[];
 
+export const NonLastProductId = null;
+
+export type TLastProductId = string | null;
+
 export interface IProductWithDocRef {
   brand: string;
   category: DocumentReference;
@@ -48,6 +52,7 @@ export interface IGetProductsParams {
   category?: string;
   subcategory?: string;
   limitNumber?: number;
+  lastDocId?: TLastProductId;
 }
 
 export interface ICategory {

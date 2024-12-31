@@ -2,7 +2,7 @@
 
 import { IconButton } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
-import { useColorMode } from '@/hooks/theme';
+import { useColorMode } from '@/hooks/useColorMode';
 
 const ThemeSwitcher = () => {
   const { mode, toggleColorMode } = useColorMode(); // Получаем режим и функцию для переключения темы

@@ -1,6 +1,6 @@
 import React from 'react';
 import Product from './Product';
-import { getOneProductByCode } from '@/lib/firebase/getProducts';
+import { getProductByCode } from '@/lib/firebase/getProducts';
 
 interface Props {
   params: {
@@ -12,7 +12,7 @@ interface Props {
 
 const ProductPage: React.FC<Props> = async ({ params }) => {
   const { productSlug } = await params;
-  const productData = await getOneProductByCode(Number(productSlug));
+  const productData = await getProductByCode(Number(productSlug));
 
   if (!productData || !productData.productsImgSplash)
     return <div>Product not found</div>;
