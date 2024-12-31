@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import List from '@mui/material/List';
 import {
   StyledContainerMenu,
@@ -44,6 +44,15 @@ const MyMenu: FC<MyMenuProps> = ({
   const dispatch = useDispatch();
   const { openedSubmenu } = useSelector((state: RootState) => state.app);
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname.split('/').length <= 2) {
+      dispatch(setOpenedSubmenu(''));
+    }
+    if (pathname.split('/').length < 4) {
+      dispatch(setActiveSubcategory(''));
+    }
+  }, [pathname, dispatch]);
 
   const listCategories = useMemo(() => {
     const getFilteredSubCat = (path: string) =>

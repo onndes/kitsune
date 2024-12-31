@@ -28,7 +28,7 @@ export default function Products({
       initialLastProductId,
       initialProducts
     );
-  console.log(category, subcategory);
+
   const products = data.pages.flatMap((page) => page.products || []);
 
   return (
