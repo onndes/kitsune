@@ -28,8 +28,6 @@ export default function ItemProduct({
 
   const hrefName = `/products/${encodeURIComponent(product.category)}/${encodeURIComponent(product.subcategory)}/${encodeURIComponent(product.code)}`;
 
-  // const href
-
   return (
     <StyledCard elevation={0}>
       <Link href={hrefName}>

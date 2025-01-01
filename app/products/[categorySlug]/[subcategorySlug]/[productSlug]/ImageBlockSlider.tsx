@@ -9,8 +9,8 @@ interface ImageBlockSliderProps {
 }
 
 const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
-  const imageCut = image.slice(0, 4); // Отображаем максимум 4 изображения
-  const { isTabletPortrait } = useResponsive();
+  // const imageCut = image.slice(0, 4); // Отображаем максимум 4 изображения
+  const { isMobileLarge } = useResponsive();
   const [nav1, setNav1] = useState<Slider | null>(null);
   const [nav2, setNav2] = useState<Slider | null>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -19,19 +19,24 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
     infinite: false,
     arrows: false,
     slidesToShow: 1,
+    preventScrollOnSwipe: true,
     beforeChange: (_oldIndex: number, newIndex: number) =>
       setCurrentSlide(newIndex),
   };
 
   const settingsNav = {
+    className: 'slider variable-width',
+    variableWidth: true,
     infinite: false,
     arrows: false,
-    slidesToShow: imageCut.length > 1 ? imageCut.length : 1,
     swipeToSlide: true,
     focusOnSelect: true,
+    // centerPadding: '0px', // Отступы по бокам
+    slidesToShow: 9,
+    preventScrollOnSwipe: true,
   };
-
-  const sizeNav = isTabletPortrait ? '75px' : '100px';
+  // TODO убрать вертикальний скролл на мобильных устройствах
+  // TODO добавить стрелки на телефонах
 
   return (
     <Box
@@ -39,10 +44,12 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
         width: '100%',
         div: {
           display: 'flex',
-          justifyContent: 'center',
           width: '100%',
         },
+        overflow: 'hidden',
+        // touchAction: 'pan-y',
       }}
+      onTouchMove={(e) => e.preventDefault()}
     >
       {/* Основной слайдер */}
       <Slider
@@ -50,52 +57,47 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
         ref={(slider1) => setNav1(slider1)}
         {...settingsMain}
       >
-        {imageCut.map((img) => (
+        {image.map((img) => (
           <ImgBlock
             key={img}
             src={img}
-            sxProps={{
-              maxWidth: '300px',
-              minHeight: '250px',
-              mb: 1,
-            }}
             sxImgageProps={{
-              maxHeight: isTabletPortrait ? '250px' : '350px',
-              height: '100%',
+              height: isMobileLarge ? '250px' : '250px',
+              width: isMobileLarge ? '250px' : '250px',
             }}
           />
         ))}
       </Slider>
-
       {/* Навигационный слайдер */}
-      <Slider
-        asNavFor={nav1 || undefined}
-        ref={(slider2) => setNav2(slider2)}
-        {...settingsNav}
-      >
-        {imageCut.map((img, idx) => (
-          <ImgBlock
-            key={img}
-            src={img}
-            sxProps={{
-              maxWidth: sizeNav,
-              width: sizeNav,
-              height: sizeNav,
-              mb: 2,
-              position: 'relative',
-              '&:before': {
-                display: 'block',
-                position: 'absolute',
-                content: "''",
-                width: '100%',
-                height: '100%',
-                border:
-                  idx === currentSlide ? '1px solid lightGrey' : undefined,
-              },
-            }}
-          />
-        ))}
-      </Slider>
+
+      {!isMobileLarge && (
+        <Slider
+          asNavFor={nav1 || undefined}
+          ref={(slider2) => setNav2(slider2)}
+          {...settingsNav}
+          // centerMode
+        >
+          {image.map((img, idx) => (
+            <ImgBlock
+              key={img}
+              src={img}
+              sxProps={{
+                border: idx === currentSlide ? '1px solid lightGreen' : 'none',
+                padding: '0',
+
+                maxWidth: '46px', // Отключаем растяжение
+                margin: '0 auto', // Центрируем
+              }}
+              sxImgageProps={{
+                padding: '3px',
+                height: '46px',
+                width: '46px',
+                position: 'relative',
+              }}
+            />
+          ))}
+        </Slider>
+      )}
     </Box>
   );
 };

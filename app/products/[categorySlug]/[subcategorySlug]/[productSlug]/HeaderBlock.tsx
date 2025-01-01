@@ -14,7 +14,7 @@ const HeaderBlock = ({ product }: Props) => {
     <Container>
       <Grid container spacing={2}>
         <Grid
-          size={{ xs: 12, sm: 6 }}
+          size={{ mobileLarge: 12, tabletPortrait: 7 }}
           sx={{
             display: 'flex',
             justifyContent: 'center',
@@ -22,7 +22,7 @@ const HeaderBlock = ({ product }: Props) => {
         >
           <ImageBlockSlider image={product.image} />
         </Grid>
-        <Grid pb={3} size={{ xs: 12, sm: 6 }}>
+        <Grid pb={3} size={{ mobileLarge: 12, tabletPortrait: 5 }}>
           <Typography
             variant="h3"
             color="initial"

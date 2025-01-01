@@ -30,7 +30,17 @@ export const extractCategoryAndSubcategoryPathsAndPlaceholder = (
   return products.map((el) => {
     return {
       ...el,
-      image: ['https://dummyimage.com/400x400/cccccc/000000&text=No+Image'],
+      image: [
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+1',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+2',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+3',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+4',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+5',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+6',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+7',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+8',
+        'https://dummyimage.com/400x400/cccccc/000000&text=No+9',
+      ],
     };
   });
 };
