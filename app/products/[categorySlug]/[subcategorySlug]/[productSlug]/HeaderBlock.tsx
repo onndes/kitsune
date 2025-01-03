@@ -27,7 +27,7 @@ const HeaderBlock = ({ product }: Props) => {
             variant="h3"
             color="initial"
             fontWeight={500}
-            fontSize="24px"
+            fontSize="20px"
             letterSpacing="1px"
           >
             {product.name}

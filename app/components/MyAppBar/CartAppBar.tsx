@@ -1,14 +1,15 @@
 import { MenuItem } from '@mui/material';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { StyledIconButton, StyledBadge, StyledMenu } from './styles';
+import Link from 'next/link';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 const CartAppBar = () => {
-  const router = useRouter();
   const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const cartProduct = useSelector((state: RootState) => state.cart.products);
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -17,17 +18,20 @@ const CartAppBar = () => {
   //   setAnchorEl(event.currentTarget);
   // };
 
+  const count = cartProduct.reduce((sum, el) => {
+    return sum + el.count;
+  }, 0);
+
   return (
     auth && (
       <>
-        <StyledIconButton
-          aria-label="cart"
-          onClick={() => router.push('/cart')}
-        >
-          <StyledBadge color="primary" max={999}>
-            <ShoppingCartIcon fontSize="small" />
-          </StyledBadge>
-        </StyledIconButton>
+        <Link href="/cart" passHref>
+          <StyledIconButton aria-label="cart">
+            <StyledBadge color="primary" max={999} badgeContent={count}>
+              <ShoppingCartIcon fontSize="small" />
+            </StyledBadge>
+          </StyledIconButton>
+        </Link>
         <StyledMenu
           id="menu-appbar"
           anchorEl={anchorEl}

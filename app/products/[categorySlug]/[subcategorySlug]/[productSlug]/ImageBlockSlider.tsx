@@ -9,7 +9,7 @@ interface ImageBlockSliderProps {
 }
 
 const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
-  // const imageCut = image.slice(0, 4); // Отображаем максимум 4 изображения
+  // const sliderRef = useRef<HTMLDivElement>(null); // Блокируем вертикальную прокрутку
   const { isMobileLarge } = useResponsive();
   const [nav1, setNav1] = useState<Slider | null>(null);
   const [nav2, setNav2] = useState<Slider | null>(null);
@@ -35,11 +35,31 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
     slidesToShow: 9,
     preventScrollOnSwipe: true,
   };
-  // TODO убрать вертикальний скролл на мобильных устройствах
   // TODO добавить стрелки на телефонах
+
+  // Блокируем вертикальную прокрутку
+  // const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+  //   if (sliderRef.current) {
+  //     sliderRef.current.dataset.startY = String(e.touches[0].clientY);
+  //   }
+  // };
+
+  // const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+  //   if (sliderRef.current) {
+  //     const startY = parseFloat(sliderRef.current.dataset.startY || '0');
+  //     const deltaY = e.touches[0].clientY - startY;
+
+  //     if (Math.abs(deltaY) > 10) {
+  //       e.preventDefault(); // Блокируем вертикальную прокрутку
+  //     }
+  //   }
+  // };
 
   return (
     <Box
+      // ref={sliderRef} // Блокируем вертикальную прокрутку
+      // onTouchStart={handleTouchStart} // Блокируем вертикальную прокрутку
+      // onTouchMove={handleTouchMove}  // Блокируем вертикальную прокрутку
       sx={{
         width: '100%',
         div: {
@@ -47,9 +67,7 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
           width: '100%',
         },
         overflow: 'hidden',
-        // touchAction: 'pan-y',
       }}
-      onTouchMove={(e) => e.preventDefault()}
     >
       {/* Основной слайдер */}
       <Slider
@@ -86,10 +104,11 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
                 padding: '0',
 
                 maxWidth: '46px', // Отключаем растяжение
+                maxHeight: '46px', // Отключаем растяжение
                 margin: '0 auto', // Центрируем
               }}
               sxImgageProps={{
-                padding: '3px',
+                padding: '2px',
                 height: '46px',
                 width: '46px',
                 position: 'relative',
