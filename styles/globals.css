@@ -17,3 +17,18 @@ html[data-theme='light'] {
   background-color: #fff;
   color: #000;
 }
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.loading-background {
+  background: linear-gradient(270deg, #fff5f7, #fde4eb, #ffeaf1);
+  background-size: 400% 400%;
+  animation: gradientAnimation 5s ease infinite;
+}

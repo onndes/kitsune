@@ -93,8 +93,8 @@ export const Form = () => {
 
       <Divider />
       <Box pt={2} pb={2}>
-        <ControlInput name="voucher" control={control} />
-        <MyButton text="Apply Voucher" variant="outlined" fullWidth />
+        <ControlInput name="voucher" control={control} placeholder="Ваучер" />
+        <MyButton text="Застосувати ваучер" variant="outlined" fullWidth />
       </Box>
       <Box>
         {formData.map((el) => (

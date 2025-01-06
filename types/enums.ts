@@ -1,3 +1,5 @@
+export const defaultCountsLoading = 8;
+
 export enum EnumFirestoreCollections {
   CATEGORIES = 'categories',
   SUBCATEGORIES = 'subcategories',

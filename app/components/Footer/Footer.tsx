@@ -25,12 +25,14 @@ const Footer = () => {
       maxWidth={false}
       disableGutters={isTabletPortrait}
       sx={{ pt: 0, display: render ? 'block' : 'none' }}
+      style={{ padding: 0 }}
     >
       <Box
         sx={{
           background: colors.primaryPink[600],
           p: isTabletPortrait ? 3 : 3,
-          borderRadius: isTabletPortrait ? 0 : '20px',
+          // borderRadius: isTabletPortrait ? 0 : '20px',
+          pb: 10,
         }}
       >
         <Grid container spacing={4}>

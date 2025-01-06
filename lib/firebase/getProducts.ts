@@ -3,7 +3,7 @@ import {
   extractCategoryAndSubcategoryPathsAndPlaceholder,
 } from '@/common/utils/extractCategoryPath';
 import { db } from '@/firebase';
-import { EnumFirestoreCollections } from '@/types/enums';
+import { defaultCountsLoading, EnumFirestoreCollections } from '@/types/enums';
 import {
   IGetProductsParams,
   IProduct,
@@ -58,7 +58,12 @@ export const getProducts = async (
   productsImgSplash: IProduct[];
 }> => {
   try {
-    const { category, subcategory, limitNumber = 2, lastDocId } = params;
+    const {
+      category,
+      subcategory,
+      limitNumber = defaultCountsLoading,
+      lastDocId,
+    } = params;
     const productsRef = collection(db, EnumFirestoreCollections.PRODUCTS);
 
     let productQuery = query(

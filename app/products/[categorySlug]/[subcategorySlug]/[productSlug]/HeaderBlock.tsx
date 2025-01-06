@@ -17,12 +17,20 @@ const HeaderBlock = ({ product }: Props) => {
           size={{ mobileLarge: 12, tabletPortrait: 7 }}
           sx={{
             display: 'flex',
+            // justifyContent: 'center',
+            alignItems: 'center',
             justifyContent: 'center',
+            // width: '100%',
+            // maxWidth: '425px',
           }}
         >
           <ImageBlockSlider image={product.image} />
         </Grid>
-        <Grid pb={3} size={{ mobileLarge: 12, tabletPortrait: 5 }}>
+        <Grid
+          pb={3}
+          size={{ mobileLarge: 12, tabletPortrait: 5 }}
+          // width={'100%'}
+        >
           <Typography
             variant="h3"
             color="initial"

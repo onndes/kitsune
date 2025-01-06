@@ -108,7 +108,7 @@ const Item = ({ product }: { product: IProduct }) => {
                 fontWeight={400}
                 pl="2px"
               >
-                {product.price} $ x{product.count}
+                {product.price} ₴ x{product.count}
               </Typography>
               <Typography
                 variant="body1"

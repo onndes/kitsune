@@ -86,6 +86,7 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
       // onTouchMove={handleTouchMove}  // Блокируем вертикальную прокрутку
       sx={{
         width: '100%',
+
         div: {
           display: 'flex',
           width: '100%',
