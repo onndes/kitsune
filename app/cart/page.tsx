@@ -31,6 +31,12 @@ const Cart = () => {
           {products.length > 0 ? (
             <Grid container spacing={2} sx={{ paddingBottom: 0 }}>
               <Grid
+                size={{ xs: 12, md: 4 }}
+                sx={{ paddingBottom: 0, maxWidth: '400px', margin: 'auto' }}
+              >
+                <OrderPanel products={products} />
+              </Grid>
+              <Grid
                 size={{ xs: 12, md: 8 }}
                 mt={isTabletPortrait ? 3 : 1}
                 sx={{ paddingBottom: 0 }}
@@ -44,9 +50,6 @@ const Cart = () => {
                     />
                   );
                 })}
-              </Grid>
-              <Grid size={{ xs: 12, md: 4 }} sx={{ paddingBottom: 0 }}>
-                <OrderPanel products={products} />
               </Grid>
             </Grid>
           ) : (

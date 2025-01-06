@@ -40,15 +40,11 @@ const ControlInput = <T extends FieldValues>({
           helperText={error ? error.message : null}
           placeholder={nameUpper}
           fullWidth
+          size="small"
           slotProps={{
             formHelperText: {
               sx: {
-                fontSize: '12px',
-              },
-            },
-            inputLabel: {
-              sx: {
-                p: '0px',
+                fontSize: '10px',
               },
             },
           }}

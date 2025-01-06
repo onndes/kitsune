@@ -13,9 +13,10 @@ const OrderPanel = ({ products }: IOrderPanelProps) => {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
+          // justifyContent: 'space-between',
           alignItems: 'center',
           pb: 2,
+          gap: 1,
         }}
       >
         <Typography
@@ -23,7 +24,7 @@ const OrderPanel = ({ products }: IOrderPanelProps) => {
           color="text.secondary"
           component="p"
           fontSize="16px"
-          fontWeight={400}
+          fontWeight={500}
         >
           Всього
         </Typography>
@@ -31,8 +32,8 @@ const OrderPanel = ({ products }: IOrderPanelProps) => {
           variant="body1"
           color="text.primary"
           component="p"
-          fontSize="20px"
-          fontWeight={600}
+          fontSize="18px"
+          fontWeight={500}
         >
           {products.reduce((acc, prod) => {
             return acc + prod.count * prod.price;

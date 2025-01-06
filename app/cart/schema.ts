@@ -30,6 +30,8 @@ const schema = yup
     comments: yup
       .string()
       .max(500, 'Коментарі не можуть бути довше 500 символів'),
+    cityRef: yup.string().required('Вибір міста є обов’язковим'),
+    warehouseRef: yup.string().required('Вибір відділення є обов’язковим'),
   })
   .required();
 

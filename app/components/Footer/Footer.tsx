@@ -35,57 +35,60 @@ const Footer = () => {
           pb: 10,
         }}
       >
-        <Grid container spacing={4}>
-          <Grid size={{ base: 12, tabletPortrait: 6 }}>
-            <Typography
-              color="white"
-              variant="h5"
-              component="div"
-              fontWeight="700"
-              sx={{
-                flexGrow: 1,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                pb: 3,
-              }}
-              onClick={() => router.push('')}
-            >
-              <Image src={logo} alt="KITSUNE logo" width={40} height={40} />
-              KITSUNE
-            </Typography>
-            <Typography variant="body2" color="white">
-              Магазин косметики {`"kitsune"`} - ваш надійний помічник у догляді
-              за шкірою, волоссям і нігтями. Ми пропонуємо широкий вибір
-              косметичних брендів з різних країн світу, щоб задовольнити потреби
-              кожного клієнта. У нашому магазині ви знайдете продукти, створені
-              з урахуванням місцевих особливостей клімату та культури догляду за
-              собою. Ми гарантуємо високу якість продукції та приємні ціни.
-            </Typography>
-          </Grid>
-          <Grid size={{ base: 12, tabletPortrait: 6 }}>
-            <Typography variant="h5" component="p" color="white" pb={2}>
-              Наші контакти
-            </Typography>
-            <Typography variant="body2" component="p" color="white">
-              <a
-                href="tel:+380630550303"
-                style={{ color: 'inherit', textDecoration: 'none' }}
+        <Container maxWidth="lg">
+          <Grid container spacing={4}>
+            <Grid size={{ base: 12, tabletPortrait: 6 }}>
+              <Typography
+                color="white"
+                variant="h5"
+                component="div"
+                fontWeight="700"
+                sx={{
+                  flexGrow: 1,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  pb: 3,
+                }}
+                onClick={() => router.push('')}
               >
-                +380630550303
-              </a>
-            </Typography>
-            <Typography variant="body2" component="p" color="white">
-              <a
-                href={`mailto:ellemod.ua@gmail.com`}
-                style={{ color: 'inherit', textDecoration: 'none' }}
-              >
-                ellemod.ua@gmail.com
-              </a>
-            </Typography>
+                <Image src={logo} alt="KITSUNE logo" width={40} height={40} />
+                KITSUNE
+              </Typography>
+              <Typography variant="body2" color="white">
+                Магазин косметики {`"kitsune"`} - ваш надійний помічник у
+                догляді за шкірою, волоссям і нігтями. Ми пропонуємо широкий
+                вибір косметичних брендів з різних країн світу, щоб задовольнити
+                потреби кожного клієнта. У нашому магазині ви знайдете продукти,
+                створені з урахуванням місцевих особливостей клімату та культури
+                догляду за собою. Ми гарантуємо високу якість продукції та
+                приємні ціни.
+              </Typography>
+            </Grid>
+            <Grid size={{ base: 12, tabletPortrait: 6 }}>
+              <Typography variant="h5" component="p" color="white" pb={1}>
+                Наші контакти
+              </Typography>
+              <Typography variant="body2" component="p" color="white">
+                <a
+                  href="tel:+380630550303"
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                >
+                  +38 (063) 055-03-03
+                </a>
+              </Typography>
+              <Typography variant="body2" component="p" color="white">
+                <a
+                  href={`mailto:ellemod.ua@gmail.com`}
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                >
+                  ellemod.ua@gmail.com
+                </a>
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
+        </Container>
       </Box>
     </Container>
   );

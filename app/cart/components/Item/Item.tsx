@@ -83,7 +83,7 @@ const Item = ({ product }: { product: IProduct }) => {
               <Typography
                 component="div"
                 variant="h6"
-                fontWeight={500}
+                fontWeight={400}
                 fontSize={15}
                 pl="2px"
                 color="text.primary"
@@ -130,7 +130,7 @@ const Item = ({ product }: { product: IProduct }) => {
             >
               <IconButton
                 aria-label=""
-                sx={{ padding: '2px' }}
+                sx={{ padding: '4x' }}
                 disabled={product.count <= 1}
                 onClick={() => handleDelete(false)}
               >
@@ -144,12 +144,12 @@ const Item = ({ product }: { product: IProduct }) => {
                   })}
                 />
               </IconButton>
-              <Typography id="count" variant="h6" textAlign="center">
+              <Typography id="count" variant="body1" textAlign="center">
                 {product.count}
               </Typography>
               <IconButton
                 aria-label=""
-                sx={{ padding: '2px' }}
+                sx={{ padding: '4px' }}
                 onClick={() => handleAdd()}
               >
                 <AddBoxOutlinedIcon

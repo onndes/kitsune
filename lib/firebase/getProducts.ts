@@ -71,7 +71,6 @@ export const getProducts = async (
       orderBy('__name__'),
       limit(limitNumber)
     );
-
     // Ссылки на подкатегорию и категорию
     const subReg =
       subcategory &&

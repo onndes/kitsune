@@ -1,10 +1,11 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import schema from './schema';
 import ControlInput from '@/app/cart/components/ControlInput';
 import MyButton from '@/app/cart/components/MyButton';
+import SelectPost from './SelectPost';
 
 interface IFormData {
   comments?: string;
@@ -14,20 +15,21 @@ interface IFormData {
   middleName: string;
   number: string;
   email: string;
+  cityRef: string;
+  warehouseRef: string;
 }
 
 const formData: Array<{ name: keyof IFormData; placeholder?: string }> = [
   { name: 'name', placeholder: "Ім'я" },
-  { name: 'surname', placeholder: 'Прізвище' },
   { name: 'middleName', placeholder: 'По батькові ' },
+  { name: 'surname', placeholder: 'Прізвище' },
   { name: 'number', placeholder: 'Номер' },
   { name: 'email', placeholder: 'Електронна пошта' },
 ];
 
 export const Form = () => {
   const form = useRef(null);
-  // const cartProducts = useSelector(({ cart }) => cart.products)
-  const { control, handleSubmit } = useForm<IFormData>({
+  const { control, handleSubmit, watch } = useForm<IFormData>({
     defaultValues: {
       comments: '',
       voucher: '',
@@ -36,8 +38,9 @@ export const Form = () => {
       middleName: '',
       number: '',
       email: '',
+      cityRef: '',
+      warehouseRef: '',
     },
-
     resolver: yupResolver(schema),
   });
 
@@ -70,33 +73,16 @@ export const Form = () => {
       ref={form}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+      }}
     >
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        fontSize="15px"
-        fontWeight={600}
-      >
-        Додаткова інформація
-      </Typography>
-      <ControlInput
-        name="comments"
-        control={control}
-        sx={{
-          pb: 2,
-          textarea: {
-            minHeight: '70px',
-          },
-        }}
-      />
-
-      <Divider />
-      <Box pt={2} pb={2}>
-        <ControlInput name="voucher" control={control} placeholder="Ваучер" />
-        <MyButton text="Застосувати ваучер" variant="outlined" fullWidth />
-      </Box>
       <Box>
+        <Typography variant="h6" fontSize={16} mb={1}>
+          Одержувач замовлення
+        </Typography>
         {formData.map((el) => (
           <ControlInput
             autoComplete="on"
@@ -104,10 +90,22 @@ export const Form = () => {
             name={el.name}
             placeholder={el.placeholder}
             control={control}
+            pb={2}
           />
         ))}
+        <Typography variant="h6" fontSize={16} mb={1}>
+          Доставка новою поштою
+        </Typography>
+        <SelectPost control={control} watch={watch} />
       </Box>
-      <MyButton type="submit" text="Checkout Now" fullWidth />
+
+      <MyButton
+        type="submit"
+        text="Оформити замовлення"
+        fullWidth
+        size="small"
+        sx={{ width: '250px', margin: 'auto', fontSize: '16px', mt: 2 }}
+      />
     </Box>
   );
 };
