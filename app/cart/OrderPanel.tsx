@@ -25,7 +25,7 @@ const OrderPanel = ({ products }: IOrderPanelProps) => {
           fontSize="16px"
           fontWeight={400}
         >
-          Total
+          Всього
         </Typography>
         <Typography
           variant="body1"

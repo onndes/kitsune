@@ -40,7 +40,7 @@ const HeaderBlock = ({ product }: Props) => {
               fontWeight={300}
               fontSize="14px"
             >
-              Code:{' '}
+              Код товару:{' '}
             </Typography>
             <Typography
               variant="body1"
@@ -58,7 +58,7 @@ const HeaderBlock = ({ product }: Props) => {
               fontWeight={400}
               fontSize="14px"
             >
-              Brand:{' '}
+              Бренд:{' '}
             </Typography>
             <Typography
               variant="body1"

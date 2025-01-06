@@ -118,7 +118,7 @@ const Item = ({ product }: { product: IProduct }) => {
                 fontWeight={500}
                 pl="2px"
               >
-                {product.price * product.count} $
+                {product.price * product.count} ₴
               </Typography>
             </Box>
             <Box
@@ -136,7 +136,7 @@ const Item = ({ product }: { product: IProduct }) => {
               >
                 <IndeterminateCheckBoxOutlinedIcon
                   sx={(theme) => ({
-                    fontSize: '27px',
+                    fontSize: '25px',
                     color:
                       product.count > 1
                         ? theme.palette.primary.main
@@ -144,7 +144,7 @@ const Item = ({ product }: { product: IProduct }) => {
                   })}
                 />
               </IconButton>
-              <Typography id="count" variant="h4" textAlign="center">
+              <Typography id="count" variant="h6" textAlign="center">
                 {product.count}
               </Typography>
               <IconButton
@@ -155,7 +155,7 @@ const Item = ({ product }: { product: IProduct }) => {
                 <AddBoxOutlinedIcon
                   fontSize="small"
                   sx={(theme) => ({
-                    fontSize: '27px',
+                    fontSize: '25px',
                     color: theme.palette.primary.main,
                   })}
                 />

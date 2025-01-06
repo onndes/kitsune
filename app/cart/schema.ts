@@ -4,31 +4,34 @@ const schema = yup
   .object({
     name: yup
       .string()
-      .required('First name is required')
-      .min(2, 'First name must be at least 2 characters')
-      .max(50, 'First name cannot be longer than 50 characters'),
+      .required('Ім’я є обов’язковим')
+      .min(2, 'Ім’я повинно містити щонайменше 2 символи')
+      .max(50, 'Ім’я не може бути довше 50 символів'),
     surname: yup
       .string()
-      .required('Last name is required')
-      .min(2, 'Last name must be at least 2 characters')
-      .max(50, 'Last name cannot be longer than 50 characters'),
+      .required('Прізвище є обов’язковим')
+      .min(2, 'Прізвище повинно містити щонайменше 2 символи')
+      .max(50, 'Прізвище не може бути довше 50 символів'),
+    middleName: yup
+      .string()
+      .required('По батькові є обов’язковим')
+      .min(2, 'По батькові повинно містити щонайменше 2 символи')
+      .max(50, 'По батькові не може бути довше 50 символів'),
     number: yup
       .string()
-      .required('Phone number is required')
-      .matches(/^\d+$/, 'Phone number must be numeric')
-      .min(10, 'Phone number must be at least 10 digits')
-      .max(15, 'Phone number cannot be longer than 15 digits'),
+      .required('Номер телефону є обов’язковим')
+      .matches(/^\d+$/, 'Номер телефону повинен містити лише цифри')
+      .min(10, 'Номер телефону повинен містити щонайменше 10 цифр')
+      .max(15, 'Номер телефону не може бути довше 15 цифр'),
     email: yup
       .string()
-      .required('Email is required')
-      .email('Invalid email address')
-      .max(100, 'Email cannot be longer than 100 characters'),
-    voucher: yup
-      .string()
-      .max(20, 'Voucher code cannot be longer than 20 characters'),
+      .required('Електронна пошта є обов’язковою')
+      .email('Недійсна електронна адреса')
+      .max(100, 'Електронна пошта не може бути довше 100 символів'),
+    voucher: yup.string().max(20, 'Код ваучера не може бути довше 20 символів'),
     comments: yup
       .string()
-      .max(500, 'Comments cannot be longer than 500 characters'),
+      .max(500, 'Коментарі не можуть бути довше 500 символів'),
   })
   .required();
 

@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { headers } from 'next/headers';
 import { ReactNode } from 'react';
 import '../styles/globals.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import Indent from './components/Indent';
 import MyAppBarWraper from './components/MyAppBar';
 import { ColorModeProvider } from './contexts/ColorModeContext';

@@ -18,13 +18,16 @@ export const StyledCard = styled(Card)(({ theme }) => ({
 
 export const StyledCardContent = styled(CardContent)({
   display: 'flex',
-  flex: 1,
+  flex: '1',
   flexDirection: 'column',
   justifyContent: 'space-between',
+  padding: 8,
+  // paddingBottom: '0px',
 });
 
 export const StyledBox = styled(Box)({
   display: 'flex',
+  // flex: 1,
   gap: '1rem',
   justifyContent: 'space-between',
   alignItems: 'center',

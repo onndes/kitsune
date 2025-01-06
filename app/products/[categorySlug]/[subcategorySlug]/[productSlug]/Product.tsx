@@ -17,7 +17,6 @@ const Product = ({ product }: Props) => {
       sx={{
         '	&.MuiContainer-root': {
           height: '100%',
-          pt: 5,
           display: 'flex',
           flexDirection: 'column',
         },

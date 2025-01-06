@@ -7,7 +7,7 @@ interface StyledIndentProps {
 }
 
 const StyledIndent = styled('div')<StyledIndentProps>(({ bottom }) => ({
-  paddingTop: !bottom ? '77px' : undefined,
+  paddingTop: !bottom ? '85px' : undefined,
 }));
 
 export default function Indent({ bottom }: { bottom?: boolean }) {

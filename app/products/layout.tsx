@@ -13,7 +13,7 @@ export default async function ProductsLayout({
   const extractedCategoryPath = extractCategoryPath(subcategories);
 
   return (
-    <Container sx={{ pt: 2, height: '100%' }} disableGutters>
+    <Container sx={{ pt: 0, height: '100%' }} disableGutters>
       <Grid
         container
         sx={{ height: '100%', minHeight: '100vh' }}

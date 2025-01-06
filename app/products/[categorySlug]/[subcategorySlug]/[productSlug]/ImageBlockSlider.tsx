@@ -7,7 +7,6 @@ import useResponsive from '@/hooks/useResponsive';
 interface ImageBlockSliderProps {
   image: string[];
 }
-
 const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
   // const sliderRef = useRef<HTMLDivElement>(null); // Блокируем вертикальную прокрутку
   const { isMobileLarge } = useResponsive();
@@ -16,12 +15,37 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const settingsMain = {
-    infinite: false,
+    infinite: true,
     arrows: false,
     slidesToShow: 1,
     preventScrollOnSwipe: true,
     beforeChange: (_oldIndex: number, newIndex: number) =>
       setCurrentSlide(newIndex),
+    dots: isMobileLarge, // Включаем точки только на мобильных
+    customPaging: (i: number) => (
+      <div
+        style={{
+          width: '10px',
+          height: '10px',
+          background: i === currentSlide ? '#cc1078' : '#ccc',
+          borderRadius: '50%',
+          margin: '0 5px',
+          cursor: 'pointer',
+        }}
+      />
+    ),
+    appendDots: (dots: React.ReactNode) => (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '0px 0',
+        }}
+      >
+        {dots}
+      </div>
+    ),
   };
 
   const settingsNav = {
@@ -67,6 +91,7 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
           width: '100%',
         },
         overflow: 'hidden',
+        padding: '0px 0px 16px 0px',
       }}
     >
       {/* Основной слайдер */}

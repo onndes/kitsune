@@ -11,15 +11,17 @@ interface IFormData {
   voucher?: string;
   name: string;
   surname: string;
+  middleName: string;
   number: string;
   email: string;
 }
 
-const formData: Array<{ name: keyof IFormData }> = [
-  { name: 'name' },
-  { name: 'surname' },
-  { name: 'number' },
-  { name: 'email' },
+const formData: Array<{ name: keyof IFormData; placeholder?: string }> = [
+  { name: 'name', placeholder: "Ім'я" },
+  { name: 'surname', placeholder: 'Прізвище' },
+  { name: 'middleName', placeholder: 'По батькові ' },
+  { name: 'number', placeholder: 'Номер' },
+  { name: 'email', placeholder: 'Електронна пошта' },
 ];
 
 export const Form = () => {
@@ -31,6 +33,7 @@ export const Form = () => {
       voucher: '',
       name: '',
       surname: '',
+      middleName: '',
       number: '',
       email: '',
     },
@@ -75,12 +78,11 @@ export const Form = () => {
         fontSize="15px"
         fontWeight={600}
       >
-        Additional Comments
+        Додаткова інформація
       </Typography>
       <ControlInput
         name="comments"
         control={control}
-        // multiline={true}
         sx={{
           pb: 2,
           textarea: {
@@ -100,6 +102,7 @@ export const Form = () => {
             autoComplete="on"
             key={el.name}
             name={el.name}
+            placeholder={el.placeholder}
             control={control}
           />
         ))}

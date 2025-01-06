@@ -5,6 +5,7 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 interface ControlInputProps<T extends FieldValues> {
   control: Control<T>; // Типизируем `control`
   name: Path<T>; // Указываем, что `name` должен быть ключом объекта формы
+  placeholder?: string; // Опциональные значения
   pb?: number; // Опциональные значения
   pt?: number;
   autoComplete?: string;
@@ -15,13 +16,15 @@ interface ControlInputProps<T extends FieldValues> {
 const ControlInput = <T extends FieldValues>({
   control,
   name,
+  placeholder,
   pb = 1,
   pt = 0,
   autoComplete = 'off',
   sx = {},
   ...otherProps
 }: ControlInputProps<T>) => {
-  const nameUpper = name.charAt(0).toUpperCase() + name.slice(1);
+  const nameUpper =
+    placeholder && placeholder.charAt(0).toUpperCase() + placeholder.slice(1);
 
   return (
     <Controller
@@ -31,15 +34,22 @@ const ControlInput = <T extends FieldValues>({
         <TextField
           autoComplete={autoComplete}
           label={nameUpper}
-          multiline={name === 'description'} // Условие для текстовой области
+          multiline={name === 'comments'} // Условие для текстовой области
           error={!!error}
           variant="outlined"
           helperText={error ? error.message : null}
           placeholder={nameUpper}
           fullWidth
-          FormHelperTextProps={{
-            sx: {
-              fontSize: '12px',
+          slotProps={{
+            formHelperText: {
+              sx: {
+                fontSize: '12px',
+              },
+            },
+            inputLabel: {
+              sx: {
+                p: '0px',
+              },
             },
           }}
           sx={{
@@ -49,6 +59,7 @@ const ControlInput = <T extends FieldValues>({
             textarea: {
               minHeight: '100px',
             },
+            fontSize: '14px',
           }}
           {...otherProps}
           {...field}

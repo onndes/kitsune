@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({ handleClose }) => {
       })}
     >
       <Typography id="modal-modal-title" variant="h4" component="h2">
-        Basket
+        Кошик
       </Typography>
       <IconButton aria-label="Close" onClick={handleClose}>
         <CloseIcon fontSize="medium" />

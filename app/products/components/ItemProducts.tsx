@@ -48,7 +48,7 @@ export default function ItemProduct({
           <Box
             sx={{
               display: 'flex',
-              gap: 1,
+              gap: 0,
             }}
           >
             <BuyButton product={product} />
