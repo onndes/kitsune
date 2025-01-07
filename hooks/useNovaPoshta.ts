@@ -1,25 +1,8 @@
 import axios from 'axios';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
-
-// Типы данных для API-ответов
-interface NovaPoshtaResponse<T> {
-  success: boolean;
-  data: T[];
-  errors: string[];
-  warnings: string[];
-  info: Record<string, unknown>;
-}
-
-interface City {
-  Ref: string;
-  Description: string;
-}
-
-interface Warehouse {
-  Ref: string;
-  Description: string;
-}
+import { ICity, INovaPoshtaResponse, IWarehouse } from '@/types/novaPoshta.t';
+import { regionalCentersCity } from '@/app/cart/regionsCenters';
 
 const API_KEY = process.env.NEXT_PUBLIC_NOVA_POSHTA_API_KEY as string;
 const BASE_URL = 'https://api.novaposhta.ua/v2.0/json/';
@@ -29,7 +12,7 @@ const novaPoshtaRequest = async <T>(
   modelName: string,
   calledMethod: string,
   methodProps: Record<string, unknown> = {}
-): Promise<NovaPoshtaResponse<T>> => {
+): Promise<INovaPoshtaResponse<T>> => {
   const response = await axios.post(BASE_URL, {
     apiKey: API_KEY,
     modelName,
@@ -41,8 +24,8 @@ const novaPoshtaRequest = async <T>(
 
 export const useCities = (
   query: string
-): { cities: City[]; isLoading: boolean } => {
-  const [cities, setCities] = useState<City[]>([]);
+): { cities: ICity[]; isLoading: boolean } => {
+  const [cities, setCities] = useState<ICity[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -54,9 +37,13 @@ export const useCities = (
     const fetchCities = async () => {
       setIsLoading(true);
       try {
-        const response = await novaPoshtaRequest<City>('Address', 'getCities', {
-          FindByString: query,
-        });
+        const response = await novaPoshtaRequest<ICity>(
+          'Address',
+          'getCities',
+          {
+            FindByString: query,
+          }
+        );
         setCities(response.data || []);
       } catch (error) {
         console.error('Ошибка получения городов:', error);
@@ -65,7 +52,7 @@ export const useCities = (
       }
     };
 
-    const debounceFetch = setTimeout(fetchCities, 500); // Задержка запроса
+    const debounceFetch = setTimeout(fetchCities, 250); // Задержка запроса
     return () => clearTimeout(debounceFetch); // Очищаем таймер при изменении query
   }, [query]);
 
@@ -74,13 +61,44 @@ export const useCities = (
 
 export const useWarehouses = (
   cityRef: string | null
-): UseQueryResult<NovaPoshtaResponse<Warehouse>> => {
+): UseQueryResult<INovaPoshtaResponse<IWarehouse>> => {
   return useQuery({
     queryKey: ['warehouses', cityRef],
     queryFn: () =>
-      novaPoshtaRequest<Warehouse>('Address', 'getWarehouses', {
+      novaPoshtaRequest<IWarehouse>('Address', 'getWarehouses', {
         CityRef: cityRef,
       }),
     enabled: !!cityRef, // Запрос активен только если передан CityRef
   });
+};
+
+// =============================
+
+//? Функция для получения актуальных Ref городов
+export const fetchCityRefs = async (): Promise<ICity[]> => {
+  try {
+    const response = await axios.post('https://api.novaposhta.ua/v2.0/json/', {
+      apiKey: API_KEY,
+      modelName: 'Address',
+      calledMethod: 'getCities',
+      methodProperties: {},
+    });
+
+    const allCities = response.data.data;
+
+    // Обновляем `Ref` для областных центров
+    const updatedRegionalCenters: ICity[] = regionalCentersCity.map((city) => {
+      const matchedCity = allCities.find(
+        (apiCity: { Description: string }) =>
+          apiCity.Description === city.Description
+      );
+      return matchedCity || [];
+    });
+
+    // console.log('Обновленный список городов:', updatedRegionalCenters);
+    return updatedRegionalCenters;
+  } catch (error) {
+    console.error('Ошибка получения данных:', error);
+    return [];
+  }
 };

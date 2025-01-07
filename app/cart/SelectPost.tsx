@@ -6,7 +6,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Control,
   Controller,
@@ -14,8 +14,8 @@ import {
   Path,
   PathValue,
 } from 'react-hook-form';
-import { regionalCenters } from './regionsCenters';
-import { useCities, useWarehouses } from '@/hooks/useNovaPoshta';
+import { fetchCityRefs, useCities, useWarehouses } from '@/hooks/useNovaPoshta';
+import { ICity } from '@/types/novaPoshta.t';
 
 interface SelectPostProps<T extends FieldValues> {
   control: Control<T>; // Типизируем `control`
@@ -29,17 +29,21 @@ const SelectPost = <T extends FieldValues>({
   const cityRef = watch('cityRef' as Path<T>) as string;
   const { data: warehouses, isLoading: loadingWarehouses } =
     useWarehouses(cityRef);
-
+  const [regCenters, setRegCenters] = useState([] as ICity[] | []);
   const [inputValue, setInputValue] = useState('');
   const { cities, isLoading: loadingCities } = useCities(inputValue);
 
+  useEffect(() => {
+    if (!cities.length && !regCenters.length) {
+      const getCities = async () => {
+        const citiesData: ICity[] = await fetchCityRefs();
+        setRegCenters(citiesData);
+      };
+      getCities();
+    }
+  }, [cities, regCenters]);
   // Объединяем предопределённые города с результатами поиска
-  const combinedCities = inputValue.trim()
-    ? cities
-    : regionalCenters.map((city) => ({
-        Ref: city.Ref,
-        Description: city.Description,
-      }));
+  const combinedCities = inputValue.trim() ? cities : regCenters;
 
   return (
     <>
@@ -52,11 +56,17 @@ const SelectPost = <T extends FieldValues>({
           <Autocomplete
             size="small"
             freeSolo
-            options={combinedCities.map((city) => city.Description)}
-            value={field.value}
-            onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+            options={combinedCities.map((city) => city.Description)} // Отображаем только Description
+            value={
+              combinedCities.find((city) => city.Ref === field.value)
+                ?.Description || ''
+            }
+            onInputChange={(_, newInputValue) => setInputValue(newInputValue)} // Обновляем поле ввода
             onChange={(_, value) => {
-              field.onChange(value);
+              const selectedCity = combinedCities.find(
+                (city) => city.Description === value
+              );
+              field.onChange(selectedCity?.Ref || '');
             }}
             loading={loadingCities}
             slotProps={{

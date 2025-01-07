@@ -38,6 +38,7 @@ export const Form = () => {
       middleName: '',
       number: '',
       email: '',
+      // Ref города и отделения
       cityRef: '',
       warehouseRef: '',
     },
