@@ -1,31 +1,3 @@
-export const regionalCenters = [
-  { Ref: '8d5a980d-391c-11dd-90d9-001a92567626', Description: 'Київ' },
-  { Ref: 'db5c88e0-391c-11dd-90d9-001a92567626', Description: 'Харків' },
-  { Ref: 'db5c88d0-391c-11dd-90d9-001a92567626', Description: 'Одеса' },
-  { Ref: 'db5c88f0-391c-11dd-90d9-001a92567626', Description: 'Дніпро' },
-  { Ref: 'db5c88f5-391c-11dd-90d9-001a92567626', Description: 'Львів' },
-  { Ref: 'db5c88c4-391c-11dd-90d9-001a92567626', Description: 'Житомир' },
-  { Ref: 'db5c897c-391c-11dd-90d9-001a92567626', Description: 'Чернігів' },
-  { Ref: 'db5c88de-391c-11dd-90d9-001a92567626', Description: 'Вінниця' },
-  { Ref: 'db5c88c6-391c-11dd-90d9-001a92567626', Description: 'Запоріжжя' },
-  { Ref: 'db5c8892-391c-11dd-90d9-001a92567626', Description: 'Полтава' },
-  { Ref: 'db5c8902-391c-11dd-90d9-001a92567626', Description: 'Черкаси' },
-  { Ref: 'db5c896a-391c-11dd-90d9-001a92567626', Description: 'Рівне' },
-  { Ref: 'db5c8900-391c-11dd-90d9-001a92567626', Description: 'Тернопіль' },
-  { Ref: 'db5c893b-391c-11dd-90d9-001a92567626', Description: 'Луцьк' },
-  {
-    Ref: 'db5c8904-391c-11dd-90d9-001a92567626',
-    Description: 'Івано-Франківськ',
-  },
-  { Ref: 'db5c88ac-391c-11dd-90d9-001a92567626', Description: 'Хмельницький' },
-  { Ref: 'e221d627-391c-11dd-90d9-001a92567626', Description: 'Ужгород' },
-  { Ref: 'e221d642-391c-11dd-90d9-001a92567626', Description: 'Чернівці' },
-  { Ref: 'db5c891b-391c-11dd-90d9-001a92567626', Description: 'Кропивницький' },
-  { Ref: 'db5c88e5-391c-11dd-90d9-001a92567626', Description: 'Суми' },
-  { Ref: 'db5c88cc-391c-11dd-90d9-001a92567626', Description: 'Херсон' },
-  { Ref: 'db5c888c-391c-11dd-90d9-001a92567626', Description: 'Миколаїв' },
-];
-
 export const regionalCentersCity = [
   { Description: 'Київ' },
   { Description: 'Харків' },

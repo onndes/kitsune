@@ -2,8 +2,13 @@ export interface INovaPoshtaResponse<T> {
   success: boolean;
   data: T[];
   errors: string[];
+  translatedErrors: string[];
   warnings: string[];
-  info: Record<string, unknown>;
+  info: string[];
+  messageCodes: string[];
+  errorCodes: string[];
+  warningCodes: string[];
+  infoCodes: string[];
 }
 
 export interface ICity {
@@ -19,7 +24,7 @@ export interface ICity {
   SettlementTypeDescriptionRu: string;
   IsBranch: string;
   PreventEntryNewStreetsUser: string;
-  SpecialCashCheck?: string;
+  SpecialCashCheck?: number;
   Delivery1: string;
   Delivery2: string;
   Delivery3: string;

@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material//Grid2';
 import Item from './components/Item/Item';
 import OrderPanel from './OrderPanel';
-import cartEmpty from '../../assets/img/cartEmpty.png';
 import useResponsive from '@/hooks/useResponsive';
 import { RootState } from '@/redux/store';
 import Link from 'next/link';
@@ -55,7 +54,12 @@ const Cart = () => {
           ) : (
             <Box textAlign="center" mb={5}>
               <Box maxWidth="200px" display="inline-block" pt={5}>
-                <Image src={cartEmpty} alt="Cart empty" width={200} />
+                <Image
+                  src="/image/cartEmpty.png"
+                  alt="Cart empty"
+                  width={200}
+                  height={200}
+                />
               </Box>
               <Typography
                 variant="h4"

@@ -3,7 +3,6 @@
 import { Box, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React, { useEffect, useState } from 'react';
-import logo from '@/app/icons/logo.svg';
 import useResponsive from '@/hooks/useResponsive';
 import useMyTheme from '@/hooks/useMyTheme';
 import { useRouter } from 'next/navigation';
@@ -53,7 +52,12 @@ const Footer = () => {
                 }}
                 onClick={() => router.push('')}
               >
-                <Image src={logo} alt="KITSUNE logo" width={40} height={40} />
+                <Image
+                  src="/image/logos/logo.svg"
+                  alt="KITSUNE logo"
+                  width={40}
+                  height={40}
+                />
                 KITSUNE
               </Typography>
               <Typography variant="body2" color="white">

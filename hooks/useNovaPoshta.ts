@@ -2,12 +2,11 @@ import axios from 'axios';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { ICity, INovaPoshtaResponse, IWarehouse } from '@/types/novaPoshta.t';
-import { regionalCentersCity } from '@/app/cart/regionsCenters';
+import { useDebounce } from 'use-debounce';
 
 const API_KEY = process.env.NEXT_PUBLIC_NOVA_POSHTA_API_KEY as string;
 const BASE_URL = 'https://api.novaposhta.ua/v2.0/json/';
 
-// Общая функция для API-запросов
 const novaPoshtaRequest = async <T>(
   modelName: string,
   calledMethod: string,
@@ -27,9 +26,10 @@ export const useCities = (
 ): { cities: ICity[]; isLoading: boolean } => {
   const [cities, setCities] = useState<ICity[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [debouncedQuery] = useDebounce(query, 250);
 
   useEffect(() => {
-    if (!query.trim()) {
+    if (!debouncedQuery.trim()) {
       setCities([]);
       return;
     }
@@ -41,20 +41,19 @@ export const useCities = (
           'Address',
           'getCities',
           {
-            FindByString: query,
+            FindByString: debouncedQuery,
           }
         );
         setCities(response.data || []);
       } catch (error) {
-        console.error('Ошибка получения городов:', error);
+        console.error('Помилка отримання даних:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    const debounceFetch = setTimeout(fetchCities, 250); // Задержка запроса
-    return () => clearTimeout(debounceFetch); // Очищаем таймер при изменении query
-  }, [query]);
+    fetchCities();
+  }, [debouncedQuery]);
 
   return { cities, isLoading };
 };
@@ -67,38 +66,43 @@ export const useWarehouses = (
     queryFn: () =>
       novaPoshtaRequest<IWarehouse>('Address', 'getWarehouses', {
         CityRef: cityRef,
+        TypeOfWarehouseRef: '841339c7-591a-42e2-8233-7a0a00f0ed6f',
       }),
     enabled: !!cityRef, // Запрос активен только если передан CityRef
   });
 };
 
-// =============================
-
-//? Функция для получения актуальных Ref городов
-export const fetchCityRefs = async (): Promise<ICity[]> => {
-  try {
-    const response = await axios.post('https://api.novaposhta.ua/v2.0/json/', {
-      apiKey: API_KEY,
-      modelName: 'Address',
-      calledMethod: 'getCities',
-      methodProperties: {},
-    });
-
-    const allCities = response.data.data;
-
-    // Обновляем `Ref` для областных центров
-    const updatedRegionalCenters: ICity[] = regionalCentersCity.map((city) => {
-      const matchedCity = allCities.find(
-        (apiCity: { Description: string }) =>
-          apiCity.Description === city.Description
-      );
-      return matchedCity || [];
-    });
-
-    // console.log('Обновленный список городов:', updatedRegionalCenters);
-    return updatedRegionalCenters;
-  } catch (error) {
-    console.error('Ошибка получения данных:', error);
-    return [];
-  }
+export const useCitiesAll = (): UseQueryResult<INovaPoshtaResponse<ICity>> => {
+  return useQuery({
+    queryKey: ['cityRefs', 'cityDescription'],
+    queryFn: () => novaPoshtaRequest<ICity>('Address', 'getCities', {}),
+  });
 };
+
+// data: [
+//   {
+//     Ref: '6f8c7162-4b72-4b0a-88e5-906948c6a92f',
+//     Description: 'Поштове відділення з обмеження',
+//     DescriptionRu: 'Parcel Shop',
+//   },
+//   {
+//     Ref: '841339c7-591a-42e2-8233-7a0a00f0ed6f',
+//     Description: 'Поштове(ий)',
+//     DescriptionRu: 'Почтовое отделение',
+//   },
+//   {
+//     Ref: '95dc212d-479c-4ffb-a8ab-8c1b9073d0bc',
+//     Description: 'Поштомат ПриватБанку',
+//     DescriptionRu: 'Почтомат приват банка',
+//   },
+//   {
+//     Ref: '9a68df70-0267-42a8-bb5c-37f427e36ee4',
+//     Description: 'Вантажне(ий)',
+//     DescriptionRu: 'Грузовое отделение',
+//   },
+//   {
+//     Ref: 'f9316480-5f2d-425d-bc2c-ac7cd29decf0',
+//     Description: 'Поштомат',
+//     DescriptionRu: 'Почтомат',
+//   },
+// ],

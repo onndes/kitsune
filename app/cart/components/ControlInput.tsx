@@ -34,7 +34,7 @@ const ControlInput = <T extends FieldValues>({
         <TextField
           autoComplete={autoComplete}
           label={nameUpper}
-          multiline={name === 'comments'} // Условие для текстовой области
+          multiline={name === 'comments'}
           error={!!error}
           variant="outlined"
           helperText={error ? error.message : null}

@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { StyledLogoContainer, StyledTypography } from './styles';
 import MyDrawer from '../MyDrawer/MyDrawer';
 import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
-import logo from '@/app/icons/logo.svg';
 import { useDispatch } from 'react-redux';
 import { setActiveSubcategory, setOpenedSubmenu } from '@/redux/appSlice';
 
@@ -32,7 +31,13 @@ const LogoAppBar = ({ categories, subcategories }: Props) => {
           dispatch(setOpenedSubmenu(''));
         }}
       >
-        <Image src={logo} alt="KITSUNE logo" width={40} height={40} priority />
+        <Image
+          src="/image/logos/logo.svg"
+          alt="KITSUNE logo"
+          width={40}
+          height={40}
+          priority
+        />
         KITSUNE
       </StyledTypography>
     </StyledLogoContainer>

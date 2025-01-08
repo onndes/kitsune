@@ -5,7 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import schema from './schema';
 import ControlInput from '@/app/cart/components/ControlInput';
 import MyButton from '@/app/cart/components/MyButton';
-import SelectPost from './SelectPost';
+import LocationPicker from './LocationPicker';
+import SelectDelivery from './components/SelectDelivery';
 
 interface IFormData {
   comments?: string;
@@ -17,6 +18,7 @@ interface IFormData {
   email: string;
   cityRef: string;
   warehouseRef: string;
+  delivery: string;
 }
 
 const formData: Array<{ name: keyof IFormData; placeholder?: string }> = [
@@ -41,6 +43,7 @@ export const Form = () => {
       // Ref города и отделения
       cityRef: '',
       warehouseRef: '',
+      delivery: 'novaPoshta',
     },
     resolver: yupResolver(schema),
   });
@@ -94,10 +97,12 @@ export const Form = () => {
             pb={2}
           />
         ))}
+
+        <SelectDelivery control={control} name="delivery" />
         <Typography variant="h6" fontSize={16} mb={1}>
-          Доставка новою поштою
+          Адреса доставки
         </Typography>
-        <SelectPost control={control} watch={watch} />
+        <LocationPicker control={control} watch={watch} />
       </Box>
 
       <MyButton

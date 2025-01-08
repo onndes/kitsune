@@ -30,7 +30,7 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
   const handleClick = () => {
     handleClickItemSubcategory(sub.nameDoc);
     if (drawerClose) {
-      drawerClose();
+      drawerClose()
     }
   };
 

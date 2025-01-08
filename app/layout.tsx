@@ -52,22 +52,22 @@ export default async function Layout({ children }: { children: ReactNode }) {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="icons/icon-180x180.png"
+            href="/image/icons/icon-180x180.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="192x192"
-            href="icons/icon-192x192.png"
+            href="/image/icons/icon-192x192.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="512x512"
-            href="/icons/icon-512x512.png"
+            href="/image/icons/icon-512x512.png"
           />
-          <link rel="preload" href="/icons/icon-192x192.png" as="image" />
-          <link rel="preload" href="/icons/icon-256x256.png" as="image" />
+          <link rel="preload" href="/image/icons/icon-192x192.png" as="image" />
+          <link rel="preload" href="/image/icons/icon-256x256.png" as="image" />
           {/* Другие метатеги */}
         </Head>
         <body className={roboto.variable}>

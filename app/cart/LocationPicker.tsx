@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Autocomplete,
   TextField,
@@ -6,7 +8,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Control,
   Controller,
@@ -14,36 +16,42 @@ import {
   Path,
   PathValue,
 } from 'react-hook-form';
-import { fetchCityRefs, useCities, useWarehouses } from '@/hooks/useNovaPoshta';
+import { useCities, useWarehouses } from '@/hooks/useNovaPoshta';
 import { ICity } from '@/types/novaPoshta.t';
+import { regionalCentersData } from './regionsCenterData';
 
 interface SelectPostProps<T extends FieldValues> {
   control: Control<T>; // Типизируем `control`
   watch: (name: Path<T>) => PathValue<T, Path<T>>;
 }
 
-const SelectPost = <T extends FieldValues>({
+const LocationPicker = <T extends FieldValues>({
   control,
   watch,
 }: SelectPostProps<T>) => {
   const cityRef = watch('cityRef' as Path<T>) as string;
+
   const { data: warehouses, isLoading: loadingWarehouses } =
     useWarehouses(cityRef);
-  const [regCenters, setRegCenters] = useState([] as ICity[] | []);
   const [inputValue, setInputValue] = useState('');
+
   const { cities, isLoading: loadingCities } = useCities(inputValue);
 
-  useEffect(() => {
-    if (!cities.length && !regCenters.length) {
-      const getCities = async () => {
-        const citiesData: ICity[] = await fetchCityRefs();
-        setRegCenters(citiesData);
-      };
-      getCities();
-    }
-  }, [cities, regCenters]);
+  // Получаем и фильтруем региональные центры (более 10.000, если нужно будет // загружать)
+  // const { data: allCities, isLoading: loadingCitiesAll } = useCitiesAll();
+  // const listRegionalCenters: ICity[] = useMemo(() => {
+  //   if (!allCities?.data.length) return [];
+  //   if (typeof window !== 'undefined') {
+  //     return filteredCities(allCities.data);
+  //   } else {
+  //     return [];
+  //   }
+  // }, [allCities]);
+
   // Объединяем предопределённые города с результатами поиска
-  const combinedCities = inputValue.trim() ? cities : regCenters;
+  const combinedCities: ICity[] = inputValue.trim()
+    ? cities
+    : regionalCentersData;
 
   return (
     <>
@@ -150,4 +158,4 @@ const SelectPost = <T extends FieldValues>({
   );
 };
 
-export default SelectPost;
+export default LocationPicker;
