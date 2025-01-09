@@ -21,16 +21,31 @@ const novaPoshtaRequest = async <T>(
   return response.data;
 };
 
-export const useCities = (
-  query: string
-): { cities: ICity[]; isLoading: boolean } => {
+export const useCities = ({
+  query,
+  initialPage = 1,
+  limit = 1000,
+}: {
+  query: string;
+  initialPage: number;
+  limit: number;
+}): {
+  cities: ICity[];
+  isLoading: boolean;
+  loadMore: () => void;
+  hasMore: boolean;
+} => {
   const [cities, setCities] = useState<ICity[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedQuery] = useDebounce(query, 250);
+  const [page, setPage] = useState(initialPage);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     if (!debouncedQuery.trim()) {
       setCities([]);
+      setPage(initialPage); // Сбрасываем страницу при новом поисковом запросе
+      setHasMore(true);
       return;
     }
 
@@ -42,9 +57,19 @@ export const useCities = (
           'getCities',
           {
             FindByString: debouncedQuery,
+            Warehouse: '1',
+            Page: page,
+            Limit: limit,
           }
         );
-        setCities(response.data || []);
+        const newCities = response.data || [];
+        setCities((prevCities) =>
+          page === initialPage ? newCities : [...prevCities, ...newCities]
+        ); // Сбрасываем список на первой странице, иначе добавляем данные
+
+        if (newCities.length < limit) {
+          setHasMore(false); // Если данных меньше лимита, дальнейших страниц нет
+        }
       } catch (error) {
         console.error('Помилка отримання даних:', error);
       } finally {
@@ -53,9 +78,14 @@ export const useCities = (
     };
 
     fetchCities();
-  }, [debouncedQuery]);
-
-  return { cities, isLoading };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedQuery, page]);
+  const loadMore = () => {
+    if (hasMore && !isLoading) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+  return { cities, isLoading, loadMore, hasMore };
 };
 
 export const useWarehouses = (

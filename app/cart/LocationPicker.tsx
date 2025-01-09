@@ -33,25 +33,36 @@ const LocationPicker = <T extends FieldValues>({
 
   const { data: warehouses, isLoading: loadingWarehouses } =
     useWarehouses(cityRef);
+
   const [inputValue, setInputValue] = useState('');
+  // const [page, setPage] = useState(1);
+  // const [citiesList, setCitiesList] = useState<ICity[]>([]);
+  const {
+    cities,
+    isLoading: loadingCities,
+    loadMore: loadMoreCities,
+    hasMore: hasMoreCities,
+  } = useCities({
+    query: inputValue,
+    initialPage: 1,
+    limit: 40,
+  });
 
-  const { cities, isLoading: loadingCities } = useCities(inputValue);
-
-  // Получаем и фильтруем региональные центры (более 10.000, если нужно будет // загружать)
-  // const { data: allCities, isLoading: loadingCitiesAll } = useCitiesAll();
-  // const listRegionalCenters: ICity[] = useMemo(() => {
-  //   if (!allCities?.data.length) return [];
-  //   if (typeof window !== 'undefined') {
-  //     return filteredCities(allCities.data);
-  //   } else {
-  //     return [];
-  //   }
-  // }, [allCities]);
-
-  // Объединяем предопределённые города с результатами поиска
   const combinedCities: ICity[] = inputValue.trim()
     ? cities
     : regionalCentersData;
+
+  const handleScrollCity = (event: React.UIEvent<HTMLDListElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } =
+      event.target as HTMLDivElement;
+    if (
+      scrollHeight - scrollTop <= clientHeight + 10 &&
+      hasMoreCities &&
+      !loadingCities
+    ) {
+      loadMoreCities();
+    }
+  };
 
   return (
     <>
@@ -60,57 +71,63 @@ const LocationPicker = <T extends FieldValues>({
         name={'cityRef' as Path<T>}
         control={control}
         defaultValue={'' as PathValue<T, Path<T>>}
-        render={({ field, fieldState }) => (
-          <Autocomplete
-            size="small"
-            freeSolo
-            options={combinedCities.map((city) => city.Description)} // Отображаем только Description
-            value={
-              combinedCities.find((city) => city.Ref === field.value)
-                ?.Description || ''
-            }
-            onInputChange={(_, newInputValue) => setInputValue(newInputValue)} // Обновляем поле ввода
-            onChange={(_, value) => {
-              const selectedCity = combinedCities.find(
-                (city) => city.Description === value
-              );
-              field.onChange(selectedCity?.Ref || '');
-            }}
-            loading={loadingCities}
-            slotProps={{
-              listbox: {
-                sx: {
-                  maxHeight: '200px',
-                  overflow: 'auto',
+        render={({ field, fieldState }) => {
+          const selectedCity = combinedCities.find(
+            (city) => city.Ref === field.value
+          );
+          const selectedCityDescription = selectedCity?.Description || '';
+          return (
+            <Autocomplete
+              size="small"
+              freeSolo
+              options={combinedCities.map(
+                (city) => city.Description || city.DescriptionRu
+              )}
+              value={selectedCityDescription}
+              onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+              onChange={(_, value) => {
+                const selectedCity = combinedCities.find(
+                  (city) => city.Description === value
+                );
+                field.onChange(selectedCity?.Ref || '');
+              }}
+              loading={loadingCities}
+              slotProps={{
+                listbox: {
+                  sx: {
+                    maxHeight: '180px',
+                    overflow: 'auto',
+                  },
+                  onScroll: (e) => handleScrollCity(e),
                 },
-              },
-            }}
-            renderInput={(params) => {
-              return (
-                <TextField
-                  {...params}
-                  label="Оберіть місто"
-                  variant="outlined"
-                  error={!!fieldState.error}
-                  helperText={
-                    fieldState.error ? fieldState.error.message : null
-                  }
-                  slotProps={{
-                    input: {
-                      ...params.InputProps,
-                      endAdornment: (
-                        <>
-                          {loadingCities && <CircularProgress size={20} />}
-                          {params.InputProps?.endAdornment}
-                        </>
-                      ),
-                    },
-                  }}
-                />
-              );
-            }}
-          />
-        )}
+              }}
+              renderInput={(params) => {
+                return (
+                  <TextField
+                    {...params}
+                    label="Оберіть місто"
+                    variant="outlined"
+                    error={!!fieldState.error}
+                    helperText={
+                      fieldState.error ? fieldState.error.message : null
+                    }
+                    slotProps={{
+                      input: {
+                        ...params.InputProps,
+                        endAdornment: (
+                          <>
+                            {loadingCities && <CircularProgress size={20} />}
+                            {params.InputProps?.endAdornment}
+                          </>
+                        ),
+                      },
+                    }}
+                  />
+                );
+              }}
+            />
+          );
+        }}
       />
 
       {/* Выбор отделения */}
