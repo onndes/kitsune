@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  UseInfiniteQueryResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { ICity, INovaPoshtaResponse, IWarehouse } from '@/types/novaPoshta.t';
 import { useDebounce } from 'use-debounce';
@@ -24,7 +29,7 @@ const novaPoshtaRequest = async <T>(
 export const useCities = ({
   query,
   initialPage = 1,
-  limit = 1000,
+  limit = 50,
 }: {
   query: string;
   initialPage: number;
@@ -52,12 +57,13 @@ export const useCities = ({
     const fetchCities = async () => {
       setIsLoading(true);
       try {
+        console.log('await novaPoshtaRequest');
         const response = await novaPoshtaRequest<ICity>(
           'Address',
           'getCities',
           {
             FindByString: debouncedQuery,
-            Warehouse: '1',
+            Warehouse: 1,
             Page: page,
             Limit: limit,
           }
@@ -88,17 +94,36 @@ export const useCities = ({
   return { cities, isLoading, loadMore, hasMore };
 };
 
-export const useWarehouses = (
-  cityRef: string | null
-): UseQueryResult<INovaPoshtaResponse<IWarehouse>> => {
-  return useQuery({
-    queryKey: ['warehouses', cityRef],
-    queryFn: () =>
+interface InfiniteData<T> {
+  pages: T[]; // Массив страниц с данными
+  pageParams: unknown[]; // Параметры страниц
+}
+
+export const useWarehouses = ({
+  cityRef,
+  findByString,
+  limit = 40,
+}: {
+  cityRef: string | null;
+  findByString: string;
+  limit?: number;
+}): UseInfiniteQueryResult<InfiniteData<INovaPoshtaResponse<IWarehouse>>> => {
+  return useInfiniteQuery<INovaPoshtaResponse<IWarehouse>, Error>({
+    queryKey: ['warehouses', cityRef, findByString],
+    queryFn: ({ pageParam = 1 }) =>
       novaPoshtaRequest<IWarehouse>('Address', 'getWarehouses', {
         CityRef: cityRef,
-        TypeOfWarehouseRef: '841339c7-591a-42e2-8233-7a0a00f0ed6f',
+        Limit: limit,
+        FindByString: `${findByString}`,
+        Page: pageParam,
       }),
-    enabled: !!cityRef, // Запрос активен только если передан CityRef
+    initialPageParam: 1,
+    enabled: !!cityRef,
+    getNextPageParam: (lastPage, allPages) => {
+      const hasMore = lastPage?.data?.length === limit;
+      const nextPage = allPages.length + 1;
+      return hasMore ? nextPage : undefined;
+    },
   });
 };
 

@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import schema from './schema';
 import ControlInput from '@/app/cart/components/ControlInput';
 import MyButton from '@/app/cart/components/MyButton';
-import LocationPicker from './LocationPicker';
+import LocationPicker from './components/LocationPocker.tsx/LocationPicker';
 import SelectDelivery from './components/SelectDelivery';
 
 interface IFormData {
