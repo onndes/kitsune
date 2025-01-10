@@ -12,6 +12,7 @@ import {
 import { useCities, useWarehouses } from '@/hooks/useNovaPoshta';
 import { ICity } from '@/types/novaPoshta.t';
 import { regionalCentersData } from '../../regionsCenterData';
+import AutocompleteController from './AutocompleteController';
 
 interface SelectPostProps<T extends FieldValues> {
   control: Control<T>;
@@ -43,18 +44,16 @@ const LocationPicker = <T extends FieldValues>({
     [warehouses]
   );
 
-  const dataCities = useCities({
-    query: inputValueCity,
-    initialPage: 1,
-    limit: 40,
-  });
-
   const {
     cities,
     isLoading: loadingCities,
     loadMore: loadMoreCities,
     hasMore: hasMoreCities,
-  } = dataCities;
+  } = useCities({
+    query: inputValueCity,
+    initialPage: 1,
+    limit: 40,
+  });
 
   const combinedCities: ICity[] = inputValueCity.trim()
     ? cities
@@ -63,11 +62,13 @@ const LocationPicker = <T extends FieldValues>({
   const handleScrollCity = (event: React.UIEvent<HTMLDListElement>) => {
     const { scrollTop, scrollHeight, clientHeight } =
       event.target as HTMLDivElement;
+    console.log(hasMoreCities);
     if (
       scrollHeight - scrollTop <= clientHeight + 10 &&
       hasMoreCities &&
       !loadingCities
     ) {
+      console.log('handleScrollCity');
       loadMoreCities();
     }
   };
@@ -87,7 +88,20 @@ const LocationPicker = <T extends FieldValues>({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {/* Выбор города */}
-      <Controller
+      <AutocompleteController
+        name={'cityRef' as Path<T>}
+        control={control}
+        defaultValue={'' as PathValue<T, Path<T>>}
+        isDisabled={false}
+        hasOptions={true}
+        optionsList={combinedCities}
+        setInputValue={setInputValueCity}
+        isLoading={loadingCities}
+        isFetchingNextPage={false}
+        handleScroll={handleScrollCity}
+        label="Оберіть місто"
+      />
+      {/* <Controller
         name={'cityRef' as Path<T>}
         control={control}
         defaultValue={'' as PathValue<T, Path<T>>}
@@ -150,7 +164,7 @@ const LocationPicker = <T extends FieldValues>({
             />
           );
         }}
-      />
+      /> */}
 
       {/* Выбор отделения */}
       <Controller

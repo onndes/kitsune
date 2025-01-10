@@ -69,9 +69,27 @@ export const useCities = ({
           }
         );
         const newCities = response.data || [];
-        setCities((prevCities) =>
-          page === initialPage ? newCities : [...prevCities, ...newCities]
-        ); // Сбрасываем список на первой странице, иначе добавляем данные
+        // console.log('🚀 ~ fetchCities ~ newCities:', newCities);
+        console.log(
+          '🚀 ~ response.data ~ newCities:',
+          response.data,
+          newCities.length < limit
+        );
+
+        setCities((prevCities) => {
+          // const prevLater = prevCities[0]?.Description.at(0);
+          // const prevLaterRu = prevCities[0]?.DescriptionRu.at(0);
+          // const newLater = newCities[0]?.Description.at(0);
+          // const newLaterRu = newCities[0]?.DescriptionRu.at(0);
+          // // Б В К В true
+          // const newValue = prevLater !== newLater || prevLaterRu !== newLaterRu;
+          // console.log(prevLater, newLater, prevLaterRu, newLaterRu, newValue);
+          // console.log('page === initialPage', page, initialPage);
+          // return (page === initialPage && newValue) || newValue
+          return page === initialPage
+            ? newCities
+            : [...prevCities, ...newCities];
+        }); // Сбрасываем список на первой странице, иначе добавляем данные
 
         if (newCities.length < limit) {
           setHasMore(false); // Если данных меньше лимита, дальнейших страниц нет
@@ -86,6 +104,7 @@ export const useCities = ({
     fetchCities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery, page]);
+
   const loadMore = () => {
     if (hasMore && !isLoading) {
       setPage((prevPage) => prevPage + 1);
