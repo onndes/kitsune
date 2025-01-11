@@ -22,3 +22,37 @@ export const regionalCentersCity = [
   { Description: 'Херсон' },
   { Description: 'Миколаїв' },
 ];
+
+const ы = {
+  success: true,
+  data: [
+    {
+      TotalCount: 9,
+      Addresses: [
+        {
+          Present: 'м. Київ, Київська обл.',
+          Warehouses: 9168,
+          MainDescription: 'Київ',
+          Area: 'Київська',
+          Region: '',
+          SettlementTypeCode: 'м.',
+          Ref: 'e718a680-4b33-11e4-ab6d-005056801329',
+          DeliveryCity: '8d5a980d-391c-11dd-90d9-001a92567626',
+          AddressDeliveryAllowed: true,
+          StreetsAvailability: true,
+          ParentRegionTypes: 'область',
+          ParentRegionCode: 'обл.',
+          RegionTypes: '',
+          RegionTypesCode: '',
+        },
+      ],
+    },
+  ],
+  errors: [],
+  warnings: [],
+  info: [],
+  messageCodes: [],
+  errorCodes: [],
+  warningCodes: [],
+  infoCodes: [],
+};

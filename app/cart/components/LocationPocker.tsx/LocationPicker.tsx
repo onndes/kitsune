@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { Control, FieldValues, Path, PathValue } from 'react-hook-form';
 import { useCities, useWarehouses } from '@/hooks/useNovaPoshta';
-import { ICity } from '@/types/novaPoshta.t';
+import { ICity, IWarehouse } from '@/types/novaPoshta.t';
 import { regionalCentersData } from '../../regionsCenterData';
 import AutocompleteController from './AutocompleteController';
 
@@ -13,6 +13,7 @@ interface SelectPostProps<T extends FieldValues> {
   watch: (name: Path<T>) => PathValue<T, Path<T>>;
 }
 
+// todo: поиск отделений перевести в оффлайн, сохранять куда-то в базу так просит НП
 const LocationPicker = <T extends FieldValues>({
   control,
   watch,
@@ -33,7 +34,7 @@ const LocationPicker = <T extends FieldValues>({
     findByString: inputValueWarehouses,
   });
 
-  const postOffices = useMemo(
+  const postOffices: IWarehouse[] = useMemo(
     () => warehouses?.pages.map((page) => page.data).flat() || [],
     [warehouses]
   );
@@ -50,11 +51,9 @@ const LocationPicker = <T extends FieldValues>({
     limit: 40,
   });
 
-  console.log(cities);
-
   const combinedCities: ICity[] = useMemo(() => {
     return inputValueCity.trim()
-      ? cities?.pages.map((page) => page.data).flat() || []
+      ? cities?.pages.map((page) => page.data[0].Addresses).flat() || []
       : regionalCentersData;
   }, [cities?.pages, inputValueCity]);
 
@@ -81,7 +80,6 @@ const LocationPicker = <T extends FieldValues>({
       fetchNextPageWarehouses();
     }
   };
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {/* Выбор города */}

@@ -4,7 +4,7 @@ export interface INovaPoshtaResponse<T> {
   success: boolean;
   data: T[];
   errors: string[];
-  translatedErrors: string[];
+  // translatedErrors: string[];
   warnings: string[];
   info: string[];
   messageCodes: string[];
@@ -15,26 +15,26 @@ export interface INovaPoshtaResponse<T> {
 }
 
 export interface ICity {
-  Ref: string;
+  Present: string;
   Description: string;
-  DescriptionRu: string;
+  Warehouses: number;
+  MainDescription: string;
   Area: string;
-  AreaDescription: string;
-  AreaDescriptionRu: string;
-  CityID: string;
-  SettlementType: string;
-  SettlementTypeDescription: string;
-  SettlementTypeDescriptionRu: string;
-  IsBranch: string;
-  PreventEntryNewStreetsUser: string;
-  SpecialCashCheck?: number;
-  Delivery1: string;
-  Delivery2: string;
-  Delivery3: string;
-  Delivery4: string;
-  Delivery5: string;
-  Delivery6: string;
-  Delivery7: string;
+  Region: string;
+  SettlementTypeCode: string;
+  Ref: string;
+  DeliveryCity: string;
+  AddressDeliveryAllowed: boolean;
+  StreetsAvailability: boolean;
+  ParentRegionTypes: string;
+  ParentRegionCode: string;
+  RegionTypes: string;
+  RegionTypesCode: string;
+}
+
+export interface ICityPage {
+  TotalCount: number;
+  Addresses: ICity[];
 }
 
 interface Dimensions {
@@ -117,7 +117,7 @@ export interface useCitiesProps {
 }
 
 export type TUseCitiesResult = UseInfiniteQueryResult<
-  InfiniteData<INovaPoshtaResponse<ICity>>
+  InfiniteData<INovaPoshtaResponse<ICityPage>>
 >;
 
 export type TUseWarehousesResult = UseInfiniteQueryResult<

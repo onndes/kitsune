@@ -12,6 +12,7 @@ import {
   useWarehousesProps,
   TUseWarehousesResult,
   TUseCitiesResult,
+  ICityPage,
 } from '@/types/novaPoshta.t';
 
 const API_KEY = process.env.NEXT_PUBLIC_NOVA_POSHTA_API_KEY as string;
@@ -36,24 +37,37 @@ export const useCities = ({
   initialPage = 1,
   limit = 50,
 }: useCitiesProps): TUseCitiesResult => {
-  return useInfiniteQuery<INovaPoshtaResponse<ICity>, Error>({
+  return useInfiniteQuery<INovaPoshtaResponse<ICityPage>, Error>({
     queryKey: ['cities', query],
     queryFn: ({ pageParam = initialPage }) =>
-      novaPoshtaRequest<ICity>('Address', 'getCities', {
-        FindByString: query,
-        Warehouse: 1,
+      novaPoshtaRequest<ICityPage>('Address', 'searchSettlements', {
+        CityName: query,
         Page: pageParam,
         Limit: limit,
       }),
     initialPageParam: initialPage,
     getNextPageParam: (lastPage, allPages) => {
-      const hasMore = lastPage?.data?.length === limit;
+      const hasMore = lastPage?.data[0].Addresses.length === limit;
       const nextPage = allPages.length + 1;
       return hasMore ? nextPage : undefined;
     },
+    select: (data) => ({
+      ...data,
+      pages: data.pages.map((page) => ({
+        ...page,
+        data: page.data.map((cityPage) => ({
+          ...cityPage,
+          Addresses: cityPage.Addresses.map((address) => ({
+            ...address,
+            Description: address.Present,
+          })),
+        })),
+      })),
+    }),
   });
 };
 
+// todo: поиск отделений перевести в оффлайн, сохранять куда-то в базу так просит НП
 export const useWarehouses = ({
   cityRef,
   findByString,
@@ -63,7 +77,7 @@ export const useWarehouses = ({
     queryKey: ['warehouses', cityRef, findByString],
     queryFn: ({ pageParam = 1 }) =>
       novaPoshtaRequest<IWarehouse>('Address', 'getWarehouses', {
-        CityRef: cityRef,
+        SettlementRef: cityRef,
         Limit: limit,
         FindByString: `${findByString}`,
         Page: pageParam,

@@ -18,8 +18,8 @@ interface AutocompleteControllerProps<T extends FieldValues> {
   hasOptions: boolean;
   optionsList: Array<{
     Description: string;
-    DescriptionRu: string;
     Ref: string;
+    Present?: string;
   }>;
   setInputValue: (value: string) => void;
   isLoading: boolean;
@@ -56,7 +56,7 @@ const AutocompleteController = <T extends FieldValues>({
             options={
               hasOptions
                 ? optionsList.map((option) => {
-                    return option.Description || option.DescriptionRu;
+                    return option.Description;
                   })
                 : []
             }
