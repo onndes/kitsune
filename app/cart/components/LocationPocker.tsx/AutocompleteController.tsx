@@ -41,6 +41,7 @@ const AutocompleteController = <T extends FieldValues>({
   isFetchingNextPage,
   handleScroll,
   label,
+  inputValue,
 }: AutocompleteControllerProps<T>) => {
   return (
     <Controller
@@ -60,10 +61,12 @@ const AutocompleteController = <T extends FieldValues>({
                   })
                 : []
             }
-            value={
-              optionsList.find((option) => option.Ref === field.value)
-                ?.Description || ''
-            }
+            // value={
+            //   optionsList.find((option) => option.Ref === field.value)
+            //     ?.Description || ''
+            // }
+
+            value={inputValue}
             onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
             onChange={(_, value) => {
               const selectedOption = optionsList.find(

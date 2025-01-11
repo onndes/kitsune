@@ -7,6 +7,7 @@ import { useCities, useWarehouses } from '@/hooks/useNovaPoshta';
 import { ICity, IWarehouse } from '@/types/novaPoshta.t';
 import { regionalCentersData } from '../../regionsCenterData';
 import AutocompleteController from './AutocompleteController';
+import { useDebounce } from 'use-debounce';
 
 interface SelectPostProps<T extends FieldValues> {
   control: Control<T>;
@@ -22,6 +23,11 @@ const LocationPicker = <T extends FieldValues>({
 
   const [inputValueCity, setInputValueCity] = useState('');
   const [inputValueWarehouses, setInputValueWarehouses] = useState('');
+  const [debouncedInputValueCity] = useDebounce(inputValueCity, 400);
+  const [debouncedInputValueWarehouses] = useDebounce(
+    inputValueWarehouses,
+    400
+  );
 
   const {
     data: warehouses,
@@ -31,7 +37,7 @@ const LocationPicker = <T extends FieldValues>({
     isFetchingNextPage: isFetchingNextPageWarehouses,
   } = useWarehouses({
     cityRef,
-    findByString: inputValueWarehouses,
+    findByString: debouncedInputValueWarehouses,
   });
 
   const postOffices: IWarehouse[] = useMemo(
@@ -46,7 +52,7 @@ const LocationPicker = <T extends FieldValues>({
     hasNextPage: hasMoreCities,
     isFetchingNextPage: isFetchingNextPageCities,
   } = useCities({
-    query: inputValueCity,
+    query: debouncedInputValueCity,
     initialPage: 1,
     limit: 40,
   });
@@ -80,6 +86,7 @@ const LocationPicker = <T extends FieldValues>({
       fetchNextPageWarehouses();
     }
   };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {/* Выбор города */}

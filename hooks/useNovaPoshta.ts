@@ -1,11 +1,6 @@
 import axios from 'axios';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import {
-  useInfiniteQuery,
-  useQuery,
-  UseQueryResult,
-} from '@tanstack/react-query';
-import {
-  ICity,
   INovaPoshtaResponse,
   IWarehouse,
   useCitiesProps,
@@ -89,13 +84,6 @@ export const useWarehouses = ({
       const nextPage = allPages.length + 1;
       return hasMore ? nextPage : undefined;
     },
-  });
-};
-
-export const useCitiesAll = (): UseQueryResult<INovaPoshtaResponse<ICity>> => {
-  return useQuery({
-    queryKey: ['cityRefs', 'cityDescription'],
-    queryFn: () => novaPoshtaRequest<ICity>('Address', 'getCities', {}),
   });
 };
 
