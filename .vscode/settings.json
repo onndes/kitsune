@@ -1,4 +1,11 @@
 {
-  "cSpell.words": ["обов’язковим", "Firestore", "Meest", "Poshta", "ukrposhta"],
+  "cSpell.words": [
+    "обов’язковим",
+    "Firestore",
+    "Meest",
+    "persistor",
+    "Poshta",
+    "ukrposhta"
+  ],
   "cSpell.language": "en,ru,uk"
 }
