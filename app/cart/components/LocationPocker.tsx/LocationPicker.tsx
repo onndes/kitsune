@@ -1,14 +1,8 @@
 'use client';
 
-import { Autocomplete, TextField, CircularProgress, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import React, { useMemo, useState } from 'react';
-import {
-  Control,
-  Controller,
-  FieldValues,
-  Path,
-  PathValue,
-} from 'react-hook-form';
+import { Control, FieldValues, Path, PathValue } from 'react-hook-form';
 import { useCities, useWarehouses } from '@/hooks/useNovaPoshta';
 import { ICity } from '@/types/novaPoshta.t';
 import { regionalCentersData } from '../../regionsCenterData';
@@ -31,9 +25,9 @@ const LocationPicker = <T extends FieldValues>({
   const {
     data: warehouses,
     isLoading: loadingWarehouses,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
+    fetchNextPage: fetchNextPageWarehouses,
+    hasNextPage: hasNextPageWarehouses,
+    isFetchingNextPage: isFetchingNextPageWarehouses,
   } = useWarehouses({
     cityRef,
     findByString: inputValueWarehouses,
@@ -45,30 +39,33 @@ const LocationPicker = <T extends FieldValues>({
   );
 
   const {
-    cities,
+    data: cities,
     isLoading: loadingCities,
-    loadMore: loadMoreCities,
-    hasMore: hasMoreCities,
+    fetchNextPage: loadMoreCities,
+    hasNextPage: hasMoreCities,
+    isFetchingNextPage: isFetchingNextPageCities,
   } = useCities({
     query: inputValueCity,
     initialPage: 1,
     limit: 40,
   });
 
-  const combinedCities: ICity[] = inputValueCity.trim()
-    ? cities
-    : regionalCentersData;
+  console.log(cities);
+
+  const combinedCities: ICity[] = useMemo(() => {
+    return inputValueCity.trim()
+      ? cities?.pages.map((page) => page.data).flat() || []
+      : regionalCentersData;
+  }, [cities?.pages, inputValueCity]);
 
   const handleScrollCity = (event: React.UIEvent<HTMLDListElement>) => {
     const { scrollTop, scrollHeight, clientHeight } =
       event.target as HTMLDivElement;
-    console.log(hasMoreCities);
     if (
       scrollHeight - scrollTop <= clientHeight + 10 &&
       hasMoreCities &&
       !loadingCities
     ) {
-      console.log('handleScrollCity');
       loadMoreCities();
     }
   };
@@ -78,10 +75,10 @@ const LocationPicker = <T extends FieldValues>({
       event.target as HTMLDivElement;
     if (
       scrollHeight - scrollTop <= clientHeight + 10 &&
-      hasNextPage &&
+      hasNextPageWarehouses &&
       !loadingWarehouses
     ) {
-      fetchNextPage();
+      fetchNextPageWarehouses();
     }
   };
 
@@ -97,147 +94,25 @@ const LocationPicker = <T extends FieldValues>({
         optionsList={combinedCities}
         setInputValue={setInputValueCity}
         isLoading={loadingCities}
-        isFetchingNextPage={false}
+        isFetchingNextPage={isFetchingNextPageCities}
         handleScroll={handleScrollCity}
+        inputValue={inputValueCity}
         label="Оберіть місто"
       />
-      {/* <Controller
-        name={'cityRef' as Path<T>}
-        control={control}
-        defaultValue={'' as PathValue<T, Path<T>>}
-        render={({ field, fieldState }) => {
-          return (
-            <Autocomplete
-              size="small"
-              freeSolo
-              options={combinedCities.map(
-                (city) => city.Description || city.DescriptionRu
-              )}
-              value={
-                combinedCities.find((city) => city.Ref === field.value)
-                  ?.Description || ''
-              }
-              onInputChange={(_, newInputValue) =>
-                setInputValueCity(newInputValue)
-              }
-              onChange={(_, value) => {
-                const selectedCity = combinedCities.find(
-                  (city) => city.Description === value
-                );
-                field.onChange(selectedCity?.Ref || '');
-              }}
-              loading={loadingCities}
-              slotProps={{
-                listbox: {
-                  sx: {
-                    maxHeight: '180px',
-                    overflow: 'auto',
-                    fontSize: '14px',
-                  },
-                  onScroll: (e) => handleScrollCity(e),
-                },
-              }}
-              renderInput={(params) => {
-                return (
-                  <TextField
-                    {...params}
-                    label="Оберіть місто"
-                    variant="outlined"
-                    error={!!fieldState.error}
-                    helperText={
-                      fieldState.error ? fieldState.error.message : null
-                    }
-                    slotProps={{
-                      input: {
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {loadingCities && <CircularProgress size={20} />}
-                            {params.InputProps?.endAdornment}
-                          </>
-                        ),
-                      },
-                    }}
-                  />
-                );
-              }}
-            />
-          );
-        }}
-      /> */}
-
       {/* Выбор отделения */}
-      <Controller
+      <AutocompleteController
         name={'warehouseRef' as Path<T>}
         control={control}
         defaultValue={'' as PathValue<T, Path<T>>}
-        render={({ field, fieldState }) => {
-          return (
-            <Autocomplete
-              disabled={!cityRef}
-              size="small"
-              freeSolo
-              options={
-                warehouses
-                  ? postOffices.map(
-                      (post) => post.Description || post.DescriptionRu
-                    )
-                  : []
-              }
-              value={
-                postOffices.find((post) => post.Ref === field.value)
-                  ?.Description || ''
-              }
-              onInputChange={(_, newInputValue) =>
-                setInputValueWarehouses(newInputValue)
-              } // вызывает бесконечный рендер
-              onChange={(_, value) => {
-                const selectedPost = postOffices.find(
-                  (post) => post.Description === value
-                );
-                field.onChange(selectedPost?.Ref || '');
-              }}
-              loading={loadingWarehouses}
-              slotProps={{
-                listbox: {
-                  sx: {
-                    maxHeight: '180px',
-                    overflow: 'auto',
-                    fontSize: '14px',
-                  },
-                  onScroll: (e) => handleScrollWarehouses(e),
-                },
-              }}
-              renderInput={(params) => {
-                return (
-                  <TextField
-                    {...params}
-                    label="Оберіть відділення чи поштомат"
-                    variant="outlined"
-                    error={!!fieldState.error}
-                    helperText={
-                      fieldState.error ? fieldState.error.message : null
-                    }
-                    slotProps={{
-                      input: {
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {loadingWarehouses ||
-                              (isFetchingNextPage && (
-                                <CircularProgress size={20} />
-                              ))}
-                            {params.InputProps?.endAdornment}
-                          </>
-                        ),
-                      },
-                    }}
-                  />
-                );
-              }}
-            />
-          );
-        }}
+        isDisabled={!cityRef}
+        hasOptions={!!warehouses}
+        optionsList={postOffices}
+        setInputValue={setInputValueWarehouses}
+        isLoading={loadingWarehouses}
+        isFetchingNextPage={isFetchingNextPageWarehouses}
+        handleScroll={handleScrollWarehouses}
+        inputValue={inputValueWarehouses}
+        label="Оберіть відділення чи поштомат"
       />
     </Box>
   );

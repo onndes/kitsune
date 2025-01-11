@@ -26,6 +26,7 @@ interface AutocompleteControllerProps<T extends FieldValues> {
   isFetchingNextPage: boolean;
   handleScroll: (e: React.UIEvent<HTMLDListElement>) => void;
   label: string;
+  inputValue: string;
 }
 
 const AutocompleteController = <T extends FieldValues>({
@@ -54,9 +55,9 @@ const AutocompleteController = <T extends FieldValues>({
             freeSolo
             options={
               hasOptions
-                ? optionsList.map(
-                    (option) => option.Description || option.DescriptionRu
-                  )
+                ? optionsList.map((option) => {
+                    return option.Description || option.DescriptionRu;
+                  })
                 : []
             }
             value={

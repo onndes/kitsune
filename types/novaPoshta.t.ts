@@ -1,3 +1,5 @@
+import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
+
 export interface INovaPoshtaResponse<T> {
   success: boolean;
   data: T[];
@@ -106,4 +108,24 @@ export interface IWarehouse {
   WarehouseIndex: string;
   BeaconCode: string;
   Location: string;
+}
+
+export interface useCitiesProps {
+  query: string;
+  initialPage: number;
+  limit: number;
+}
+
+export type TUseCitiesResult = UseInfiniteQueryResult<
+  InfiniteData<INovaPoshtaResponse<ICity>>
+>;
+
+export type TUseWarehousesResult = UseInfiniteQueryResult<
+  InfiniteData<INovaPoshtaResponse<IWarehouse>>
+>;
+
+export interface useWarehousesProps {
+  cityRef: string | null;
+  findByString: string;
+  limit?: number;
 }
