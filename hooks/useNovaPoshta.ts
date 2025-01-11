@@ -34,31 +34,55 @@ export const useCities = ({
 }: useCitiesProps): TUseCitiesResult => {
   return useInfiniteQuery<INovaPoshtaResponse<ICityPage>, Error>({
     queryKey: ['cities', query],
-    queryFn: ({ pageParam = initialPage }) =>
-      novaPoshtaRequest<ICityPage>('Address', 'searchSettlements', {
-        CityName: query,
-        Page: pageParam,
-        Limit: limit,
-      }),
+    queryFn: async ({ pageParam = initialPage }) => {
+      try {
+        const response = await novaPoshtaRequest<ICityPage>(
+          'Address',
+          'searchSettlements',
+          {
+            CityName: query,
+            Page: pageParam,
+            Limit: limit,
+          }
+        );
+        // todo: отобразить ошибку в интерфейсе
+        // Если API вернул ошибку, выбросим её
+        if (!response.success) {
+          throw new Error(
+            'Помилка при отриманні даних з Нової Пошти. Спробуйте пізніше. Можливо ви ввели невірні дані.'
+          );
+        }
+
+        return response;
+      } catch (error) {
+        // Локальная обработка ошибки запроса
+        console.error('Ошибка при выполнении запроса в useCities:', error);
+        throw error; // Пробрасываем ошибку в TanStack Query
+      }
+    },
     initialPageParam: initialPage,
     getNextPageParam: (lastPage, allPages) => {
       const hasMore = lastPage?.data[0].Addresses.length === limit;
       const nextPage = allPages.length + 1;
       return hasMore ? nextPage : undefined;
     },
-    select: (data) => ({
-      ...data,
-      pages: data.pages.map((page) => ({
-        ...page,
-        data: page.data.map((cityPage) => ({
-          ...cityPage,
-          Addresses: cityPage.Addresses.map((address) => ({
-            ...address,
-            Description: address.Present,
+    select: (data) => {
+      return {
+        ...data,
+        pages: data.pages.map((page) => ({
+          ...page,
+          data: page.data.map((cityPage) => ({
+            ...cityPage,
+            Addresses: cityPage?.Addresses.map((address) => ({
+              ...address,
+              Description: address?.Present,
+            })),
           })),
         })),
-      })),
-    }),
+      };
+    },
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000, // Данные хранятся 24
   });
 };
 
@@ -84,6 +108,8 @@ export const useWarehouses = ({
       const nextPage = allPages.length + 1;
       return hasMore ? nextPage : undefined;
     },
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000, // Данные хранятся 24 часа
   });
 };
 
