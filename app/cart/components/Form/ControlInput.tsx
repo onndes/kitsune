@@ -1,20 +1,18 @@
 import { TextField, TextFieldProps } from '@mui/material';
 import React from 'react';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 
 interface ControlInputProps<T extends FieldValues> {
-  control: Control<T>; // Типизируем `control`
-  name: Path<T>; // Указываем, что `name` должен быть ключом объекта формы
-  placeholder?: string; // Опциональные значения
-  pb?: number; // Опциональные значения
+  name: Path<T>;
+  placeholder?: string;
+  pb?: number;
   pt?: number;
   autoComplete?: string;
   sx?: object;
-  otherProps?: TextFieldProps; // Дополнительные пропсы для `TextField`
+  otherProps?: TextFieldProps;
 }
 
 const ControlInput = <T extends FieldValues>({
-  control,
   name,
   placeholder,
   pb = 1,
@@ -23,6 +21,7 @@ const ControlInput = <T extends FieldValues>({
   sx = {},
   ...otherProps
 }: ControlInputProps<T>) => {
+  const { control } = useFormContext();
   const nameUpper =
     placeholder && placeholder.charAt(0).toUpperCase() + placeholder.slice(1);
 

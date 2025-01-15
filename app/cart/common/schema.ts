@@ -1,3 +1,4 @@
+import { TCompanyPost, TTypeDelivery } from '@/types/novaPoshta.t';
 import * as yup from 'yup';
 
 const schema = yup
@@ -32,7 +33,14 @@ const schema = yup
       .max(500, 'Коментарі не можуть бути довше 500 символів'),
     cityRef: yup.string().required('Вибір міста є обов’язковим'),
     warehouseRef: yup.string().required('Вибір відділення є обов’язковим'),
-    delivery: yup.string().required('Вибір служби доставки є обов’язковим'),
+    delivery: yup
+      .mixed<TCompanyPost>()
+      .oneOf(['novaPoshta', 'ukrPoshta'], 'Неправильна служба доставки')
+      .required('Вибір служби доставки є обов’язковим'),
+    typeDelivery: yup
+      .mixed<TTypeDelivery>()
+      .oneOf(['home', 'warehouse'], 'Неправильний тип доставки')
+      .required('Вибір типу адреси є обов’язковим'),
   })
   .required();
 

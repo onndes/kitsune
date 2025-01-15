@@ -1,19 +1,22 @@
 import { Box, Divider, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { IProduct } from '@/types/products.types';
-import { Form } from './Form';
+import { Form } from './components/Form/Form';
 
 interface IOrderPanelProps {
   products: IProduct[];
 }
 
 const OrderPanel = ({ products }: IOrderPanelProps) => {
+  const orderTotalPrice = products.reduce((acc, prod) => {
+    return acc + prod.count * prod.price;
+  }, 0);
+
   return (
     <Paper sx={{ p: 2 }}>
       <Box
         sx={{
           display: 'flex',
-          // justifyContent: 'space-between',
           alignItems: 'center',
           pb: 2,
           gap: 1,
@@ -35,10 +38,7 @@ const OrderPanel = ({ products }: IOrderPanelProps) => {
           fontSize="18px"
           fontWeight={500}
         >
-          {products.reduce((acc, prod) => {
-            return acc + prod.count * prod.price;
-          }, 0)}{' '}
-          ₴
+          {orderTotalPrice} ₴
         </Typography>
       </Box>
       <Divider />

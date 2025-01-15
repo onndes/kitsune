@@ -1,4 +1,4 @@
-import { regionalCentersCity } from '@/app/cart/regionsCenters';
+import { regionalCentersCity } from '@/app/cart/common/regionalCity';
 import { ICity } from '@/types/novaPoshta.t';
 
 export const filteredCities = (allCities: ICity[]) => {

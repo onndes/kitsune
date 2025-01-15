@@ -2,20 +2,15 @@ import React from 'react';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Box, Typography } from '@mui/material';
 
 import Image from 'next/image';
+import { formFields } from '../../common/initialFormValues';
 
-interface SelectDeliveryProps<T extends FieldValues> {
-  control: Control<T>;
-  name: Path<T>;
-}
-
-const SelectDelivery = <T extends FieldValues>({
-  control,
-  name,
-}: SelectDeliveryProps<T>) => {
+const SelectDelivery = () => {
+  const { control } = useFormContext();
+  const { name } = formFields.delivery;
   return (
     <Box mb={1}>
       <Controller
@@ -28,14 +23,13 @@ const SelectDelivery = <T extends FieldValues>({
             </Typography>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              name="radio-buttons-group"
+              name={name + `radio-buttons-group`}
               value={field.value}
               onChange={(_, value) => field.onChange(value)}
             >
               <FormControlLabel
                 value="novaPoshta"
                 control={<Radio />}
-                // label="Нова пошта"
                 label={
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Image

@@ -3,16 +3,13 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material//Grid2';
-import Item from './components/Item/Item';
+import ItemProductCart from './components/ItemProductCart/ItemProductCart';
 import OrderPanel from './OrderPanel';
 import useResponsive from '@/hooks/useResponsive';
 import { RootState } from '@/redux/store';
-import Link from 'next/link';
-import Image from 'next/image';
 import { Container } from '@mui/material';
+import EmptyCart from './components/EmptyCart';
 
 const style = {};
 
@@ -41,49 +38,12 @@ const Cart = () => {
                 sx={{ paddingBottom: 0 }}
               >
                 {products.map((el) => {
-                  return (
-                    <Item
-                      key={el.code}
-                      product={el}
-                      // last={idx === arr.length - 1}
-                    />
-                  );
+                  return <ItemProductCart key={el.code} product={el} />;
                 })}
               </Grid>
             </Grid>
           ) : (
-            <Box textAlign="center" mb={5}>
-              <Box maxWidth="200px" display="inline-block" pt={5}>
-                <Image
-                  src="/image/cartEmpty.png"
-                  alt="Cart empty"
-                  width={200}
-                  height={200}
-                />
-              </Box>
-              <Typography
-                variant="h4"
-                color="text.primary"
-                fontWeight={600}
-                pb={5}
-              >
-                Oops... the basket is empty
-              </Typography>
-              <Link href="/" passHref>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{
-                    width: '200px',
-                    height: '34px',
-                    fontSize: '18px',
-                    color: 'white',
-                  }}
-                >
-                  Back
-                </Button>
-              </Link>
-            </Box>
+            <EmptyCart />
           )}
         </Box>
       </Container>

@@ -13,7 +13,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import ImgBlock from '@/app/products/components/ImgBlock';
 
-const Item = ({ product }: { product: IProduct }) => {
+const ItemProductCart = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
 
   const handleDelete = (remove: boolean) => {
@@ -186,4 +186,4 @@ const Item = ({ product }: { product: IProduct }) => {
   );
 };
 
-export default Item;
+export default ItemProductCart;

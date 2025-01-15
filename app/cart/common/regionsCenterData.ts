@@ -1,6 +1,7 @@
 import { ICity } from '@/types/novaPoshta.t';
 
-export const regionalCentersData: ICity[] = [
+// Uncomments the main cities
+export const regionalCitiesData: ICity[] = [
   {
     Description: 'Київ',
     Present: 'м. Київ, Київська обл.',

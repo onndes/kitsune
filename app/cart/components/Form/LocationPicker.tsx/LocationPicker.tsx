@@ -1,33 +1,30 @@
 'use client';
 
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { useMemo, useState } from 'react';
-import { Control, FieldValues, Path, PathValue } from 'react-hook-form';
+import { FieldValues, Path, PathValue, useFormContext } from 'react-hook-form';
 import { useCities, useWarehouses } from '@/hooks/useNovaPoshta';
 import { ICity, IWarehouse } from '@/types/novaPoshta.t';
-import { regionalCentersData } from '../../regionsCenterData';
 import AutocompleteController from './AutocompleteController';
 import { useDebounce } from 'use-debounce';
-
-interface SelectPostProps<T extends FieldValues> {
-  control: Control<T>;
-  watch: (name: Path<T>) => PathValue<T, Path<T>>;
-}
+import { regionalCitiesData } from '@/app/cart/common/regionsCenterData';
 
 // todo: поиск отделений перевести в оффлайн, сохранять куда-то в базу так просит НП
-const LocationPicker = <T extends FieldValues>({
-  control,
-  watch,
-}: SelectPostProps<T>) => {
+const LocationPicker = <T extends FieldValues>() => {
+  const { control, watch } = useFormContext();
   const cityRef = watch('cityRef' as Path<T>) as string;
-
   const [inputValueCity, setInputValueCity] = useState('');
   const [inputValueWarehouses, setInputValueWarehouses] = useState('');
   const [debouncedInputValueCity] = useDebounce(inputValueCity, 400);
+  // const [typeDelivery, setTypeDelivery] = useState('home');
   const [debouncedInputValueWarehouses] = useDebounce(
     inputValueWarehouses,
     1500
   );
+
+  // const handleSetTypeAddress = (valueTypeDelivery: TTypeDelivery) => {
+  //   setTypeDelivery(valueTypeDelivery);
+  // };
 
   const {
     data: warehouses,
@@ -60,7 +57,7 @@ const LocationPicker = <T extends FieldValues>({
   const combinedCities: ICity[] = useMemo(() => {
     return inputValueCity.trim()
       ? cities?.pages.map((page) => page.data[0].Addresses).flat() || []
-      : regionalCentersData;
+      : regionalCitiesData;
   }, [cities?.pages, inputValueCity]);
 
   const handleScrollCity = (event: React.UIEvent<HTMLDListElement>) => {
@@ -106,6 +103,9 @@ const LocationPicker = <T extends FieldValues>({
       >
         Load
       </Button> */}
+      <Typography variant="h6" fontSize={16} mb={1}>
+        Адреса доставки
+      </Typography>
       <AutocompleteController
         name={'cityRef' as Path<T>}
         control={control}
@@ -121,6 +121,7 @@ const LocationPicker = <T extends FieldValues>({
         label="Оберіть місто"
       />
       {/* Выбор отделения */}
+
       <AutocompleteController
         name={'warehouseRef' as Path<T>}
         control={control}
