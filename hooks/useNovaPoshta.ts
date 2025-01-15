@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import {
   INovaPoshtaResponse,
   IWarehouse,
@@ -92,15 +92,27 @@ export const useWarehouses = ({
   findByString,
   limit = 40,
 }: useWarehousesProps): TUseWarehousesResult => {
+  const isCityRefNumberFormat =
+    findByString && /^\d+$/.test(findByString.trim());
+  const searchMethodProperty = isCityRefNumberFormat
+    ? 'WarehouseId'
+    : 'FindByString';
   return useInfiniteQuery<INovaPoshtaResponse<IWarehouse>, Error>({
     queryKey: ['warehouses', cityRef, findByString],
-    queryFn: ({ pageParam = 1 }) =>
-      novaPoshtaRequest<IWarehouse>('Address', 'getWarehouses', {
-        SettlementRef: cityRef,
-        Limit: limit,
-        FindByString: `${findByString}`,
-        Page: pageParam,
-      }),
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await novaPoshtaRequest<IWarehouse>(
+        'Address',
+        'getWarehouses',
+        {
+          SettlementRef: cityRef,
+          Limit: limit,
+          // WarehouseId по номеру отделения или findByString по всему названию (номер, улица, и т.д.)
+          [searchMethodProperty]: `${findByString}`.trim(),
+          Page: pageParam,
+        }
+      );
+      return res;
+    },
     initialPageParam: 1,
     enabled: !!cityRef,
     getNextPageParam: (lastPage, allPages) => {
@@ -108,7 +120,20 @@ export const useWarehouses = ({
       const nextPage = allPages.length + 1;
       return hasMore ? nextPage : undefined;
     },
+    retry: 5,
+    retryDelay: 500,
     staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000, // Данные хранятся 24 часа
+  });
+};
+
+export const useWarehousesBase = () => {
+  // Получаем список всех отделений (37.000+)
+  return useQuery({
+    queryKey: ['warehousesBase'],
+    queryFn: () =>
+      novaPoshtaRequest<IWarehouse>('Address', 'getWarehouses', {}),
+    staleTime: 24 * 60 * 60 * 1000, // Данные хранятся 24 часа
     gcTime: 24 * 60 * 60 * 1000, // Данные хранятся 24 часа
   });
 };

@@ -26,7 +26,7 @@ const LocationPicker = <T extends FieldValues>({
   const [debouncedInputValueCity] = useDebounce(inputValueCity, 400);
   const [debouncedInputValueWarehouses] = useDebounce(
     inputValueWarehouses,
-    400
+    1500
   );
 
   const {
@@ -37,7 +37,7 @@ const LocationPicker = <T extends FieldValues>({
     isFetchingNextPage: isFetchingNextPageWarehouses,
   } = useWarehouses({
     cityRef,
-    findByString: debouncedInputValueWarehouses,
+    findByString: debouncedInputValueWarehouses.trim(),
   });
 
   const postOffices: IWarehouse[] = useMemo(
@@ -87,9 +87,25 @@ const LocationPicker = <T extends FieldValues>({
     }
   };
 
+  // const { data: warehousesBase } = useWarehousesBase();
+  // console.log(
+  //   '🐞 [LocationPicker.tsx][95] warehousesBase:',
+  //   warehousesBase?.data[0]
+  // );
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {/* Выбор города */}
+      {/* <Button
+        variant="contained"
+        onClick={(e) => {
+          e.preventDefault();
+          // if (warehousesBase) uploadWarehouses(warehousesBase.data);
+          fetchAllWarehouses();
+        }}
+      >
+        Load
+      </Button> */}
       <AutocompleteController
         name={'cityRef' as Path<T>}
         control={control}
@@ -117,7 +133,7 @@ const LocationPicker = <T extends FieldValues>({
         isFetchingNextPage={isFetchingNextPageWarehouses}
         handleScroll={handleScrollWarehouses}
         inputValue={inputValueWarehouses}
-        label="Оберіть відділення чи поштомат"
+        label="Введіть номер відділення чи поштомата"
       />
     </Box>
   );
