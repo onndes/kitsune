@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { addProduct } from '@/redux/cartSlice';
 import { RootState } from '@/redux/store';
-import { IProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.t';
 
 interface BuyButtonProps {
   product: IProduct;

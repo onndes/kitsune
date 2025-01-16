@@ -1,4 +1,4 @@
-import { IProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.t';
 import { Box, List, Typography } from '@mui/material';
 import React from 'react';
 

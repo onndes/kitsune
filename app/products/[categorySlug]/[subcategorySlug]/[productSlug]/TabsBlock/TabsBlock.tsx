@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Description from './Description';
 import AboutProduct from './AboutProduct';
-import { IProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.t';
 
 interface TabPanelProps {
   children?: React.ReactNode;

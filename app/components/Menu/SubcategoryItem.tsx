@@ -4,7 +4,7 @@ import React from 'react';
 import { ListItemText } from '@mui/material';
 import Link from 'next/link';
 import { StyledListItemButton, StyledTypography } from './styles';
-import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.t';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 
@@ -30,7 +30,7 @@ const SubcategoryItem: React.FC<SubcategoryItemProps> = ({
   const handleClick = () => {
     handleClickItemSubcategory(sub.nameDoc);
     if (drawerClose) {
-      drawerClose()
+      drawerClose();
     }
   };
 

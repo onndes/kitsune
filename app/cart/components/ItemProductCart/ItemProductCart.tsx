@@ -1,5 +1,5 @@
 import { addProduct, removeProduct } from '@/redux/cartSlice';
-import { IProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.t';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import IndeterminateCheckBoxOutlinedIcon from '@mui/icons-material/IndeterminateCheckBoxOutlined';

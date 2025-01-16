@@ -1,5 +1,5 @@
 import { collection, getDocs } from 'firebase/firestore';
-import { ICategory, ISubCategory } from '@/types/products.types';
+import { ICategory, ISubCategory } from '@/types/products.t';
 import { db } from '@/firebase';
 import { EnumFirestoreCollections } from '@/types/enums';
 

@@ -4,7 +4,7 @@ import { Container, Box } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid2';
 import ItemProduct from './components/ItemProducts';
-import { IProduct, TLastProductId } from '@/types/products.types';
+import { IProduct, TLastProductId } from '@/types/products.t';
 import { useProductsQuery } from '@/hooks/useProductsQuery';
 
 interface Props {

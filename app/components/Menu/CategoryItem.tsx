@@ -5,7 +5,7 @@ import Link from 'next/link';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import useMyTheme from '@/hooks/useMyTheme';
-import { ICategory } from '@/types/products.types';
+import { ICategory } from '@/types/products.t';
 import { ICategoryWithSubcategory } from './ListCategories';
 import { ItemButton, ItemText } from './styles';
 

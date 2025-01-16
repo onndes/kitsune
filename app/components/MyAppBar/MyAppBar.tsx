@@ -8,7 +8,7 @@ import SearchInput from './SearchInput';
 import LogoAppBar from './LogoAppBar';
 import CartAppBar from './CartAppBar';
 import { StyledAppBar, StyledToolbar } from './styles';
-import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.t';
 
 interface Props {
   categories: ICategory[];

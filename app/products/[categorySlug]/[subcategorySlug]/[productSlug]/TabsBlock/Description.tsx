@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
-import { IProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.t';
 
 interface Props {
   product: IProduct;

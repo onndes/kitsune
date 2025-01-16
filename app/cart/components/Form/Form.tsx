@@ -1,16 +1,16 @@
 import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/cart/components/MyButton';
-import { IOrderFormData } from '@/types/novaPoshta.t';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@mui/material';
 import { useRef } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { formFields } from '../../common/initialFormValues';
-import { orderFormFields } from '../../common/orderFormFields';
+import { extractedFields } from '../../common/orderFormFields';
 import schema from '../../common/schema';
 import LocationPicker from './LocationPicker.tsx/LocationPicker';
 import SelectDelivery from './SelectDelivery';
 import { getInitialValues } from '../../common/getInitialValues';
+import { IOrderFormData } from '@/types/formOrder.t';
 
 export const Form = () => {
   const form = useRef(null);
@@ -43,7 +43,7 @@ export const Form = () => {
           <Typography variant="h6" fontSize={16} mb={1}>
             Одержувач замовлення
           </Typography>
-          {orderFormFields.map((el) => (
+          {extractedFields.userData.map((el) => (
             <ControlInput
               autoComplete="on"
               key={el.name}

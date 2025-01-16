@@ -1,8 +1,4 @@
-import {
-  IProduct,
-  NonLastProductId,
-  TLastProductId,
-} from '@/types/products.types';
+import { IProduct, NonLastProductId, TLastProductId } from '@/types/products.t';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ProductState {

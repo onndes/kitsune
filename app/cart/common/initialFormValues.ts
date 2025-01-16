@@ -1,4 +1,6 @@
-export const formFields = {
+import { TFormFields } from '@/types/formOrder.t';
+
+export const formFields: TFormFields = {
   name: {
     initialValue: '',
     name: 'name',
@@ -59,6 +61,23 @@ export const formFields = {
     name: 'delivery',
     placeholder: 'Оберіть метод доставки',
     label: 'Метод доставки',
+    options: [
+      {
+        value: 'novaPoshta',
+        label: 'Нова пошта',
+        image: '/image/logos/delivery/novaPoshta.svg',
+      },
+      {
+        value: 'ukrPoshta',
+        label: 'Укрпошта',
+        image: '/image/logos/delivery/ukrposhta.svg',
+      },
+      {
+        value: 'meest',
+        label: 'Meest',
+        image: '/image/logos/delivery/meest.svg',
+      },
+    ],
   },
   typeDelivery: {
     initialValue: 'home',
@@ -67,4 +86,3 @@ export const formFields = {
     label: 'Тип доставки',
   },
 };
-export type TFormFields = typeof formFields;

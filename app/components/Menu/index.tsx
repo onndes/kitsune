@@ -9,7 +9,7 @@ import {
   StyledWrapperTitle,
 } from './styles';
 import Grid from '@mui/material/Grid2';
-import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.t';
 import { db } from '@/firebase';
 import { setActiveSubcategory, setOpenedSubmenu } from '@/redux/appSlice';
 import { RootState } from '@/redux/store';

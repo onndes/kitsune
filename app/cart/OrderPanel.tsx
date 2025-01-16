@@ -1,6 +1,6 @@
 import { Box, Divider, Paper, Typography } from '@mui/material';
 import React from 'react';
-import { IProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.t';
 import { Form } from './components/Form/Form';
 
 interface IOrderPanelProps {

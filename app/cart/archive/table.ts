@@ -1,4 +1,4 @@
-import { IProduct } from '@/types/products.types';
+import { IProduct } from '@/types/products.t';
 
 // <td>${el.availability}</td>
 // <td>${el.sales}</td>

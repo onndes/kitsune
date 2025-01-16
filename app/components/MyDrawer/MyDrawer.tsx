@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MyMenu from '../Menu';
-import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.t';
 import { useDevice } from '@/app/contexts/DeviceContextProps';
 import useResponsive from '@/hooks/useResponsive';
 

@@ -129,20 +129,3 @@ export interface useWarehousesProps {
   findByString: string;
   limit?: number;
 }
-
-export type TCompanyPost = 'novaPoshta' | 'ukrPoshta' | 'Meest';
-export type TTypeDelivery = 'home' | 'warehouse';
-
-export interface IOrderFormData {
-  comments?: string;
-  voucher?: string;
-  name: string;
-  surname: string;
-  middleName: string;
-  number: string;
-  email: string;
-  cityRef: string;
-  warehouseRef: string;
-  delivery: TCompanyPost;
-  typeDelivery: TTypeDelivery;
-}

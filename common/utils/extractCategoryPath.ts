@@ -3,7 +3,7 @@ import {
   IProductWithDocRef,
   ISubCategory,
   ISubCategoryWithPath,
-} from '@/types/products.types';
+} from '@/types/products.t';
 
 export const extractCategoryPath = (
   subcategories: ISubCategory[]

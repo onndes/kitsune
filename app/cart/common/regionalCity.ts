@@ -1,4 +1,4 @@
-export const regionalCity = [
+export const regionalCity: { Description: string }[] = [
   { Description: 'Київ' },
   { Description: 'Харків' },
   { Description: 'Одеса' },

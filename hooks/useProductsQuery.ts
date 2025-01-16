@@ -1,5 +1,5 @@
 import { getProducts } from '@/lib/firebase/getProducts';
-import { IProduct, TLastProductId } from '@/types/products.types';
+import { IProduct, TLastProductId } from '@/types/products.t';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 export const useProductsQuery = (

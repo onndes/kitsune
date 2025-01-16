@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { StyledLogoContainer, StyledTypography } from './styles';
 import MyDrawer from '../MyDrawer/MyDrawer';
-import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.t';
 import { useDispatch } from 'react-redux';
 import { setActiveSubcategory, setOpenedSubmenu } from '@/redux/appSlice';
 

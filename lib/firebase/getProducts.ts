@@ -10,7 +10,7 @@ import {
   IProductWithDocRef,
   NonLastProductId,
   TLastProductId,
-} from '@/types/products.types';
+} from '@/types/products.t';
 import {
   collection,
   doc,

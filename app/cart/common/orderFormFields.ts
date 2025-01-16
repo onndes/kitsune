@@ -1,15 +1,12 @@
-import { formFields } from './initialFormValues';
+import { IFormField } from '@/types/formOrder.t';
+import { extractFieldValues } from './getInitialValues';
 
-export const orderFormFields = [
-  { name: formFields.name.name, placeholder: formFields.name.placeholder },
-  {
-    name: formFields.surname.name,
-    placeholder: formFields.surname.placeholder,
-  },
-  {
-    name: formFields.middleName.name,
-    placeholder: formFields.middleName.placeholder,
-  },
-  { name: formFields.number.name, placeholder: formFields.number.placeholder },
-  { name: formFields.email.name, placeholder: formFields.email.placeholder },
-];
+export const extractedFields: { userData: IFormField<string>[] } = {
+  userData: extractFieldValues([
+    'name',
+    'surname',
+    'middleName',
+    'number',
+    'email',
+  ]),
+};

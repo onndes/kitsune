@@ -1,7 +1,7 @@
 import { Collapse, List } from '@mui/material';
 import React, { FC } from 'react';
 import SubcategoryItem from './SubcategoryItem';
-import { ICategory, ISubCategoryWithPath } from '@/types/products.types';
+import { ICategory, ISubCategoryWithPath } from '@/types/products.t';
 import CategoryItem from './CategoryItem';
 
 export interface ICategoryWithSubcategory extends ICategory {
