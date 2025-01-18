@@ -4,12 +4,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import Grid from '@mui/material//Grid2';
-import ItemProductCart from './components/ItemProductCart/ItemProductCart';
-import OrderPanel from './OrderPanel';
+import ItemProductCart from './components/ItemProductCart';
 import useResponsive from '@/hooks/useResponsive';
 import { RootState } from '@/redux/store';
 import { Container } from '@mui/material';
 import EmptyCart from './components/EmptyCart';
+import OrderPanel from './components/OrderPanel';
 
 const style = {};
 

@@ -1,12 +1,11 @@
-import { IFormField } from '@/types/formOrder.t';
+import { IFormField } from '@/app/cart/formOrder.t';
 import { extractFieldValues } from './getInitialValues';
 
-export const extractedFields: { userData: IFormField<string>[] } = {
-  userData: extractFieldValues([
-    'name',
-    'surname',
-    'middleName',
-    'number',
-    'email',
-  ]),
+interface ExtractedFields {
+  userData: () => IFormField<string>[];
+}
+
+export const extractedFields: ExtractedFields = {
+  userData: () =>
+    extractFieldValues(['name', 'surname', 'middleName', 'number', 'email']),
 };

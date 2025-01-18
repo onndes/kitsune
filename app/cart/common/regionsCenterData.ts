@@ -1,4 +1,4 @@
-import { ICity } from '@/types/novaPoshta.t';
+import { ICity } from '@/api/novaPoshta/novaPoshta.types';
 
 // Uncomments the main cities
 export const regionalCitiesData: ICity[] = [

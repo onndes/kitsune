@@ -1,4 +1,4 @@
-import { TFormFields } from '@/types/formOrder.t';
+import { TFormFields } from '@/app/cart/formOrder.t';
 
 export const formFields: TFormFields = {
   name: {

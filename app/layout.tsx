@@ -7,11 +7,11 @@ import '../styles/globals.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Indent from './components/Indent';
-import MyAppBarWraper from './components/MyAppBar';
+import MyAppBarWrapper from './components/MyAppBar';
 import { ColorModeProvider } from './contexts/ColorModeContext';
 import { DeviceProvider } from './contexts/DeviceContextProps';
-import { StoreProvider } from './StoreProvider';
-import Footer from './components/Footer/Footer';
+import { StoreProvider } from './Providers';
+import Footer from './components/Footer';
 
 export const metadata = {
   title: 'KITSUNE',
@@ -76,7 +76,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
               <DeviceProvider isMobile={isMobile}>
                 <section>
                   {/* <Nav /> */}
-                  <MyAppBarWraper />
+                  <MyAppBarWrapper />
                   <Indent />
                   <main>{children}</main>
                   <Indent bottom />

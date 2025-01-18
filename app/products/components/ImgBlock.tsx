@@ -1,22 +1,24 @@
 import { Box, BoxProps, SystemStyleObject } from '@mui/system';
 import Image from 'next/image';
 
-interface ImgBlockProps {
+interface Props {
   src: string;
   handleClickProduct?: () => void;
   boxProps?: BoxProps;
   lazy?: boolean;
-  index?: number;
+  index?: number | undefined;
   sxProps?: SystemStyleObject;
-  sxImgageProps?: SystemStyleObject;
+  sxImageProps?: SystemStyleObject;
 }
 
-const ImgBlock: React.FC<ImgBlockProps> = ({
+const ImgBlock = ({
   src,
   handleClickProduct = () => {},
   sxProps = {},
-  sxImgageProps = {},
-}) => {
+  sxImageProps = {},
+  index,
+}: Props) => {
+  const isPriority = index === undefined || index >= 16 ? undefined : true;
   return (
     <Box
       sx={{
@@ -25,7 +27,7 @@ const ImgBlock: React.FC<ImgBlockProps> = ({
         justifyContent: 'center',
         p: 1,
         img: {
-          ...sxImgageProps,
+          ...sxImageProps,
         },
         position: 'relative',
         cursor: 'pointer',
@@ -34,11 +36,12 @@ const ImgBlock: React.FC<ImgBlockProps> = ({
       onClick={() => handleClickProduct()}
     >
       <Image
+        priority={isPriority}
+        loading={isPriority ? undefined : 'lazy'}
         src={src}
         alt="Product Image"
         width={160}
         height={160}
-        loading="lazy"
       />
     </Box>
   );

@@ -1,4 +1,4 @@
-import { IOptions } from '@/types/formOrder.t';
+import { IOptions } from '@/app/cart/formOrder.t';
 import { FormControlLabel, Radio, Box } from '@mui/material';
 import Image from 'next/image';
 

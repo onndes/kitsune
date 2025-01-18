@@ -9,9 +9,9 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { addProduct } from '@/redux/cartSlice';
 import { RootState } from '@/redux/store';
-import { IProduct } from '@/types/products.t';
+import { IProduct } from '@/api/products/products.types';
 
-interface BuyButtonProps {
+interface Props {
   product: IProduct;
   width?: string;
   sxButton?: Record<string, unknown>;
@@ -33,12 +33,12 @@ const StyledTypography = styled(Typography)`
   font-weight: bold;
 `;
 
-const BuyButton: React.FC<BuyButtonProps> = ({
+const BuyButton = ({
   product,
   width = '100%',
   sxButton = {},
   content = false,
-}) => {
+}: Props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const cartProducts = useSelector((state: RootState) => state.cart.products);

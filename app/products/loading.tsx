@@ -3,7 +3,7 @@
 import { Box, Container, Divider, Skeleton } from '@mui/material';
 import { StyledBox, StyledCard, StyledCardContent } from './components/styles';
 import Grid from '@mui/material/Grid2';
-import { defaultCountsLoading } from '@/types/enums';
+import { defaultCountsLoading } from '@/api/categories/enums';
 
 const ItemLoading = () => (
   <StyledCard elevation={0}>

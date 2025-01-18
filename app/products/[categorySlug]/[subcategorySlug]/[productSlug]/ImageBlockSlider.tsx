@@ -7,7 +7,7 @@ import useResponsive from '@/hooks/useResponsive';
 interface ImageBlockSliderProps {
   image: string[];
 }
-const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
+const ImageBlockSlider = ({ image }: ImageBlockSliderProps) => {
   // const sliderRef = useRef<HTMLDivElement>(null); // Блокируем вертикальную прокрутку
   const { isMobileLarge } = useResponsive();
   const [nav1, setNav1] = useState<Slider | null>(null);
@@ -105,7 +105,7 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
           <ImgBlock
             key={img}
             src={img}
-            sxImgageProps={{
+            sxImageProps={{
               height: isMobileLarge ? '250px' : '250px',
               width: isMobileLarge ? '250px' : '250px',
             }}
@@ -133,7 +133,7 @@ const ImageBlockSlider: React.FC<ImageBlockSliderProps> = ({ image }) => {
                 maxHeight: '46px', // Отключаем растяжение
                 margin: '0 auto', // Центрируем
               }}
-              sxImgageProps={{
+              sxImageProps={{
                 padding: '2px',
                 height: '46px',
                 width: '46px',

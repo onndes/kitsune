@@ -4,7 +4,7 @@ import React from 'react';
 import { Box, Container } from '@mui/material';
 import HeaderBlock from './HeaderBlock';
 import TabsBlock from './TabsBlock/TabsBlock';
-import { IProduct } from '@/types/products.t';
+import { IProduct } from '@/api/products/products.types';
 
 interface Props {
   product: IProduct;

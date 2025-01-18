@@ -1,4 +1,4 @@
-import { IProduct } from '@/types/products.t';
+import { IProduct } from '@/api/products/products.types';
 
 // <td>${el.availability}</td>
 // <td>${el.sales}</td>

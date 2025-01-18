@@ -1,4 +1,4 @@
-import { IProduct, NonLastProductId, TLastProductId } from '@/types/products.t';
+import { IProduct, TLastProductId } from '@/api/products/products.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ProductState {
@@ -9,7 +9,7 @@ interface ProductState {
 
 const initialState: ProductState = {
   products: [],
-  lastDoc: NonLastProductId,
+  lastDoc: null,
   limitGetProduct: 16,
 };
 

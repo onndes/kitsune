@@ -9,14 +9,14 @@ import {
   StyledWrapperTitle,
 } from './styles';
 import Grid from '@mui/material/Grid2';
-import { ICategory, ISubCategoryWithPath } from '@/types/products.t';
+import { ICategory, ISubCategoryWithPath } from '@/api/products/products.types';
 import { db } from '@/firebase';
 import { setActiveSubcategory, setOpenedSubmenu } from '@/redux/appSlice';
 import { RootState } from '@/redux/store';
-import { EnumFirestoreCollections } from '@/types/enums';
+import { EnumFirestoreCollections } from '@/api/categories/enums';
 import { doc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
-import ListCategories from './ListCategories';
+import ListCategories from './components/ListCategories';
 import { useDispatch } from 'react-redux';
 import { useDevice } from '@/app/contexts/DeviceContextProps';
 import useResponsive from '@/hooks/useResponsive';

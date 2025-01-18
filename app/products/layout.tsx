@@ -1,10 +1,10 @@
 import { Container, Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { getCatsAndSubs } from '@/lib/firebase/getCategories';
-import { extractCategoryPath } from '@/common/utils/extractCategoryPath';
+import { getCatsAndSubs } from '@/api/categories/getCategories';
+import { extractCategoryPath } from '@/utils/extractCategoryPath';
 import MyMenu from '@/app/components/Menu';
 
-export default async function ProductsLayout({
+export default async function HomePageWrapper({
   children,
 }: {
   children: React.ReactNode;

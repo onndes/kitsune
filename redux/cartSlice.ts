@@ -1,6 +1,6 @@
 // cartSlice.ts
 
-import { IProduct } from '@/types/products.t';
+import { IProduct } from '@/api/products/products.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CartState {

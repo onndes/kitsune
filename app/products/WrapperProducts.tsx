@@ -1,4 +1,4 @@
-import { getProducts } from '@/lib/firebase/getProducts';
+import { getProducts } from '@/api/products/getProducts';
 import Products from './Products';
 
 interface Props {

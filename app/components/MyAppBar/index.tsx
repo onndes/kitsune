@@ -1,9 +1,9 @@
-import { extractCategoryPath } from '@/common/utils/extractCategoryPath';
-import { getCatsAndSubs } from '@/lib/firebase/getCategories';
+import { extractCategoryPath } from '@/utils/extractCategoryPath';
+import { getCatsAndSubs } from '@/api/categories/getCategories';
 import React from 'react';
-import MyAppBar from './MyAppBar';
+import MyAppBar from './components/MyAppBar';
 
-const MyAppBarWraper = async () => {
+const MyAppBarWrapper = async () => {
   const { categories, subcategories } = await getCatsAndSubs();
   const extractedCategoryPath = extractCategoryPath(subcategories);
 
@@ -12,4 +12,4 @@ const MyAppBarWraper = async () => {
   );
 };
 
-export default MyAppBarWraper;
+export default MyAppBarWrapper;

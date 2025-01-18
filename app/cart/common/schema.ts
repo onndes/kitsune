@@ -1,4 +1,4 @@
-import { TCompanyPost, TTypeDelivery } from '@/types/formOrder.t';
+import { TCompanyPost, TTypeDelivery } from '@/app/cart/formOrder.t';
 import * as yup from 'yup';
 
 const schema = yup

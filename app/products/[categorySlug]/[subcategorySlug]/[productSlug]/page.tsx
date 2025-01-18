@@ -1,6 +1,6 @@
 import React from 'react';
 import Product from './Product';
-import { getProductByCode } from '@/lib/firebase/getProducts';
+import { getProductByCode } from '@/api/products/getProducts';
 
 interface Props {
   params: {
@@ -10,7 +10,7 @@ interface Props {
   };
 }
 
-const ProductPage: React.FC<Props> = async ({ params }) => {
+const ProductPage = async ({ params }: Props) => {
   const { productSlug } = await params;
   const productData = await getProductByCode(Number(productSlug));
 

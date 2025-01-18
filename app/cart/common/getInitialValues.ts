@@ -1,4 +1,4 @@
-import { TFormFields } from '@/types/formOrder.t';
+import { TFormFields } from '@/app/cart/formOrder.t';
 import { formFields } from './initialFormValues';
 
 export const getInitialValues = (fields: TFormFields) => {

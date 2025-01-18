@@ -10,7 +10,7 @@ import {
   StyledBox,
   PriceTypography,
 } from './styles';
-import { IProduct } from '@/types/products.t';
+import { IProduct } from '@/api/products/products.types';
 import ImgBlock from './ImgBlock';
 import Link from 'next/link';
 

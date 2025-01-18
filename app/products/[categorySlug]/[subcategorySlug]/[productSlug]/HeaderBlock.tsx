@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import ImageBlockSlider from './ImageBlockSlider';
-import { IProduct } from '@/types/products.t';
+import { IProduct } from '@/api/products/products.types';
 import Grid from '@mui/material/Grid2';
 import BuyButton from '@/app/products/components/BuyButton';
 
