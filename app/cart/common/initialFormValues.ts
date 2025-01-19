@@ -43,7 +43,18 @@ export const formFields: TFormFields = {
     placeholder: 'Введіть ваш код ваучера',
     label: 'Ваучер',
   },
-
+  city: {
+    initialValue: '',
+    name: 'city',
+    placeholder: 'Оберіть місто',
+    label: 'Місто',
+  },
+  warehouse: {
+    initialValue: '',
+    name: 'warehouse',
+    placeholder: 'Введіть номер відділення чи поштомата',
+    label: 'Введіть номер відділення чи поштомата',
+  },
   cityRef: {
     initialValue: '',
     name: 'cityRef',

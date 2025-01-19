@@ -23,6 +23,8 @@ export type TFormFields = {
   email: IFormField<string>;
   comments: IFormField<string>;
   voucher: IFormField<string>;
+  city: IFormField<string>;
+  warehouse: IFormField<string>;
   cityRef: IFormField<string>;
   warehouseRef: IFormField<string>;
   delivery: IFormField<TCompanyPost>;
@@ -37,6 +39,8 @@ export interface IOrderSubmissionData {
   email: string;
   comments?: string;
   voucher?: string;
+  city: string;
+  warehouse: string;
   cityRef: string;
   warehouseRef: string;
   delivery: TCompanyPost;

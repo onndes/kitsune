@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { FieldValues, Path, PathValue, useFormContext } from 'react-hook-form';
 import { useCities, useWarehouses } from '@/api/novaPoshta/useNovaPoshta';
 import { ICity, IWarehouse } from '@/api/novaPoshta/novaPoshta.types';
@@ -15,30 +15,18 @@ import { formFields } from '@/app/cart/common/initialFormValues';
 const LocationPicker = <T extends FieldValues>() => {
   const { control, watch } = useFormContext();
 
-  const cityRef = watch('cityRef' as Path<T>) as string;
+  const city = watch('city' as Path<T>);
+  const cityRef = watch('cityRef' as Path<T>);
+  const warehouse = watch('warehouse' as Path<T>);
 
-  const [inputValueCity, setInputValueCity] = useState('');
-  const [inputValueWarehouses, setInputValueWarehouses] = useState('');
-
-  const [debouncedInputValueCity] = useDebounce(inputValueCity, 400);
-  const [debouncedWarehouseInput] = useDebounce(inputValueWarehouses, 400);
+  const [debouncedInputValueCity] = useDebounce(city, 400);
+  const [debouncedWarehouseInput] = useDebounce(warehouse, 400);
 
   // const [typeDelivery, setTypeDelivery] = useState('home');
 
   // const handleSetTypeAddress = (valueTypeDelivery: TTypeDelivery) => {
   //   setTypeDelivery(valueTypeDelivery);
   // };
-
-  const {
-    data: warehouses,
-    isLoading: loadingWarehouses,
-    fetchNextPage: loadMoreWarehouses,
-    hasNextPage: hasMoreWarehouses,
-    isFetchingNextPage: isFetchingNextPageWarehouses,
-  } = useWarehouses({
-    cityRef,
-    findByString: debouncedWarehouseInput.trim(),
-  });
 
   const {
     data: cities,
@@ -52,16 +40,27 @@ const LocationPicker = <T extends FieldValues>() => {
     limit: 40,
   });
 
+  const {
+    data: warehouses,
+    isLoading: loadingWarehouses,
+    fetchNextPage: loadMoreWarehouses,
+    hasNextPage: hasMoreWarehouses,
+    isFetchingNextPage: isFetchingNextPageWarehouses,
+  } = useWarehouses({
+    cityRef,
+    findByString: debouncedWarehouseInput.trim(),
+  });
+
   const postOffices: IWarehouse[] = useMemo(
     () => warehouses?.pages.map((page) => page.data).flat() || [],
     [warehouses]
   );
 
   const combinedCities: ICity[] = useMemo(() => {
-    return inputValueCity.trim()
+    return city.trim()
       ? cities?.pages.map((page) => page.data[0].Addresses).flat() || []
       : regionalCitiesData;
-  }, [cities?.pages, inputValueCity]);
+  }, [cities?.pages, city]);
 
   const handleScrollCity = (e: React.UIEvent<HTMLDListElement>) => {
     handleScrollMorePage(e, hasMoreCities, loadingCities, loadMoreCities);
@@ -99,23 +98,23 @@ const LocationPicker = <T extends FieldValues>() => {
         Адреса доставки
       </Typography>
       <AutocompleteController
-        name={formFields.cityRef.name as Path<T>}
+        nameRef={formFields.cityRef.name as Path<T>}
+        name={formFields.city.name as Path<T>}
         control={control}
         defaultValue={formFields.cityRef.initialValue as PathValue<T, Path<T>>}
         isDisabled={false}
         hasOptions={true}
         optionsList={combinedCities}
-        setInputValue={setInputValueCity}
         isLoading={loadingCities}
         isFetchingNextPage={isFetchingNextPageCities}
         handleScroll={handleScrollCity}
-        inputValue={inputValueCity}
-        label={formFields.cityRef.name}
+        label={formFields.cityRef.placeholder}
       />
       {/* Выбор отделения */}
 
       <AutocompleteController
-        name={formFields.warehouseRef.name as Path<T>}
+        name={formFields.warehouse.name as Path<T>}
+        nameRef={formFields.warehouseRef.name as Path<T>}
         control={control}
         defaultValue={
           formFields.warehouseRef.initialValue as PathValue<T, Path<T>>
@@ -123,12 +122,10 @@ const LocationPicker = <T extends FieldValues>() => {
         isDisabled={!cityRef}
         hasOptions={!!warehouses}
         optionsList={postOffices}
-        setInputValue={setInputValueWarehouses}
         isLoading={loadingWarehouses}
         isFetchingNextPage={isFetchingNextPageWarehouses}
         handleScroll={handleScrollWarehouses}
-        inputValue={inputValueWarehouses}
-        label={formFields.warehouseRef.label}
+        label={formFields.warehouseRef.placeholder}
       />
     </Box>
   );

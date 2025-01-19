@@ -5,13 +5,16 @@ import {
   FieldValues,
   Path,
   PathValue,
+  useFormContext,
 } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
+import { IOrderSubmissionData, TFormFields } from '@/app/cart/formOrder.t';
 
 interface AutocompleteControllerProps<T extends FieldValues> {
   name: Path<T>;
+  nameRef: Path<T>;
   control: Control<T>;
   defaultValue: PathValue<T, Path<T>>;
   isDisabled: boolean;
@@ -21,31 +24,31 @@ interface AutocompleteControllerProps<T extends FieldValues> {
     Ref: string;
     Present?: string;
   }>;
-  setInputValue: (value: string) => void;
   isLoading: boolean;
   isFetchingNextPage: boolean;
   handleScroll: (e: React.UIEvent<HTMLDListElement>) => void;
   label: string;
-  inputValue: string;
 }
 
 const AutocompleteController = <T extends FieldValues>({
   name,
+  nameRef,
   control,
   defaultValue,
   isDisabled,
   hasOptions,
   optionsList,
-  setInputValue,
   isLoading,
   isFetchingNextPage,
   handleScroll,
   label,
-  inputValue,
 }: AutocompleteControllerProps<T>) => {
+  const { setValue, watch } = useFormContext<IOrderSubmissionData>();
+  const currentValue = watch(name as keyof TFormFields) || '';
+
   return (
     <Controller
-      name={name}
+      name={nameRef}
       control={control}
       defaultValue={defaultValue}
       render={({ field, fieldState }) => {
@@ -66,13 +69,22 @@ const AutocompleteController = <T extends FieldValues>({
             //     ?.Description || ''
             // }
 
-            value={inputValue}
-            onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+            value={currentValue}
+            onInputChange={(_, newInputValue) => {
+              setValue(
+                name as keyof TFormFields,
+                newInputValue as PathValue<T, Path<T>>
+              );
+            }}
             onChange={(_, value) => {
               const selectedOption = optionsList.find(
                 (option) => option.Description === value
               );
               field.onChange(selectedOption?.Ref || '');
+              setValue(
+                name as keyof TFormFields,
+                selectedOption?.Description || ''
+              );
             }}
             loading={isLoading}
             slotProps={{
