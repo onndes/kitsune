@@ -12,6 +12,7 @@ import SelectDelivery from './SelectDelivery';
 import { getInitialValues } from '../../common/getInitialValues';
 import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
 import SelectVariantDelivery from './SelectVariantDelivery';
+import { useSendMessage } from '@/api/notification/useNotification';
 
 export const Form = () => {
   const form = useRef(null);
@@ -21,11 +22,21 @@ export const Form = () => {
     resolver: yupResolver(schema),
   });
 
+  const { mutate: sendOrder, isPending, isSuccess, isError } = useSendMessage();
+
+  useEffect(() => {
+    if (isSuccess) {
+      methods.reset();
+    }
+  }, [isSuccess]);
+
   const onSubmit: SubmitHandler<IOrderSubmissionData> = (
     orderFormData: IOrderSubmissionData
   ) => {
     // тут был какой-то функционал отправки данных через EmailJs возможно в красивом виде, файлы в папке archive
+
     console.log(orderFormData);
+    sendOrder(orderFormData);
   };
 
   const userDataFields = useMemo(() => extractedFields.userData(), []);
@@ -61,14 +72,32 @@ export const Form = () => {
           </Typography>
           <LocationPicker />
         </Box>
-
-        <MyButton
-          type="submit"
-          text="Оформити замовлення"
-          fullWidth
-          size="small"
-          sx={{ width: '250px', margin: 'auto', fontSize: '16px', mt: 2 }}
-        />
+        <Box
+          mt={2}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {isError && (
+            <Typography textAlign="center" color="error" fontSize={13}>
+              Помилка при відправці замовлення
+            </Typography>
+          )}
+          {isSuccess && (
+            <Typography textAlign="center" color="success" fontSize={13}>
+              Замовлення успішно відправлено
+            </Typography>
+          )}
+          <MyButton
+            type="submit"
+            text="Оформити замовлення"
+            fullWidth
+            size="small"
+            loading={isPending}
+            sx={{ width: '250px', margin: 'auto', fontSize: '16px', mt: 0 }}
+          />
+        </Box>
       </Box>
     </FormProvider>
   );
