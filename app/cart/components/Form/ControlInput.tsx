@@ -15,7 +15,7 @@ interface ControlInputProps<T extends FieldValues> {
 const ControlInput = <T extends FieldValues>({
   name,
   placeholder,
-  pb = 1,
+  pb = 0,
   pt = 0,
   autoComplete = 'off',
   sx = {},
@@ -35,7 +35,7 @@ const ControlInput = <T extends FieldValues>({
           label={nameUpper}
           multiline={name === 'comments'}
           error={!!error}
-          variant="outlined"
+          variant="standard"
           helperText={error ? error.message : null}
           placeholder={nameUpper}
           fullWidth

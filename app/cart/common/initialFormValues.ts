@@ -1,4 +1,8 @@
-import { TFormFields } from '@/app/cart/formOrder.t';
+import {
+  CompanyPost,
+  TFormFields,
+  VariantsDelivery,
+} from '@/app/cart/formOrder.t';
 
 export const formFields: TFormFields = {
   name: {
@@ -68,7 +72,7 @@ export const formFields: TFormFields = {
     label: 'Введіть номер відділення чи поштомата',
   },
   delivery: {
-    initialValue: 'novaPoshta',
+    initialValue: CompanyPost.novaPoshta,
     name: 'delivery',
     placeholder: 'Оберіть метод доставки',
     label: 'Метод доставки',
@@ -77,23 +81,46 @@ export const formFields: TFormFields = {
         value: 'novaPoshta',
         label: 'Нова пошта',
         image: '/image/logos/delivery/novaPoshta.svg',
+        isWork: true,
       },
       {
         value: 'ukrPoshta',
         label: 'Укрпошта',
         image: '/image/logos/delivery/ukrposhta.svg',
+        isWork: false,
       },
       {
         value: 'meest',
         label: 'Meest',
         image: '/image/logos/delivery/meest.svg',
+        isWork: false,
       },
     ],
   },
-  typeDelivery: {
-    initialValue: 'home',
-    name: 'typeDelivery',
-    placeholder: 'Оберіть тип доставки',
-    label: 'Тип доставки',
+  variantsDelivery: {
+    initialValue: VariantsDelivery.warehouses,
+    name: 'variantsDelivery',
+    placeholder: 'Варіант доставки',
+    label: 'Варіант доставки',
+    options: [
+      {
+        value: VariantsDelivery.warehouses,
+        label: 'Відділення/поштомат',
+        image: '',
+        isWork: true,
+      },
+      {
+        value: VariantsDelivery.home,
+        label: 'На адресу',
+        image: '',
+        isWork: false,
+      },
+    ],
+  },
+  address: {
+    initialValue: '',
+    name: 'address',
+    placeholder: 'Введіть вашу повну адресу',
+    label: 'Введіть вашу повну адресу',
   },
 };

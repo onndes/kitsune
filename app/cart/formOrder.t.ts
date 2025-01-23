@@ -1,13 +1,21 @@
-export type TCompanyPost = 'novaPoshta' | 'ukrPoshta' | 'Meest';
-export type TTypeDelivery = 'home' | 'warehouse';
+export enum CompanyPost {
+  novaPoshta = 'novaPoshta',
+  ukrPoshta = 'ukrPoshta',
+  meest = 'meest',
+}
 
+export enum VariantsDelivery {
+  warehouses = 'warehouses',
+  home = 'home',
+}
 export interface IOptions {
   value: string;
   label: string;
   image: string;
+  isWork: boolean;
 }
 
-export interface IFormField<I> {
+export interface IFormField<I = string> {
   initialValue: I;
   name: string;
   placeholder: string;
@@ -16,19 +24,20 @@ export interface IFormField<I> {
 }
 
 export type TFormFields = {
-  name: IFormField<string>;
-  surname: IFormField<string>;
-  middleName: IFormField<string>;
-  number: IFormField<string>;
-  email: IFormField<string>;
-  comments: IFormField<string>;
-  voucher: IFormField<string>;
-  city: IFormField<string>;
-  warehouse: IFormField<string>;
-  cityRef: IFormField<string>;
-  warehouseRef: IFormField<string>;
-  delivery: IFormField<TCompanyPost>;
-  typeDelivery: IFormField<TTypeDelivery>;
+  name: IFormField;
+  surname: IFormField;
+  middleName: IFormField;
+  number: IFormField;
+  email: IFormField;
+  comments: IFormField;
+  voucher: IFormField;
+  city: IFormField;
+  warehouse?: IFormField;
+  cityRef: IFormField;
+  warehouseRef?: IFormField;
+  delivery: IFormField<CompanyPost>;
+  variantsDelivery: IFormField<VariantsDelivery>;
+  address?: IFormField;
 };
 
 export interface IOrderSubmissionData {
@@ -39,12 +48,13 @@ export interface IOrderSubmissionData {
   email: string;
   comments?: string;
   voucher?: string;
+  delivery: CompanyPost;
   city: string;
-  warehouse: string;
   cityRef: string;
-  warehouseRef: string;
-  delivery: TCompanyPost;
-  typeDelivery: TTypeDelivery;
+  warehouse?: string;
+  warehouseRef?: string;
+  variantsDelivery: VariantsDelivery;
+  address?: string;
 }
 
 // export type IFormFieldUserData = Array<IFormField<string>>;

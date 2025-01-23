@@ -2,7 +2,7 @@ import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/components/MyButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@mui/material';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { formFields } from '../../common/initialFormValues';
 import { extractedFields } from '../../common/orderFormFields';
@@ -11,6 +11,7 @@ import LocationPicker from './LocationPicker.tsx';
 import SelectDelivery from './SelectDelivery';
 import { getInitialValues } from '../../common/getInitialValues';
 import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
+import SelectVariantDelivery from './SelectVariantDelivery';
 
 export const Form = () => {
   const form = useRef(null);
@@ -55,7 +56,9 @@ export const Form = () => {
             />
           ))}
 
-          <SelectDelivery />
+          <Typography variant="h6" fontSize={16} mb={1}>
+            Доставка
+          </Typography>
           <LocationPicker />
         </Box>
 

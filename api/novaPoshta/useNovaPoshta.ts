@@ -92,8 +92,6 @@ export const useWarehouses = ({
   findByString,
   limit = 40,
 }: useWarehousesProps): TUseWarehousesResult => {
-  console.log('useWarehouses findByString:', findByString);
-  console.log('useWarehouses cityRef:', cityRef);
   const isCityRefNumberFormat =
     findByString && /^\d+$/.test(findByString.trim());
   const searchMethodProperty = isCityRefNumberFormat

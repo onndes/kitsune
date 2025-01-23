@@ -2,7 +2,13 @@
 
 import { Box, Typography } from '@mui/material';
 import React, { useMemo } from 'react';
-import { FieldValues, Path, PathValue, useFormContext } from 'react-hook-form';
+import {
+  FieldValues,
+  Path,
+  PathValue,
+  useFormContext,
+  Controller,
+} from 'react-hook-form';
 import { useCities, useWarehouses } from '@/api/novaPoshta/useNovaPoshta';
 import { ICity, IWarehouse } from '@/api/novaPoshta/novaPoshta.types';
 import AutocompleteController from './AutocompleteController';
@@ -10,15 +16,19 @@ import { useDebounce } from 'use-debounce';
 import { regionalCitiesData } from '@/app/cart/common/regionsCenterData';
 import { handleScrollMorePage } from '@/app/cart/common/handleScrollMore';
 import { formFields } from '@/app/cart/common/initialFormValues';
+import SelectVariantDelivery from '../SelectVariantDelivery';
+import SelectDelivery from '../SelectDelivery';
+import { VariantsDelivery } from '@/app/cart/formOrder.t';
+import AddressInput from '../AddressInput';
 
 // todo: поиск отделений перевести в оффлайн, сохранять куда-то в базу так просит НП
 const LocationPicker = <T extends FieldValues>() => {
   const { control, watch } = useFormContext();
 
-  const city = watch('city' as Path<T>);
-  const cityRef = watch('cityRef' as Path<T>);
-  const warehouse = watch('warehouse' as Path<T>);
-
+  const city = watch('city');
+  const cityRef = watch('cityRef');
+  const warehouse = watch('warehouse');
+  const variantsDelivery = watch('variantsDelivery');
   const [debouncedInputValueCity] = useDebounce(city, 400);
   const [debouncedWarehouseInput] = useDebounce(warehouse, 400);
 
@@ -49,6 +59,7 @@ const LocationPicker = <T extends FieldValues>() => {
   } = useWarehouses({
     cityRef,
     findByString: debouncedWarehouseInput.trim(),
+    // todo: убрать поиск если вибрана адресная доставка
   });
 
   const postOffices: IWarehouse[] = useMemo(
@@ -94,9 +105,8 @@ const LocationPicker = <T extends FieldValues>() => {
       >
         Load
       </Button> */}
-      <Typography variant="h6" fontSize={16} mb={1}>
-        Адреса доставки
-      </Typography>
+      <SelectDelivery />
+      <SelectVariantDelivery />
       <AutocompleteController
         nameRef={formFields.cityRef.name as Path<T>}
         name={formFields.city.name as Path<T>}
@@ -110,23 +120,27 @@ const LocationPicker = <T extends FieldValues>() => {
         handleScroll={handleScrollCity}
         label={formFields.cityRef.placeholder}
       />
-      {/* Выбор отделения */}
-
-      <AutocompleteController
-        name={formFields.warehouse.name as Path<T>}
-        nameRef={formFields.warehouseRef.name as Path<T>}
-        control={control}
-        defaultValue={
-          formFields.warehouseRef.initialValue as PathValue<T, Path<T>>
-        }
-        isDisabled={!cityRef}
-        hasOptions={!!warehouses}
-        optionsList={postOffices}
-        isLoading={loadingWarehouses}
-        isFetchingNextPage={isFetchingNextPageWarehouses}
-        handleScroll={handleScrollWarehouses}
-        label={formFields.warehouseRef.placeholder}
-      />
+      {variantsDelivery === VariantsDelivery.warehouses && (
+        <>
+          {/* Выбор отделения */}
+          <AutocompleteController
+            name={formFields.warehouse.name as Path<T>}
+            nameRef={formFields.warehouseRef.name as Path<T>}
+            control={control}
+            defaultValue={
+              formFields.warehouseRef.initialValue as PathValue<T, Path<T>>
+            }
+            isDisabled={!cityRef}
+            hasOptions={!!warehouses}
+            optionsList={postOffices}
+            isLoading={loadingWarehouses}
+            isFetchingNextPage={isFetchingNextPageWarehouses}
+            handleScroll={handleScrollWarehouses}
+            label={formFields.warehouseRef.placeholder}
+          />
+        </>
+      )}
+      <AddressInput />
     </Box>
   );
 };

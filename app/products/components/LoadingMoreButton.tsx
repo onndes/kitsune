@@ -1,5 +1,4 @@
-import { LoadingButton } from '@mui/lab';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React from 'react';
 
 interface ILoadingMoreButtonProps {
@@ -18,7 +17,7 @@ export default function LoadingMoreButton({
   return (
     show && (
       <Box display="flex" justifyContent="center">
-        <LoadingButton
+        <Button
           sx={{ height: '100%', fontWeight: 600 }}
           onClick={() => fetchNextPage()}
           type="submit"
@@ -28,7 +27,7 @@ export default function LoadingMoreButton({
           loading={isFetchingNextPage}
         >
           Завантажити ще
-        </LoadingButton>
+        </Button>
       </Box>
     )
   );
