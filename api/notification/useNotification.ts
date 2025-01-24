@@ -9,23 +9,15 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 
-const API_KEY = process.env.NEXT_PUBLIC_TELEGRAM_ORDER_BOT_KEY as string;
-const CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID as string;
-const BASE_URL = 'https://api.telegram.org/bot';
+const sendMessage = async (formData: IOrderSubmissionData) => {
+  const message = formatOrderMessage(formData);
 
-// api.telegram.org/bot<KEY>/getUpdates
+  const response = await axios.post('/api/telegram/send-message', { message });
 
-// https://api.telegram.org/bot<KEY>/sendMessage?chat_id=<ID>&text=Привет+из+бота!
+  if (response.status !== 200) {
+    throw new Error(`Ошибка отправки: ${response.statusText}`);
+  }
 
-const telegramRequest = async <T>(
-  modelName: string,
-  message: string
-): Promise<TelegramResponse<T>> => {
-  const response = await axios.post(`${BASE_URL}${API_KEY}/${modelName}`, {
-    chat_id: CHAT_ID,
-    text: message,
-    parse_mode: 'Markdown',
-  });
   return response.data;
 };
 
@@ -35,10 +27,7 @@ export const useSendMessage = (): UseMutationResult<
   IOrderSubmissionData // Тип входящих данных
 > =>
   useMutation({
-    mutationFn: async (formData: IOrderSubmissionData) => {
-      const message = formatOrderMessage(formData);
-      return await telegramRequest<TelegramMessage>('sendMessage', message);
-    },
+    mutationFn: sendMessage,
     onSuccess: (data) => {
       console.log('Сообщение успешно отправлено:', data);
     },
