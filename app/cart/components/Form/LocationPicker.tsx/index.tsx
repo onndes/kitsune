@@ -58,7 +58,7 @@ const LocationPicker = <T extends FieldValues>() => {
     isFetchingNextPage: isFetchingNextPageWarehouses,
   } = useWarehouses({
     cityRef,
-    findByString: debouncedWarehouseInput.trim(),
+    findByString: debouncedWarehouseInput?.trim(),
     // todo: убрать поиск если вибрана адресная доставка
   });
 
@@ -68,7 +68,7 @@ const LocationPicker = <T extends FieldValues>() => {
   );
 
   const combinedCities: ICity[] = useMemo(() => {
-    return city.trim()
+    return city?.trim()
       ? cities?.pages.map((page) => page.data[0].Addresses).flat() || []
       : regionalCitiesData;
   }, [cities?.pages, city]);
@@ -124,11 +124,11 @@ const LocationPicker = <T extends FieldValues>() => {
         <>
           {/* Выбор отделения */}
           <AutocompleteController
-            name={formFields.warehouse.name as Path<T>}
-            nameRef={formFields.warehouseRef.name as Path<T>}
+            name={formFields.warehouse?.name as Path<T>}
+            nameRef={formFields.warehouseRef?.name as Path<T>}
             control={control}
             defaultValue={
-              formFields.warehouseRef.initialValue as PathValue<T, Path<T>>
+              formFields.warehouseRef?.initialValue as PathValue<T, Path<T>>
             }
             isDisabled={!cityRef}
             hasOptions={!!warehouses}
@@ -136,7 +136,7 @@ const LocationPicker = <T extends FieldValues>() => {
             isLoading={loadingWarehouses}
             isFetchingNextPage={isFetchingNextPageWarehouses}
             handleScroll={handleScrollWarehouses}
-            label={formFields.warehouseRef.placeholder}
+            label={formFields.warehouseRef?.placeholder || ''}
           />
         </>
       )}

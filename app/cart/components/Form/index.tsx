@@ -1,7 +1,7 @@
 import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/components/MyButton';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { formFields } from '../../common/initialFormValues';
@@ -13,33 +13,69 @@ import { getInitialValues } from '../../common/getInitialValues';
 import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
 import SelectVariantDelivery from './SelectVariantDelivery';
 import { useSendMessage } from '@/api/notification/useNotification';
+import { useDispatch } from 'react-redux';
+import { clearForm, saveArchivedData, saveForm } from '@/redux/formSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import { isEqual, debounce } from 'lodash';
 
 export const Form = () => {
+  const dispatch = useDispatch();
   const form = useRef(null);
+  const isFirstRender = useRef(true);
+
+  const {
+    data: savedData,
+    archivedData,
+  }: { data: IOrderSubmissionData; archivedData: IOrderSubmissionData } =
+    useSelector((state: RootState) => state.form);
 
   const methods = useForm<IOrderSubmissionData>({
-    defaultValues: getInitialValues(formFields) as IOrderSubmissionData,
+    defaultValues: savedData,
     resolver: yupResolver(schema),
   });
-
+  const formValues = methods.watch();
   const { mutate: sendOrder, isPending, isSuccess, isError } = useSendMessage();
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(saveArchivedData(formValues));
+      dispatch(clearForm());
       methods.reset();
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    if (!isEqual(formValues, savedData)) {
+    }
+  }, [formValues, savedData]);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    if (savedData) {
+      methods.reset(savedData); //  Теперь форма обновляется корректно
+    }
+  }, [savedData, methods.setValue]);
+
   const onSubmit: SubmitHandler<IOrderSubmissionData> = (
     orderFormData: IOrderSubmissionData
   ) => {
-    // тут был какой-то функционал отправки данных через EmailJs возможно в красивом виде, файлы в папке archive
-
-    console.log(orderFormData);
+    console.log('✅ Удача, данные отправлены ', orderFormData);
     sendOrder(orderFormData);
   };
 
+  const handleLoadArchivedData = () => {
+    if (!archivedData) return;
+    methods.reset(archivedData);
+  };
+
   const userDataFields = useMemo(() => extractedFields.userData(), []);
+  const hasArchivedData = archivedData?.name;
 
   return (
     <FormProvider {...methods}>
@@ -57,6 +93,29 @@ export const Form = () => {
           <Typography variant="h6" fontSize={16} mb={1}>
             Одержувач замовлення
           </Typography>
+          {hasArchivedData && (
+            <Button
+              variant="outlined" // Второстепенный стиль
+              color="secondary" // Светло-розовый
+              startIcon={<DownloadRoundedIcon />}
+              sx={{
+                textTransform: 'none',
+                borderRadius: '12px',
+                borderWidth: '2px',
+                fontSize: '14px',
+                fontWeight: 500,
+                padding: '8px 16px',
+                marginBottom: 1,
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 192, 203, 0.1)', // Лёгкий розовый фон
+                },
+              }}
+              onClick={() => handleLoadArchivedData()}
+            >
+              Завантажити попередні дані
+            </Button>
+          )}
+
           {userDataFields.map((el) => (
             <ControlInput
               autoComplete="on"

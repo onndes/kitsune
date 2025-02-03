@@ -5,40 +5,42 @@ import storage from 'redux-persist/lib/storage'; // Использует localSt
 import appReducer from './appSlice';
 import cartReducer from './cartSlice';
 import productReducer from './productSlice';
-// import categoryMenuReducer from './categoryMenuSlice';
+import formReducer from './formSlice';
 
 // Корневой редюсер с использованием combineReducers
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   app: appReducer,
   cart: cartReducer,
-  // categoryMenu: categoryMenuReducer,
   product: productReducer,
+  form: formReducer,
 });
 
 // Конфигурация redux-persist
 const persistConfig = {
   key: 'root', // Ключ, под которым будет храниться состояние в localStorage
   storage, // Используем localStorage для хранения состояния
-  whitelist: ['cart', 'app'], // Указываем, какие редьюсеры сохранять (например, корзина)
+  whitelist: ['cart', 'app', 'form'], // Указываем, какие редьюсеры сохранять
 };
 
 // Оборачиваем корневой редюсер в persistReducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const makeStore = () => {
-  return configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: false, // Отключаем проверку сериализуемости для корректной работы redux-persist
-      }),
-  });
-};
+// Создаём store
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST'],
+      },
+    }),
+});
 
-export const store = makeStore();
+// Создаём persistor
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof rootReducer>;
+// Типизация
+export type RootState = ReturnType<typeof store.getState>;
 export type AppStore = typeof store;
 export type AppDispatch = AppStore['dispatch'];
 

@@ -41,7 +41,7 @@ const AutocompleteController = <T extends FieldValues>({
   isLoading,
   isFetchingNextPage,
   handleScroll,
-  label,
+  label = '',
 }: AutocompleteControllerProps<T>) => {
   const { setValue, watch } = useFormContext<IOrderSubmissionData>();
   const currentValue = watch(name as keyof TFormFields) || '';

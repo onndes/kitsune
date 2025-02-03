@@ -5,10 +5,6 @@ const API_KEY = process.env.TELEGRAM_ORDER_BOT_KEY;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const BASE_URL = 'https://api.telegram.org/bot';
 
-// https://api.telegram.org/bot<KEY>/getUpdates
-
-// https://api.telegram.org/bot<KEY>/sendMessage?chat_id=<ID>&text=Привет+из+бота!
-console.log('---ROUTE---', API_KEY);
 export async function POST(request: Request) {
   console.log('---POST request---');
   try {
