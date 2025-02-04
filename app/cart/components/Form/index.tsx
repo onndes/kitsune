@@ -25,6 +25,12 @@ export const Form = () => {
   const form = useRef(null);
   const isFirstRender = useRef(true);
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Теперь мы уверены, что клиент загружен
+  }, []);
+
   const {
     data: savedData,
     archivedData,
@@ -102,11 +108,36 @@ export const Form = () => {
           <Typography variant="h6" fontSize={16} mb={1}>
             Одержувач замовлення
           </Typography>
+<<<<<<< HEAD
 
           <ButtonLoadPrevData
             handleLoadArchivedData={handleLoadArchivedData}
             isName={!!archivedData?.name}
           />
+=======
+          {isClient && archivedData?.name && hasArchivedData && (
+            <Button
+              variant="outlined" // Второстепенный стиль
+              color="secondary" // Светло-розовый
+              startIcon={<DownloadRoundedIcon />}
+              sx={{
+                textTransform: 'none',
+                borderRadius: '12px',
+                borderWidth: '2px',
+                fontSize: '14px',
+                fontWeight: 500,
+                padding: '8px 16px',
+                marginBottom: 1,
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 192, 203, 0.1)', // Лёгкий розовый фон
+                },
+              }}
+              onClick={() => handleLoadArchivedData()}
+            >
+              Завантажити попередні дані
+            </Button>
+          )}
+>>>>>>> f277e6f32a243c672b3791e0c3c3f9c9c39979fc
 
           {userDataFields.map((el) => (
             <ControlInput
