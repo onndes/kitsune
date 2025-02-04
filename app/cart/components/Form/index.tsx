@@ -2,7 +2,7 @@ import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/components/MyButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Typography } from '@mui/material';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { formFields } from '../../common/initialFormValues';
 import { extractedFields } from '../../common/orderFormFields';
@@ -17,8 +17,8 @@ import { useDispatch } from 'react-redux';
 import { clearForm, saveArchivedData, saveForm } from '@/redux/formSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import { isEqual, debounce } from 'lodash';
+import ButtonLoadPrevData from '../ButtonLoadPrevData';
 
 export const Form = () => {
   const dispatch = useDispatch();
@@ -46,10 +46,19 @@ export const Form = () => {
     }
   }, [isSuccess]);
 
+  const saveToRedux = useMemo(
+    () =>
+      debounce((values: IOrderSubmissionData) => {
+        dispatch(saveForm(values));
+      }, 500),
+    [dispatch]
+  );
+
   useEffect(() => {
-    if (!isEqual(formValues, savedData)) {
+    if (isFirstRender.current) {
+      saveToRedux(formValues);
     }
-  }, [formValues, savedData]);
+  }, [formValues]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -58,9 +67,9 @@ export const Form = () => {
     }
 
     if (savedData) {
-      methods.reset(savedData); //  Теперь форма обновляется корректно
+      methods.reset(savedData);
     }
-  }, [savedData, methods.setValue]);
+  }, [savedData]);
 
   const onSubmit: SubmitHandler<IOrderSubmissionData> = (
     orderFormData: IOrderSubmissionData
@@ -93,28 +102,11 @@ export const Form = () => {
           <Typography variant="h6" fontSize={16} mb={1}>
             Одержувач замовлення
           </Typography>
-          {hasArchivedData && (
-            <Button
-              variant="outlined" // Второстепенный стиль
-              color="secondary" // Светло-розовый
-              startIcon={<DownloadRoundedIcon />}
-              sx={{
-                textTransform: 'none',
-                borderRadius: '12px',
-                borderWidth: '2px',
-                fontSize: '14px',
-                fontWeight: 500,
-                padding: '8px 16px',
-                marginBottom: 1,
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 192, 203, 0.1)', // Лёгкий розовый фон
-                },
-              }}
-              onClick={() => handleLoadArchivedData()}
-            >
-              Завантажити попередні дані
-            </Button>
-          )}
+
+          <ButtonLoadPrevData
+            handleLoadArchivedData={handleLoadArchivedData}
+            isName={!!archivedData?.name}
+          />
 
           {userDataFields.map((el) => (
             <ControlInput
