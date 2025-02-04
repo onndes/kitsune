@@ -2,7 +2,7 @@ import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/components/MyButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Typography } from '@mui/material';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { formFields } from '../../common/initialFormValues';
 import { extractedFields } from '../../common/orderFormFields';
@@ -24,6 +24,12 @@ export const Form = () => {
   const dispatch = useDispatch();
   const form = useRef(null);
   const isFirstRender = useRef(true);
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Теперь мы уверены, что клиент загружен
+  }, []);
 
   const {
     data: savedData,
@@ -60,7 +66,7 @@ export const Form = () => {
     if (savedData) {
       methods.reset(savedData); //  Теперь форма обновляется корректно
     }
-  }, [savedData, methods.setValue]);
+  }, [savedData]);
 
   const onSubmit: SubmitHandler<IOrderSubmissionData> = (
     orderFormData: IOrderSubmissionData
@@ -93,7 +99,7 @@ export const Form = () => {
           <Typography variant="h6" fontSize={16} mb={1}>
             Одержувач замовлення
           </Typography>
-          {hasArchivedData && (
+          {isClient && archivedData?.name && hasArchivedData && (
             <Button
               variant="outlined" // Второстепенный стиль
               color="secondary" // Светло-розовый
