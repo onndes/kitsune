@@ -1,7 +1,7 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // Использует localStorage
+import storage from './storage'; // Использует localStorage
 import appReducer from './appSlice';
 import cartReducer from './cartSlice';
 import productReducer from './productSlice';

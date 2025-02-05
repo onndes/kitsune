@@ -9,13 +9,12 @@ interface IProps {
 
 const ButtonLoadPrevData = ({ handleLoadArchivedData, isName }: IProps) => {
   const [isClient, setIsClient] = useState(false);
-
   useEffect(() => {
     // Теперь мы уверены, что клиент загружен
     setIsClient(true);
   }, []);
 
-  if (!isName && !isClient) return null;
+  if (!isName ||   !isClient) return null;
 
   return (
     <Button
