@@ -10,16 +10,12 @@ import {
   ICityPage,
 } from '@/api/novaPoshta/novaPoshta.types';
 
-const API_KEY = process.env.NEXT_PUBLIC_NOVA_POSHTA_API_KEY as string;
-const BASE_URL = 'https://api.novaposhta.ua/v2.0/json/';
-
 const novaPoshtaRequest = async <T>(
   modelName: string,
   calledMethod: string,
   methodProps: Record<string, unknown> = {}
 ): Promise<INovaPoshtaApiResponse<T>> => {
-  const response = await axios.post(BASE_URL, {
-    apiKey: API_KEY,
+  const response = await axios.post('/api/nova-poshta', {
     modelName,
     calledMethod,
     methodProperties: methodProps,

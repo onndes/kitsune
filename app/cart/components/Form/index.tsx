@@ -1,3 +1,5 @@
+'use client';
+
 import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/components/MyButton';
 import { yupResolver } from '@hookform/resolvers/yup';

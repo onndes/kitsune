@@ -6,7 +6,6 @@ const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const BASE_URL = 'https://api.telegram.org/bot';
 
 export async function POST(request: Request) {
-  console.log('---POST request---');
   try {
     const { message } = await request.json();
 
@@ -29,7 +28,7 @@ export async function POST(request: Request) {
       headers: {
         'Content-Type': 'application/json',
       },
-      timeout: 5000, // Устанавливаем таймаут 5 секунд
+      timeout: 10000, // Устанавливаем таймаут 5 секунд
       httpsAgent: new (require('https').Agent)({ keepAlive: true }), // Для поддержки долгосрочных соединений
       data: {
         chat_id: CHAT_ID,

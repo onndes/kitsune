@@ -11,7 +11,6 @@ import {
 
 const sendMessage = async (formData: IOrderSubmissionData) => {
   const message = formatOrderMessage(formData);
-
   const response = await axios.post('/api/telegram/send-message', { message });
 
   if (response.status !== 200) {
