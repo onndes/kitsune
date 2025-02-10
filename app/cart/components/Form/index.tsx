@@ -3,81 +3,82 @@
 import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/components/MyButton';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { formFields } from '../../common/initialFormValues';
 import { extractedFields } from '../../common/orderFormFields';
 import schema from '../../common/schema';
 import LocationPicker from './LocationPicker.tsx';
-import SelectDelivery from './SelectDelivery';
 import { getInitialValues } from '../../common/getInitialValues';
 import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
-import SelectVariantDelivery from './SelectVariantDelivery';
 import { useSendMessage } from '@/api/notification/useNotification';
 import { useDispatch } from 'react-redux';
 import { clearForm, saveArchivedData, saveForm } from '@/redux/formSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import { isEqual, debounce } from 'lodash';
+import { debounce } from 'lodash';
 import ButtonLoadPrevData from '../ButtonLoadPrevData';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 export const Form = () => {
+  // TODO
+  // ! Из-за сохранения в redux, получается какой то баг
+  // ! страница но совпадает со страницей на сервере
+
   const dispatch = useDispatch();
   const form = useRef(null);
-  const isFirstRender = useRef(true);
 
-  const [isClient, setIsClient] = useState(false);
+  // const isFirstRender = useRef(true);
 
-  useEffect(() => {
-    setIsClient(true); // Теперь мы уверены, что клиент загружен
-  }, []);
+  // const [isClient, setIsClient] = useState(false);
 
-  const {
-    data: savedData,
-    archivedData,
-  }: { data: IOrderSubmissionData; archivedData: IOrderSubmissionData } =
-    useSelector((state: RootState) => state.form);
+  // useEffect(() => {
+  //   setIsClient(true); // Теперь мы уверены, что клиент загружен
+  // }, []);
 
+  // const { savedData, archivedData } = useAppSelector((state) => state.form);
+  // const initialValue = getInitialValues(formFields) as IOrderSubmissionData;
+  // console.log(initialValue);
   const methods = useForm<IOrderSubmissionData>({
-    defaultValues: savedData,
+    // ? Возможно это решило проблему - savedData || initialValue
+    // defaultValues: initialValue,
     resolver: yupResolver(schema),
   });
-  const formValues = methods.watch();
   const { mutate: sendOrder, isPending, isSuccess, isError } = useSendMessage();
+
+  // const formValues = methods.watch();
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(saveArchivedData(formValues));
-      dispatch(clearForm());
+      // dispatch(saveArchivedData(formValues)); // save
+      // dispatch(clearForm());
       methods.reset();
     }
   }, [isSuccess]);
 
-  const saveToRedux = useMemo(
-    () =>
-      debounce((values: IOrderSubmissionData) => {
-        dispatch(saveForm(values));
-      }, 500),
-    [dispatch]
-  );
+  // const saveToRedux = useMemo(
+  //   () =>
+  //     debounce((values: IOrderSubmissionData) => {
+  //       dispatch(saveForm(values));
+  //     }, 500),
+  //   [dispatch]
+  // );
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      saveToRedux(formValues);
-    }
-  }, [formValues]);
+  // useEffect(() => {
+  //   if (isFirstRender.current) {
+  //     saveToRedux(formValues);
+  //   }
+  // }, [formValues]);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
+  // useEffect(() => {
+  //   if (isFirstRender.current) {
+  //     isFirstRender.current = false;
+  //     return;
+  //   }
 
-    if (savedData) {
-      methods.reset(savedData);
-    }
-  }, [savedData]);
+  //   if (savedData) {
+  //     methods.reset(savedData);
+  //   }
+  // }, [savedData]);
 
   const onSubmit: SubmitHandler<IOrderSubmissionData> = (
     orderFormData: IOrderSubmissionData
@@ -86,13 +87,13 @@ export const Form = () => {
     sendOrder(orderFormData);
   };
 
-  const handleLoadArchivedData = () => {
-    if (!archivedData) return;
-    methods.reset(archivedData);
-  };
+  // const handleLoadArchivedData = () => {
+  //   if (!archivedData) return;
+  //   methods.reset(archivedData);
+  // };
 
   const userDataFields = useMemo(() => extractedFields.userData(), []);
-  const hasArchivedData = archivedData?.name;
+  // const hasArchivedData = archivedData?.name;
 
   return (
     <FormProvider {...methods}>
@@ -111,10 +112,10 @@ export const Form = () => {
             Одержувач замовлення
           </Typography>
 
-          <ButtonLoadPrevData
+          {/* <ButtonLoadPrevData
             handleLoadArchivedData={handleLoadArchivedData}
             isName={!!archivedData?.name}
-          />
+          /> */}
 
           {userDataFields.map((el) => (
             <ControlInput

@@ -1,5 +1,4 @@
 // cartSlice.ts
-
 import { IProduct } from '@/api/products/products.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -22,23 +21,13 @@ const cartSlice = createSlice({
         (el) => el.code === product.code
       );
 
-      if (existingProduct) {
-        const updatedProducts = state.products.map((el) =>
-          el.code === product.code ? { ...el, count: el.count + 1 } : el
-        );
-        window.localStorage.setItem(
-          'cartProducts',
-          JSON.stringify(updatedProducts)
-        );
-        state.products = updatedProducts;
-      } else {
-        const updatedProducts = [...state.products, { ...product, count: 1 }];
-        window.localStorage.setItem(
-          'cartProducts',
-          JSON.stringify(updatedProducts)
-        );
-        state.products = updatedProducts;
-      }
+      const updatedProducts = existingProduct
+        ? state.products.map((el) =>
+            el.code === product.code ? { ...el, count: el.count + 1 } : el
+          )
+        : [...state.products, { ...product, count: 1 }];
+
+      state.products = updatedProducts;
     },
     removeProduct(
       state,
@@ -50,25 +39,14 @@ const cartSlice = createSlice({
       );
 
       if (existingProduct) {
-        if (existingProduct.count > 1 && !remove) {
-          const updatedProducts = state.products.map((el) =>
-            el.code === product.code ? { ...el, count: el.count - 1 } : el
-          );
-          window.localStorage.setItem(
-            'cartProducts',
-            JSON.stringify(updatedProducts)
-          );
-          state.products = updatedProducts;
-        } else {
-          const updatedProducts = state.products.filter(
-            (el) => el.code !== product.code
-          );
-          window.localStorage.setItem(
-            'cartProducts',
-            JSON.stringify(updatedProducts)
-          );
-          state.products = updatedProducts;
-        }
+        const updatedProducts =
+          existingProduct.count > 1 && !remove
+            ? state.products.map((el) =>
+                el.code === product.code ? { ...el, count: el.count - 1 } : el
+              )
+            : state.products.filter((el) => el.code !== product.code);
+
+        state.products = updatedProducts;
       }
     },
   },

@@ -5,14 +5,14 @@ import { IFormField, IOrderSubmissionData } from '@/app/cart/formOrder.t';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FormState {
-  data: IOrderSubmissionData;
+  savedData: IOrderSubmissionData;
   archivedData: IOrderSubmissionData;
 }
 
 const initialValue = getInitialValues(formFields) as IOrderSubmissionData;
 
 const initialState: FormState = {
-  data: initialValue,
+  savedData: initialValue,
   archivedData: initialValue,
 };
 
@@ -21,14 +21,13 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     saveForm: (state, action: PayloadAction<IOrderSubmissionData>) => {
-      state.data = action.payload;
+      state.savedData = action.payload;
     },
     saveArchivedData: (state, action: PayloadAction<IOrderSubmissionData>) => {
       state.archivedData = action.payload;
     },
     clearForm: (state) => {
-      console.log('clear data');
-      state.data = initialValue;
+      state.savedData = initialValue;
     },
     clearArchivedData: (state) => {
       state.archivedData = initialValue;
