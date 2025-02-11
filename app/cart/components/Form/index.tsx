@@ -27,58 +27,70 @@ export const Form = () => {
   const dispatch = useDispatch();
   const form = useRef(null);
 
-  // const isFirstRender = useRef(true);
+  const isFirstRender = useRef(true);
 
-  // const [isClient, setIsClient] = useState(false);
+  const { savedData, archivedData } = useAppSelector((state) => state.form);
 
-  // useEffect(() => {
-  //   setIsClient(true); // Теперь мы уверены, что клиент загружен
-  // }, []);
-
-  // const { savedData, archivedData } = useAppSelector((state) => state.form);
-  // const initialValue = getInitialValues(formFields) as IOrderSubmissionData;
-  // console.log(initialValue);
   const methods = useForm<IOrderSubmissionData>({
-    // ? Возможно это решило проблему - savedData || initialValue
-    // defaultValues: initialValue,
+    defaultValues: savedData,
     resolver: yupResolver(schema),
   });
-  const { mutate: sendOrder, isPending, isSuccess, isError } = useSendMessage();
+  const {
+    mutate: sendOrder,
+    isPending,
+    isSuccess,
+    isError,
+    reset,
+  } = useSendMessage();
 
-  // const formValues = methods.watch();
+  useEffect(() => {
+    if (isSuccess || isError) {
+      const timer = setTimeout(() => {
+        reset();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, isError]);
+
+  const formValues = methods.watch();
 
   useEffect(() => {
     if (isSuccess) {
-      // dispatch(saveArchivedData(formValues)); // save
-      // dispatch(clearForm());
+      dispatch(saveArchivedData(formValues));
+      dispatch(clearForm());
       methods.reset();
     }
   }, [isSuccess]);
 
-  // const saveToRedux = useMemo(
-  //   () =>
-  //     debounce((values: IOrderSubmissionData) => {
-  //       dispatch(saveForm(values));
-  //     }, 500),
-  //   [dispatch]
-  // );
+  const saveToRedux = useMemo(
+    () =>
+      debounce((values: IOrderSubmissionData) => {
+        dispatch(saveForm(values));
+      }, 500),
+    [dispatch]
+  );
 
-  // useEffect(() => {
-  //   if (isFirstRender.current) {
-  //     saveToRedux(formValues);
-  //   }
-  // }, [formValues]);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (JSON.stringify(formValues) !== JSON.stringify(savedData)) {
+      console.log('saveForm(formValues)');
+      dispatch(saveForm(formValues));
+    }
+  }, [formValues]);
 
-  // useEffect(() => {
-  //   if (isFirstRender.current) {
-  //     isFirstRender.current = false;
-  //     return;
-  //   }
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
 
-  //   if (savedData) {
-  //     methods.reset(savedData);
-  //   }
-  // }, [savedData]);
+    if (savedData) {
+      methods.reset(savedData);
+    }
+  }, [savedData]);
 
   const onSubmit: SubmitHandler<IOrderSubmissionData> = (
     orderFormData: IOrderSubmissionData
@@ -87,13 +99,13 @@ export const Form = () => {
     sendOrder(orderFormData);
   };
 
-  // const handleLoadArchivedData = () => {
-  //   if (!archivedData) return;
-  //   methods.reset(archivedData);
-  // };
+  const handleLoadArchivedData = () => {
+    if (!archivedData) return;
+    methods.reset(archivedData);
+  };
 
   const userDataFields = useMemo(() => extractedFields.userData(), []);
-  // const hasArchivedData = archivedData?.name;
+  const hasArchivedData = archivedData?.name;
 
   return (
     <FormProvider {...methods}>
@@ -112,10 +124,10 @@ export const Form = () => {
             Одержувач замовлення
           </Typography>
 
-          {/* <ButtonLoadPrevData
+          <ButtonLoadPrevData
             handleLoadArchivedData={handleLoadArchivedData}
             isName={!!archivedData?.name}
-          /> */}
+          />
 
           {userDataFields.map((el) => (
             <ControlInput
