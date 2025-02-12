@@ -1,0 +1,177 @@
+[2025-02-12T11:50:20.620Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[2025-02-12T11:50:20.621Z] > authorizing via signed-in user (vladvyljotnikov@gmail.com)
+[2025-02-12T11:50:20.621Z] [iam] checking project onndesy-product for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[2025-02-12T11:50:20.622Z] Checked if tokens are valid: false, expires at: 1739360023737
+[2025-02-12T11:50:20.623Z] Checked if tokens are valid: false, expires at: 1739360023737
+[2025-02-12T11:50:20.623Z] > refreshing access token with scopes: []
+[2025-02-12T11:50:20.624Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[2025-02-12T11:50:20.625Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[2025-02-12T11:50:20.799Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[2025-02-12T11:50:20.799Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[2025-02-12T11:50:20.805Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/onndesy-product:testIamPermissions [none]
+[2025-02-12T11:50:20.805Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/onndesy-product:testIamPermissions x-goog-quota-user=projects/onndesy-product
+[2025-02-12T11:50:20.805Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/onndesy-product:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[2025-02-12T11:50:21.616Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/onndesy-product:testIamPermissions 200
+[2025-02-12T11:50:21.616Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/onndesy-product:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[2025-02-12T11:50:21.616Z] Checked if tokens are valid: true, expires at: 1739364619799
+[2025-02-12T11:50:21.616Z] Checked if tokens are valid: true, expires at: 1739364619799
+[2025-02-12T11:50:21.616Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/onndesy-product/serviceAccounts/onndesy-product@appspot.gserviceaccount.com:testIamPermissions [none]
+[2025-02-12T11:50:21.616Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/onndesy-product/serviceAccounts/onndesy-product@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[2025-02-12T11:50:22.444Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/onndesy-product/serviceAccounts/onndesy-product@appspot.gserviceaccount.com:testIamPermissions 200
+[2025-02-12T11:50:22.444Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/onndesy-product/serviceAccounts/onndesy-product@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+
+=== Deploying to 'onndesy-product'...
+
+i  deploying functions 
+Running command: npm --prefix "$RESOURCE_DIR" run build
+
+> build
+> tsc
+
+node_modules/typescript/lib/lib.dom.d.ts(25,1): error TS6200: Definitions of the following identifiers conflict with those in another file: fetch, HeadersInit, Headers, BodyInit, RequestInfo, Request, RequestDestination, RequestMode, RequestCredentials, RequestCache, RequestRedirect, ReferrerPolicy, Response, ResponseType
+node_modules/typescript/lib/lib.dom.d.ts(9999,14): error TS2687: All declarations of 'serviceWorker' must have identical modifiers.
+node_modules/typescript/lib/lib.dom.d.ts(11126,14): error TS2687: All declarations of 'applicationServerKey' must have identical modifiers.
+node_modules/typescript/lib/lib.dom.d.ts(16780,11): error TS2320: Interface 'Window' cannot simultaneously extend types 'WindowEventHandlers' and 'ServiceWorkerGlobalScope'.
+  Named property 'onmessage' of types 'WindowEventHandlers' and 'ServiceWorkerGlobalScope' are not identical.
+src/index.ts(2,7): error TS6133: 'logger' is declared but its value is never read.
+src/index.ts(3,7): error TS6133: 'onRequest' is declared but its value is never read.
+src/index.ts(4,7): error TS6133: 'onDocumentCreated' is declared but its value is never read.
+src/index.ts(8,7): error TS6133: 'getFirestore' is declared but its value is never read.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/components/error-boundary.d.ts(26,49): error TS2694: Namespace 'React' has no exported member 'ReactFragment'.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/components/error-boundary.d.ts(26,71): error TS2694: Namespace 'React' has no exported member 'PromiseLikeOfReactNode'.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/components/error-boundary.d.ts(42,5): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/components/render-from-template-context.d.ts(2,54): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/components/router-reducer/router-reducer-types.d.ts(3,15): error TS2305: Module '"react"' has no exported member 'FulfilledThenable'.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/components/router-reducer/router-reducer-types.d.ts(3,34): error TS2305: Module '"react"' has no exported member 'PendingThenable'.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/components/router-reducer/router-reducer-types.d.ts(3,51): error TS2305: Module '"react"' has no exported member 'RejectedThenable'.
+../node_modules/@types/next-pwa/node_modules/next/dist/client/script.d.ts(18,46): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/compiled/@vercel/og/types.d.ts(3,32): error TS2834: Relative import paths need explicit file extensions in EcmaScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Consider adding an extension to the import path.
+../node_modules/@types/next-pwa/node_modules/next/dist/pages/_document.d.ts(21,40): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/pages/_document.d.ts(23,48): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/server/web/spec-extension/image-response.d.ts(3,62): error TS2307: Cannot find module 'next/dist/compiled/@vercel/og' or its corresponding type declarations.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/dynamic.d.ts(22,61): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/get-img-props.d.ts(15,31): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/get-img-props.d.ts(55,24): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/head.d.ts(2,59): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/html-context.shared-runtime.d.ts(36,43): error TS2694: Namespace 'React' has no exported member 'ReactFragment'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/html-context.shared-runtime.d.ts(37,18): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/utils.d.ts(52,18): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/utils.d.ts(159,43): error TS2694: Namespace 'React' has no exported member 'ReactFragment'.
+../node_modules/@types/next-pwa/node_modules/next/dist/shared/lib/utils.d.ts(159,59): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/styled-jsx/types/css.d.ts(4,63): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/styled-jsx/types/css.d.ts(9,8): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/styled-jsx/types/css.d.ts(13,37): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/styled-jsx/types/index.d.ts(3,43): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/styled-jsx/types/index.d.ts(13,15): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/styled-jsx/types/index.d.ts(15,7): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/dist/styled-jsx/types/macro.d.ts(8,15): error TS2503: Cannot find namespace 'JSX'.
+../node_modules/@types/next-pwa/node_modules/next/server.d.ts(15,43): error TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("next/dist/compiled/@vercel/og/types")' call instead.
+../node_modules/@types/service_worker_api/index.d.ts(262,14): error TS2717: Subsequent property declarations must have the same type.  Property 'state' must be of type 'ServiceWorkerState', but here has type 'string'.
+../node_modules/@types/service_worker_api/index.d.ts(268,5): error TS2717: Subsequent property declarations must have the same type.  Property 'onstatechange' must be of type '((this: ServiceWorker, ev: Event) => any) | null', but here has type '(statechangeevent: Event) => void'.
+../node_modules/@types/service_worker_api/index.d.ts(306,14): error TS2717: Subsequent property declarations must have the same type.  Property 'endpoint' must be of type 'string', but here has type 'any'.
+../node_modules/@types/service_worker_api/index.d.ts(329,14): error TS2687: All declarations of 'applicationServerKey' must have identical modifiers.
+../node_modules/@types/service_worker_api/index.d.ts(329,14): error TS2717: Subsequent property declarations must have the same type.  Property 'applicationServerKey' must be of type 'ArrayBuffer | null', but here has type 'Uint8Array | undefined'.
+../node_modules/@types/service_worker_api/index.d.ts(531,14): error TS2717: Subsequent property declarations must have the same type.  Property 'scope' must be of type 'string', but here has type 'any'.
+../node_modules/@types/service_worker_api/index.d.ts(537,14): error TS2717: Subsequent property declarations must have the same type.  Property 'installing' must be of type 'ServiceWorker | null', but here has type 'ServiceWorker'.
+../node_modules/@types/service_worker_api/index.d.ts(543,14): error TS2717: Subsequent property declarations must have the same type.  Property 'waiting' must be of type 'ServiceWorker | null', but here has type 'ServiceWorker'.
+../node_modules/@types/service_worker_api/index.d.ts(552,14): error TS2717: Subsequent property declarations must have the same type.  Property 'active' must be of type 'ServiceWorker | null', but here has type 'ServiceWorker'.
+../node_modules/@types/service_worker_api/index.d.ts(566,5): error TS2717: Subsequent property declarations must have the same type.  Property 'onupdatefound' must be of type '((this: ServiceWorkerRegistration, ev: Event) => any) | null', but here has type '() => void'.
+../node_modules/@types/service_worker_api/index.d.ts(676,14): error TS2717: Subsequent property declarations must have the same type.  Property 'controller' must be of type 'ServiceWorker | null', but here has type 'ServiceWorker'.
+../node_modules/@types/service_worker_api/index.d.ts(690,5): error TS2717: Subsequent property declarations must have the same type.  Property 'oncontrollerchange' must be of type '((this: ServiceWorkerContainer, ev: Event) => any) | null', but here has type '(controllerchangeevent: Event) => void'.
+../node_modules/@types/service_worker_api/index.d.ts(703,5): error TS2717: Subsequent property declarations must have the same type.  Property 'onmessage' must be of type '((this: ServiceWorkerContainer, ev: MessageEvent<any>) => any) | null', but here has type '(messageevent: MessageEvent<any>) => void'.
+../node_modules/@types/service_worker_api/index.d.ts(827,5): error TS2687: All declarations of 'serviceWorker' must have identical modifiers.
+../node_modules/@types/webpack/index.d.ts(17,5): error TS2305: Module '"tapable"' has no exported member 'Tapable'.
+../node_modules/@types/webpack/index.d.ts(1125,23): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1126,22): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1127,28): error TS2707: Generic type 'AsyncSeriesWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1128,27): error TS2707: Generic type 'AsyncSeriesWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1129,27): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1130,21): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1131,27): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1133,30): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1134,24): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1143,33): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1144,27): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1145,37): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1146,44): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1147,47): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1148,28): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1149,30): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1150,24): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1151,25): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1152,34): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1153,25): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1154,31): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1155,36): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1156,35): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1157,34): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1158,40): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1159,33): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1160,36): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1161,38): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1162,36): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1163,28): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1164,25): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1165,27): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1166,25): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1167,29): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1168,23): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1169,32): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1170,22): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1171,29): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1172,38): error TS2314: Generic type 'HookMap<H>' requires 1 type argument(s).
+../node_modules/@types/webpack/index.d.ts(1173,48): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1174,44): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1175,26): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1184,28): error TS2707: Generic type 'AsyncSeriesWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1185,27): error TS2707: Generic type 'AsyncSeriesWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1186,33): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1187,27): error TS2707: Generic type 'AsyncSeriesWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1207,21): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1208,19): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1210,40): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1211,35): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1212,43): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1215,23): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1217,35): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1218,30): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1219,38): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1234,27): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1253,25): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1254,24): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1260,33): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1261,40): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1262,32): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1267,31): error TS2707: Generic type 'AsyncSeriesHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1273,33): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1274,24): error TS2707: Generic type 'AsyncSeriesHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1282,33): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1283,28): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1287,43): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1288,38): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1289,46): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1302,31): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1303,26): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1304,36): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1305,32): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1306,28): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1307,31): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1326,22): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1327,21): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1328,21): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1329,22): error TS2707: Generic type 'SyncWaterfallHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1330,19): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1429,25): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1431,29): error TS2707: Generic type 'AsyncSeriesHook<T, AdditionalOptions>' requires between 1 and 2 type arguments.
+../node_modules/@types/webpack/index.d.ts(1447,25): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1448,26): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1449,31): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1452,26): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1473,25): error TS2707: Generic type 'SyncHook<T, R, AdditionalOptions>' requires between 1 and 3 type arguments.
+../node_modules/@types/webpack/index.d.ts(1540,24): error TS2707: Generic type 'SyncBailHook<T, R, AdditionalOptions>' requires between 2 and 3 type arguments.
+../node_modules/@types/whatwg-fetch/index.d.ts(8,1): error TS6200: Definitions of the following identifiers conflict with those in another file: fetch, HeadersInit, Headers, BodyInit, RequestInfo, Request, RequestDestination, RequestMode, RequestCredentials, RequestCache, RequestRedirect, ReferrerPolicy, Response, ResponseType
+../node_modules/@types/whatwg-fetch/index.d.ts(68,5): error TS2717: Subsequent property declarations must have the same type.  Property 'body' must be of type 'BodyInit | null | undefined', but here has type 'BodyInit | undefined'.
+
+Error: functions predeploy error: Command terminated with non-zero exit code 2
+[error] 
+[error] Error: functions predeploy error: Command terminated with non-zero exit code 2

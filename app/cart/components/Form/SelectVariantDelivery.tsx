@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select, Typography } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { formFields } from '../../common/initialFormValues';

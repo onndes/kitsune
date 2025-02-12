@@ -14,7 +14,7 @@ const ButtonLoadPrevData = ({ handleLoadArchivedData, isName }: IProps) => {
     setIsClient(true);
   }, []);
 
-  if (!isName ||   !isClient) return null;
+  if (!isName || !isClient) return null;
 
   return (
     <Button

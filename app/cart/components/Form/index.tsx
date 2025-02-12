@@ -4,26 +4,19 @@ import ControlInput from '@/app/cart/components/Form/ControlInput';
 import MyButton from '@/app/components/MyButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@mui/material';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { formFields } from '../../common/initialFormValues';
 import { extractedFields } from '../../common/orderFormFields';
 import schema from '../../common/schema';
 import LocationPicker from './LocationPicker.tsx';
-import { getInitialValues } from '../../common/getInitialValues';
 import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
 import { useSendMessage } from '@/api/notification/useNotification';
 import { useDispatch } from 'react-redux';
 import { clearForm, saveArchivedData, saveForm } from '@/redux/formSlice';
-import { debounce } from 'lodash';
 import ButtonLoadPrevData from '../ButtonLoadPrevData';
 import { useAppSelector } from '@/hooks/useAppSelector';
 
 export const Form = () => {
-  // TODO
-  // ! Из-за сохранения в redux, получается какой то баг
-  // ! страница но совпадает со страницей на сервере
-
   const dispatch = useDispatch();
   const form = useRef(null);
 
@@ -62,21 +55,12 @@ export const Form = () => {
     }
   }, [isSuccess]);
 
-  const saveToRedux = useMemo(
-    () =>
-      debounce((values: IOrderSubmissionData) => {
-        dispatch(saveForm(values));
-      }, 500),
-    [dispatch]
-  );
-
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
     if (JSON.stringify(formValues) !== JSON.stringify(savedData)) {
-      console.log('saveForm(formValues)');
       dispatch(saveForm(formValues));
     }
   }, [formValues]);
@@ -95,7 +79,6 @@ export const Form = () => {
   const onSubmit: SubmitHandler<IOrderSubmissionData> = (
     orderFormData: IOrderSubmissionData
   ) => {
-    console.log('✅ Удача, данные отправлены ', orderFormData);
     sendOrder(orderFormData);
   };
 
@@ -105,7 +88,6 @@ export const Form = () => {
   };
 
   const userDataFields = useMemo(() => extractedFields.userData(), []);
-  const hasArchivedData = archivedData?.name;
 
   return (
     <FormProvider {...methods}>

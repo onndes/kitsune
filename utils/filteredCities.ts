@@ -1,8 +1,8 @@
-import { regionalCentersCity } from '@/app/cart/common/regionalCity';
 import { ICity } from '@/api/novaPoshta/novaPoshta.types';
+import { regionalCitiesData } from '@/app/cart/common/regionsCenterData';
 
 export const filteredCities = (allCities: ICity[]) => {
-  const filteredCities = regionalCentersCity.map((city) => {
+  const filteredCities = regionalCitiesData.map((city) => {
     const matchedCity = allCities.find(
       (apiCity) => apiCity.Description === city.Description
     );

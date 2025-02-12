@@ -1,12 +1,10 @@
-import React from 'react';
-import RadioGroup from '@mui/material/RadioGroup';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Box, MenuItem, Select, Typography } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
 import { formFields } from '../../common/initialFormValues';
 import Image from 'next/image';
 
 const SelectDelivery = () => {
-  const { control, setValue } = useFormContext();
+  const { control } = useFormContext();
   const { name, options, initialValue } = formFields.delivery;
 
   return (

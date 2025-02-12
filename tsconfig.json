@@ -36,6 +36,6 @@
     "service-worker.ts",
     "archive/aservice-worker.js"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", ".next"],
   "rules": {}
 }

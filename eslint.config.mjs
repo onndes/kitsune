@@ -19,6 +19,8 @@ const eslintConfig = [
     rules: {
       // Предупреждение для console.log
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'prettier/prettier': ['error', { endOfLine: 'lf' }],
+      'react-hooks/exhaustive-deps': 'off',
     },
   },
 ];
