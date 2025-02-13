@@ -11,17 +11,27 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends(
-    'next/core-web-vitals',
-    'next/typescript',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+    'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended'
   ),
   {
+    ignores: ['lib/**/*', 'generated/**/*'], // Игнорируемые файлы
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
     rules: {
-      // Предупреждение для console.log
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'prettier/prettier': ['error', { endOfLine: 'auto' }],
       'react-hooks/exhaustive-deps': 'off',
-      
+      quotes: ['error', 'single'],
+      'import/no-unresolved': 0,
+      indent: ['error', 2],
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
+      'require-jsdoc': 'off',
+      'valid-jsdoc': 'off',
     },
   },
 ];

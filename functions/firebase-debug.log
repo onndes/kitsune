@@ -1,0 +1,77 @@
+[debug] [2025-02-13T13:55:29.813Z] ----------------------------------------------------------------------
+[debug] [2025-02-13T13:55:29.815Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\vladv\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only functions
+[debug] [2025-02-13T13:55:29.815Z] CLI Version:   13.30.0
+[debug] [2025-02-13T13:55:29.815Z] Platform:      win32
+[debug] [2025-02-13T13:55:29.815Z] Node Version:  v22.14.0
+[debug] [2025-02-13T13:55:29.815Z] Time:          Thu Feb 13 2025 15:55:29 GMT+0200 (Восточная Европа, стандартное время)
+[debug] [2025-02-13T13:55:29.816Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-02-13T13:55:29.975Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-02-13T13:55:29.976Z] > authorizing via signed-in user (vladvyljotnikov@gmail.com)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2025-02-13T13:55:29.983Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-02-13T13:55:29.983Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-02-13T13:55:29.986Z] [hub] writing locator at C:\Users\vladv\AppData\Local\Temp\hub-onndesy-product.json
+[debug] [2025-02-13T13:55:29.998Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-02-13T13:55:29.998Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-02-13T13:55:29.998Z] [tasks] Cloud Tasks Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-02-13T13:55:29.998Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}],"tasks":[{"address":"127.0.0.1","family":"IPv4","port":9499}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: apphosting, auth, firestore, database, hosting, pubsub, storage, dataconnect {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mapphosting, auth, firestore, database, hosting, pubsub, storage, dataconnect\u001b[22m"}}
+[debug] [2025-02-13T13:55:30.001Z] defaultcredentials: writing to file C:\Users\vladv\AppData\Roaming\firebase\vladvyljotnikov_gmail_com_application_default_credentials.json
+[debug] [2025-02-13T13:55:30.002Z] Setting GAC to C:\Users\vladv\AppData\Roaming\firebase\vladvyljotnikov_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\vladv\\AppData\\Roaming\\firebase\\vladvyljotnikov_gmail_com_application_default_credentials.json"}}
+[debug] [2025-02-13T13:55:30.003Z] Checked if tokens are valid: true, expires at: 1739456054479
+[debug] [2025-02-13T13:55:30.003Z] Checked if tokens are valid: true, expires at: 1739456054479
+[debug] [2025-02-13T13:55:30.004Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/onndesy-product/adminSdkConfig [none]
+[debug] [2025-02-13T13:55:30.843Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/onndesy-product/adminSdkConfig 200
+[debug] [2025-02-13T13:55:30.843Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/onndesy-product/adminSdkConfig {"projectId":"onndesy-product","storageBucket":"onndesy-product.appspot.com","locationId":"us-central"}
+[info] i  functions: Watching "D:\Progects\kitsune\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"D:\\Progects\\kitsune\\functions\" for Cloud Functions..."}}
+[debug] [2025-02-13T13:55:30.863Z] Validating nodejs source
+[debug] [2025-02-13T13:55:31.537Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "lint:fix": "eslint --fix"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^13.1.0",
+    "firebase-functions": "^6.3.1",
+    "kitsune": "file:.."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.18.1",
+    "eslint": "^9.17.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^50.6.3",
+    "eslint-plugin-prettier": "^5.2.3",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^5.7.2"
+  },
+  "private": true,
+  "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals",
+      "next/typescript",
+      "plugin:prettier/recommended"
+    ]
+  }
+}
+[debug] [2025-02-13T13:55:31.537Z] Building nodejs source
+[debug] [2025-02-13T13:55:31.537Z] Failed to find version of module node: reached end of search path D:\Progects\kitsune\functions\node_modules
+[info] +  functions: Using node@22 from host. 
+[debug] [2025-02-13T13:55:31.539Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-02-13T13:55:31.543Z] Found firebase-functions binary at 'D:\Progects\kitsune\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8347
+
+[debug] [2025-02-13T13:55:31.864Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
