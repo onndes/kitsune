@@ -21,7 +21,6 @@ const eslintConfig = [
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
       'react-hooks/exhaustive-deps': 'off',
-      
     },
   },
 ];
