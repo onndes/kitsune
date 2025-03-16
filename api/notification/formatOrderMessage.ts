@@ -1,4 +1,4 @@
-import { CompanyPost, IOrderSubmissionData } from '@/app/cart/formOrder.t';
+import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
 
 export function formatOrderMessage(order: IOrderSubmissionData): string {
   return `

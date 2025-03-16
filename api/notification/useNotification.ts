@@ -2,12 +2,7 @@ import axios from 'axios';
 import { TelegramMessage, TelegramResponse } from './useNotification.types';
 import { formatOrderMessage } from './formatOrderMessage';
 import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
-import {
-  useMutation,
-  UseMutationResult,
-  useQuery,
-  UseQueryResult,
-} from '@tanstack/react-query';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
 const sendMessage = async (formData: IOrderSubmissionData) => {
   const message = formatOrderMessage(formData);
