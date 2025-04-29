@@ -1,7 +1,21 @@
-/* html,
+html,
 body {
-  overflow: hidden;
-} */
+  height: 100%;
+  /* min-height: 100%; */
+}
+
+.app-section {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* flex: 1 0 auto; */
+  height: 100%;
+}
+
+.main {
+  height: 100%;
+}
 
 .hydration-hidden {
   opacity: 0;

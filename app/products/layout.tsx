@@ -16,7 +16,7 @@ export default async function HomePageWrapper({
     <Container sx={{ pt: 0, height: '100%' }} disableGutters>
       <Grid
         container
-        sx={{ height: '100%', minHeight: '100vh' }}
+        sx={{ height: '100%', minHeight: '100%' }}
         gap={1}
         size={4}
       >

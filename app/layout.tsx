@@ -1,6 +1,5 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { Roboto } from 'next/font/google';
-import Head from 'next/head';
 import { headers } from 'next/headers';
 import { ReactNode } from 'react';
 import '../styles/globals.css';
@@ -12,6 +11,7 @@ import { ColorModeProvider } from './contexts/ColorModeContext';
 import { DeviceProvider } from './contexts/DeviceContextProps';
 import { StoreProvider } from './Providers';
 import Footer from './components/Footer';
+import HeadComponent from './components/Head';
 
 export const metadata = {
   title: 'KITSUNE',
@@ -33,52 +33,21 @@ const roboto = Roboto({
 export default async function Layout({ children }: { children: ReactNode }) {
   const headersList = await headers();
   const userAgent = headersList.get('user-agent');
-  const initialTheme = 'light';
   const isMobile = /iPhone|iPad|Android/i.test(userAgent || '');
 
   return (
     <ColorModeProvider>
       <html lang="en">
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, viewport-fit=cover"
-          />
-          <meta
-            name="theme-color"
-            content={initialTheme === 'light' ? '#ffffff' : '#000000'}
-          />
-          <link rel="manifest" href="./manifest.ts" />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/image/icons/icon-180x180.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="192x192"
-            href="/image/icons/icon-192x192.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="512x512"
-            href="/image/icons/icon-512x512.png"
-          />
-          <link rel="preload" href="/image/icons/icon-192x192.png" as="image" />
-          <link rel="preload" href="/image/icons/icon-256x256.png" as="image" />
-          {/* Другие метатеги */}
-        </Head>
+        <HeadComponent />
         <body className={roboto.variable}>
           <StoreProvider>
             <AppRouterCacheProvider>
               <DeviceProvider isMobile={isMobile}>
-                <section>
+                <section className="app-section">
                   {/* <Nav /> */}
                   <MyAppBarWrapper />
                   <Indent />
-                  <main>{children}</main>
+                  <main className="main">{children}</main>
                   <Indent bottom />
                   <Footer />
                 </section>
