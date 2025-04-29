@@ -1,7 +1,7 @@
 // store/formSlice.ts
 import { getInitialValues } from '@/app/cart/common/getInitialValues';
 import { formFields } from '@/app/cart/common/initialFormValues';
-import { IFormField, IOrderSubmissionData } from '@/app/cart/formOrder.t';
+import { IOrderSubmissionData } from '@/app/cart/formOrder.t';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FormState {

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { useMemo } from 'react';
 import { FieldValues, Path, PathValue, useFormContext } from 'react-hook-form';
 import { useCities, useWarehouses } from '@/api/novaPoshta/useNovaPoshta';
@@ -38,6 +38,7 @@ const LocationPicker = <T extends FieldValues>() => {
     fetchNextPage: loadMoreCities,
     hasNextPage: hasMoreCities,
     isFetchingNextPage: isFetchingNextPageCities,
+    error: errorCities,
   } = useCities({
     query: debouncedInputValueCity,
     initialPage: 1,
@@ -135,6 +136,9 @@ const LocationPicker = <T extends FieldValues>() => {
         </>
       )}
       <AddressInput />
+      {errorCities && (
+        <Typography color="error">Помилка: {errorCities.message}</Typography>
+      )}
     </Box>
   );
 };

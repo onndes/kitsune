@@ -9,13 +9,12 @@ import {
   TUseCitiesResult,
   ICityPage,
 } from '@/api/novaPoshta/novaPoshta.types';
-
 const novaPoshtaRequest = async <T>(
   modelName: string,
   calledMethod: string,
   methodProps: Record<string, unknown> = {}
 ): Promise<INovaPoshtaApiResponse<T>> => {
-  const response = await axios.post('/api/nova-poshta', {
+  const response = await axios.post('https://api.novaposhta.ua/v2.0/json/', {
     modelName,
     calledMethod,
     methodProperties: methodProps,
@@ -56,6 +55,8 @@ export const useCities = ({
         throw error; // Пробрасываем ошибку в TanStack Query
       }
     },
+    retry: 2, // 🔁 Ограничение количества попыток
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 3000),
     initialPageParam: initialPage,
     getNextPageParam: (lastPage, allPages) => {
       const hasMore = lastPage?.data[0].Addresses.length === limit;
@@ -116,7 +117,7 @@ export const useWarehouses = ({
       const nextPage = allPages.length + 1;
       return hasMore ? nextPage : undefined;
     },
-    retry: 5,
+    retry: 2,
     retryDelay: 500,
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 24 * 60 * 60 * 1000, // Данные хранятся 24 часа
