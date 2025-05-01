@@ -15,11 +15,14 @@ import { useDispatch } from 'react-redux';
 import { clearForm, saveArchivedData, saveForm } from '@/redux/formSlice';
 import ButtonLoadPrevData from '../ButtonLoadPrevData';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { getInitialValues } from '../../common/getInitialValues';
+import { formFields } from '../../common/initialFormValues';
+
+const initialValue = getInitialValues(formFields) as IOrderSubmissionData;
 
 export const Form = () => {
   const dispatch = useDispatch();
   const form = useRef(null);
-
   const isFirstRender = useRef(true);
 
   const { savedData, archivedData } = useAppSelector((state) => state.form);
@@ -36,6 +39,9 @@ export const Form = () => {
     reset,
   } = useSendMessage();
 
+  const formValues = methods.watch();
+
+  // Вывод сообщения про успешную отправку
   useEffect(() => {
     if (isSuccess || isError) {
       const timer = setTimeout(() => {
@@ -45,34 +51,47 @@ export const Form = () => {
     }
   }, [isSuccess, isError]);
 
-  const formValues = methods.watch();
-
   useEffect(() => {
+    // При успешной отправки формы очищаем данные формы и
+    // сохраняем данные пользователя для восстановления формы,
     if (isSuccess) {
       dispatch(saveArchivedData(formValues));
       dispatch(clearForm());
-      methods.reset();
+      methods.reset(initialValue);
     }
   }, [isSuccess]);
 
   useEffect(() => {
+    // Сохраняем данные формы в redux
+    // при изменении данных формы и если они не равны сохраненным данным
+    // и не равны начальным данным
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    if (JSON.stringify(formValues) !== JSON.stringify(savedData)) {
+    if (
+      JSON.stringify(formValues) !== JSON.stringify(savedData) &&
+      JSON.stringify(formValues) !== JSON.stringify(initialValue)
+    ) {
       dispatch(saveForm(formValues));
     }
   }, [formValues]);
 
   useEffect(() => {
+    // Заполняем форму данными из redux
+
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
 
     if (savedData) {
-      methods.reset(savedData);
+      Object.keys(savedData).forEach((key) => {
+        methods.setValue(
+          key as keyof IOrderSubmissionData,
+          savedData[key as keyof IOrderSubmissionData] || ''
+        );
+      });
     }
   }, [savedData]);
 
