@@ -2,11 +2,10 @@ import { initializeApp, FirebaseApp } from 'firebase/app'; // Импортиру
 import { getAuth, Auth } from 'firebase/auth'; // Импортируем auth и тип Auth
 import { getFirestore, Firestore } from 'firebase/firestore'; // Импортируем firestore и тип Firestore
 import { Database, getDatabase } from 'firebase/database'; // Импортируем Realtime Database и тип Database
-
-const config = JSON.parse(process.env.FIREBASE_WEBAPP_CONFIG || '{}');
+import firebaseConfig from './firebaseConfig';
 
 // Инициализация Firebase
-const app: FirebaseApp = initializeApp(config); // Типизация для FirebaseApp
+const app: FirebaseApp = initializeApp(firebaseConfig); // Типизация для FirebaseApp
 
 // Получение экземпляров сервисов
 const auth: Auth = getAuth(app); // Типизация для auth
