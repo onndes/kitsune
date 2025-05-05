@@ -1,4 +1,3 @@
-// functions/src/telegram/sendTelegramMessage.ts
 import axios, { isAxiosError } from 'axios';
 import { onRequest } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
