@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 import { Agent } from 'https'; // ⬅️ Импортируем https.Agent
 
-const API_KEY = process.env.TELEGRAM_ORDER_BOT_KEY;
-const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const API_KEY = process.env.TELEGRAM_CONFIG_ORDER_BOT_KEY;
+const CHAT_ID = process.env.TELEGRAM_CONFIG_CHAT_ID;
 const BASE_URL = 'https://api.telegram.org/bot';
 
 export async function POST(request: Request) {

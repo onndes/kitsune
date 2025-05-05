@@ -1,6 +1,20 @@
 import withPWA from 'next-pwa';
 import { RemotePattern } from 'next/dist/shared/lib/image-config';
 
+const isDev = process.env.NODE_ENV === 'development';
+
+/* ---------- добавляем ---------- */
+const devRewrites = isDev
+  ? [
+      {
+        source: '/api/telegram/send-message',
+        destination:
+          'http://localhost:5001/onndesy-product/europe-central2/sendTelegramMessage',
+      },
+    ]
+  : [];
+/* -------------------------------- */
+
 const nextConfig = {
   reactStrictMode: true, // Enable React strict mode for improved error handling
   // swcMinify: true, // Enable SWC minification for improved performance
@@ -28,11 +42,14 @@ const nextConfig = {
       },
     ] as RemotePattern[], // Разрешаем загрузку с dummyimage.com
   },
+  async rewrites() {
+    return devRewrites;
+  },
 };
 
 export default withPWA({
   dest: 'public', // destination directory for the PWA files
-  disable: process.env.NODE_ENV === 'development', // disable PWA in the development environment
+  disable: isDev, // disable PWA in the development environment
   register: true, // register the PWA service worker
   skipWaiting: true, // skip waiting for service worker activation
 })(nextConfig);

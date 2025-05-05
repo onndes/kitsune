@@ -1,19 +1,28 @@
 {
   "hosting": {
-    "public": "public",
-    "site": "onndesy-product",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "source": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "frameworksBackend": {
+      "region": "europe-central2"
+    },
     "rewrites": [
       {
+        "source": "/api/telegram/send-message",
+        "function": {
+          "functionId": "sendTelegramMessage",
+          "region": "europe-central2"
+        }
+      },
+      {
         "source": "**",
-        "function": "nextServer"
+        "function": {
+          "functionId": "nextServer",
+          "region": "europe-central2"
+        }
       }
     ]
   },
+  
   "functions": {
     "source": "functions",
     "codebase": "default",

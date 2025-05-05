@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "onndesy-product"
-  }
+    "default": "onndesy-product",
+    "y": "onndesy-product"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+/.firebase/
 /out/
 
 # production
@@ -39,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+firebase-debug.log
+public/sw.js
+public/workbox-4754cb34.js
+functions/.eslintcache
