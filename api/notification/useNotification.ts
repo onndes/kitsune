@@ -7,7 +7,7 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 const sendMessage = async (formData: IOrderSubmissionData) => {
   const message = formatOrderMessage(formData);
   const response = await axios.post(
-    'https://europe-west4‑<project>.cloudfunctions.net/sendTelegramMessage',
+    'https://europe-west4‑onndesy-product.cloudfunctions.net/sendTelegramMessage',
     { message }
   );
 
