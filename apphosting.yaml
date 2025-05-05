@@ -1,0 +1,87 @@
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+# runConfig:
+# minInstances: 0
+# maxInstances: 100
+# concurrency: 80
+# cpu: 1
+# memoryMiB: 512
+
+# Environment variables and secrets.
+# env:
+# Configure environment variables.
+# See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
+# - variable: MESSAGE
+#   value: Hello world!
+#   availability:
+#     - BUILD
+#     - RUNTIME
+
+# Grant access to secrets in Cloud Secret Manager.
+# See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
+# - variable: MY_SECRET
+#   secret: mySecretRef
+
+# apphosting.yaml
+runConfig:
+  # (необязательно) min/max инстансы, concurrency, CPU/память и т.п.
+  minInstances: 0
+  maxInstances: 5
+  concurrency: 80
+
+env:
+  # secrets из Secret Manager (рантайм)
+  - variable: TELEGRAM_ORDER_BOT_KEY
+    secret: TELEGRAM_ORDER_BOT_KEY # имя секрета в GCP Secret Manager
+    availability:
+      - RUNTIME
+
+  - variable: TELEGRAM_CHAT_ID
+    secret: TELEGRAM_CHAT_ID
+    availability:
+      - RUNTIME
+
+  # если нужны переменные NEXT_PUBLIC_… при сборке и в браузере,
+  # можно либо добавить их через apphosting.yaml, либо оставить .env.production,
+  # но тогда надо не игнорить файл в git.
+ - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyBbpyh49NLweXNP_JGbhrq6u2caivddlx0"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "onndesy-product.firebaseapp.com"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "onndesy-product"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "onndesy-product.appspot.com"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "342717473310"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:342717473310:web:6d6b2cdd29ca9f189d040f"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    value: "G-P1W2H3XNL7"
+    availability:
+      - BUILD
+      - RUNTIME

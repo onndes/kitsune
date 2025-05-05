@@ -33,6 +33,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env.development
+.env.production
 
 # vercel
 .vercel
@@ -44,3 +45,4 @@ firebase-debug.log
 public/sw.js
 public/workbox-4754cb34.js
 functions/.eslintcache
+
