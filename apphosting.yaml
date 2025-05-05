@@ -1,38 +1,16 @@
-# Settings for Backend (on Cloud Run).
-# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
-# runConfig:
-# minInstances: 0
-# maxInstances: 100
-# concurrency: 80
-# cpu: 1
-# memoryMiB: 512
-
-# Environment variables and secrets.
-# env:
-# Configure environment variables.
-# See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
-# - variable: MESSAGE
-#   value: Hello world!
-#   availability:
-#     - BUILD
-#     - RUNTIME
-
-# Grant access to secrets in Cloud Secret Manager.
-# See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-# - variable: MY_SECRET
-#   secret: mySecretRef
-
 # apphosting.yaml
+
+# Настройки Cloud Run (необязательно):
 runConfig:
-  # (необязательно) min/max инстансы, concurrency, CPU/память и т.п.
   minInstances: 0
   maxInstances: 5
   concurrency: 80
 
+# env — это список переменных и секретов
 env:
-  # secrets из Secret Manager (рантайм)
+  # Секреты из Secret Manager, доступны только на RUNTIME
   - variable: TELEGRAM_ORDER_BOT_KEY
-    secret: TELEGRAM_ORDER_BOT_KEY # имя секрета в GCP Secret Manager
+    secret: TELEGRAM_ORDER_BOT_KEY
     availability:
       - RUNTIME
 
@@ -41,10 +19,8 @@ env:
     availability:
       - RUNTIME
 
-  # если нужны переменные NEXT_PUBLIC_… при сборке и в браузере,
-  # можно либо добавить их через apphosting.yaml, либо оставить .env.production,
-  # но тогда надо не игнорить файл в git.
- - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+  # Публичные переменные для сборки и для браузера
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
     value: "AIzaSyBbpyh49NLweXNP_JGbhrq6u2caivddlx0"
     availability:
       - BUILD
