@@ -3,14 +3,14 @@
     "source": ".",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "frameworksBackend": {
-      "region": "europe-central2"
+      "region": "europe-west4"
     },
     "rewrites": [
       {
         "source": "/api/telegram/send-message",
         "function": {
           "functionId": "sendTelegramMessage",
-          "region": "europe-central2"
+          "region": "europe-west4"
         }
       }
     ]

@@ -22,7 +22,7 @@ const TELEGRAM_CHAT = defineSecret('TELEGRAM_CHAT_ID');
 
 export const sendTelegramMessage = onRequest(
   {
-    region: 'europe-central2',
+    region: 'europe-west4',
     secrets: [TELEGRAM_TOKEN, TELEGRAM_CHAT],
     timeoutSeconds: 10,
   },
