@@ -12,17 +12,10 @@
           "functionId": "sendTelegramMessage",
           "region": "europe-central2"
         }
-      },
-      {
-        "source": "**",
-        "function": {
-          "functionId": "nextServer",
-          "region": "europe-central2"
-        }
       }
     ]
   },
-  
+
   "functions": {
     "source": "functions",
     "codebase": "default",
