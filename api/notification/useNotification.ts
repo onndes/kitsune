@@ -6,7 +6,7 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
 const sendMessage = async (formData: IOrderSubmissionData) => {
   const message = formatOrderMessage(formData);
-  const response = await axios.post('/api/telegram/send-message', { message });
+  const response = await axios.post('/fn/telegram/send-message', { message });
 
   if (response.status !== 200) {
     throw new Error(`Ошибка отправки: ${response.statusText}`);

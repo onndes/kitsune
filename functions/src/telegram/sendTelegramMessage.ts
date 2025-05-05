@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios, { isAxiosError } from 'axios';
 import { onRequest } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
@@ -61,7 +62,14 @@ export const sendTelegramMessage = onRequest(
       } else if (err instanceof Error) {
         detail = err.message;
       }
-
+      console.debug(
+        'token',
+        TELEGRAM_TOKEN.value().length,
+        'chat',
+        TELEGRAM_CHAT.value().length
+      );
+      console.log('Telegram error:', detail);
+      res.status(500).json({ error: detail });
       console.error('Telegram error:', detail);
       res.status(500).json({ error: detail });
     }

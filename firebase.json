@@ -11,7 +11,7 @@
     },
     "rewrites": [
       {
-        "source": "/api/telegram/send-message",
+        "source": "/fn/telegram/send-message",
         "function": {
           "functionId": "sendTelegramMessage",
           "region": "europe-west4"
