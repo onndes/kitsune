@@ -1,9 +1,20 @@
-import type { Request } from 'firebase-functions/v2/https';
-import type { Response } from 'express';
+// Минимальные типы, достаточные для CORS-логики
+export interface CorsRequest {
+  method?: string;
+}
 
+export interface CorsResponse {
+  setHeader(name: string, value: string): void;
+  status(code: number): { send(body?: unknown): void };
+}
+
+/**
+ * Обработка CORS для Cloud Functions v2.
+ * @returns true, если это был pre-flight OPTIONS и ответ уже отправлен.
+ */
 export function handleCors(
-  req: Request,
-  res: Response,
+  req: CorsRequest,
+  res: CorsResponse,
   allowedOrigin = '*'
 ): boolean {
   res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
