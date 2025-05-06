@@ -3,6 +3,7 @@ import axios, { isAxiosError } from 'axios';
 import { onRequest } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { URLSearchParams } from 'url';
+import { handleCors } from '../utils/cors.js';
 
 interface Body {
   message?: string;
@@ -27,6 +28,8 @@ export const sendTelegramMessage = onRequest(
     timeoutSeconds: 10,
   },
   async (req, res): Promise<void> => {
+    if (handleCors(req, res)) return;
+
     if (req.method !== 'POST') {
       res.status(405).send('Method Not Allowed');
       return;
