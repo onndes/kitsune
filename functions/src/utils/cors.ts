@@ -1,9 +1,6 @@
-// utils/cors.ts
-import type { Request, Response } from 'express';
+import type { Request } from 'firebase-functions/v2/https';
+import type { Response } from 'express';
 
-/**
- * Обработка CORS для Cloud Functions (Express).
- */
 export function handleCors(
   req: Request,
   res: Response,
